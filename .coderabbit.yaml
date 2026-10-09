@@ -1,0 +1,34 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+language: "en-GB"
+early_access: false
+
+reviews:
+  profile: "chill"
+  high_level_summary: true
+  path_filters:
+    - "!site/vendor/**"
+    - "!site/*/manifest.json"
+    - "!**/*.woff2"
+    - "!**/uv.lock"
+  path_instructions:
+    - path: "site/player/**"
+      instructions: |
+        Static player. Check DOM construction (no innerHTML or inline handlers),
+        CSP compatibility, keyboard and screen-reader access, and that media
+        elements are never re-created or seeked when a state keeps them
+        (docs/SPEC.md section 3.2).
+    - path: "tools/**"
+      instructions: |
+        Build pipeline from a Keynote HTML export to content-addressed media and
+        a manifest. Review path handling, subprocess use (no shell=True), hashing
+        determinism, and upload idempotency (never overwrite an R2 key).
+    - path: "talks-src/**"
+      instructions: |
+        Human decisions per talk. Check consistency with docs/SPEC.md section 1.2.
+  tools:
+    eslint:
+      enabled: true
+    ruff:
+      enabled: true
+    markdownlint:
+      enabled: true

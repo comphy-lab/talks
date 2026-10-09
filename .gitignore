@@ -1,0 +1,22 @@
+# Build output and media (media lives on R2, never in Git)
+build/
+*.mp4
+*.mov
+*.m4v
+*.webm
+exports/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+*.egg-info/
+
+# Node / Playwright
+node_modules/
+test-results/
+playwright-report/
+
+# OS
+.DS_Store

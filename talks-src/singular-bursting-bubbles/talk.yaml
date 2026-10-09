@@ -1,0 +1,42 @@
+# Human decisions for the singular-bursting-bubbles talk (see docs/SPEC.md §1.2).
+# Slide content comes from the Keynote HTML export, which is not committed.
+
+slug: singular-bursting-bubbles
+title: Bursting bubbles
+subtitle: Singular Worthington jets and the drops they make
+speaker: Vatsal Sanjay
+venue_note: First given at the University of Illinois Urbana-Champaign, October 2026.
+updated: "2026-10-10"
+media_base: https://media.comphy-lab.org/talks/singular-bursting-bubbles/
+
+video:
+  loop: true            # every video loops (decided 2026-10-09)
+  spans: auto           # same source at the same rect on consecutive states/slides = one placement
+  max_scale: 2.0        # encode at most 2x the largest on-slide box
+
+# Movies replaced by a YouTube embed. YouTube's terms forbid overlays on the
+# player, so the slide image is rebuilt without the movie and the embed sits
+# clear of the title and attribution.
+youtube:
+  - slide: B47A6023-3D84-4F1B-9E00-F5153B91555B   # slide 6, non-Newtonian medium
+    movie: Mudpots
+    id: a9hUsVq9q7U
+    start: 7.191
+    end: 63.397
+    title: Mud pots, Yellowstone National Park
+    credit: "Yellowstone National Park: video from https://www.youtube.com/watch?v=a9hUsVq9q7U"
+    rect: null          # filled in by the build after inspecting the slide layout
+
+# Corrections drawn onto slide images until the .key itself is fixed.
+# Text is taken from publisher metadata (Crossref), never typed from memory.
+patches:
+  - slide: 6BDE34AF-C6F3-4830-829F-9C89C9310573   # slide 4, Newtonian medium
+    find: "Gabache et al. (2016), Sc. Rep."
+    replace: "Ghabache et al. (2016), Sci. Rep."
+  - slide: 6BDE34AF-C6F3-4830-829F-9C89C9310573
+    find: "Walls et al. (2015), PRE"
+    replace: full-citation   # clipped by a white mask in Keynote; show the full reference unclipped
+
+changelog:
+  - date: "2026-10-10"
+    note: First web version of the UIUC talk.

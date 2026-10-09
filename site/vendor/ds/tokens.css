@@ -1,0 +1,352 @@
+/* =============================================================
+   CoMPhy Lab · Design Tokens
+   Paper + ink scholarly aesthetic with lab's four-stop gradient.
+   Fused from comphy-lab.github.io brand tokens and sl25 warmth.
+   ============================================================= */
+
+:root {
+  /* ---------- Brand hues (from production site) ---------- */
+  --c-brand-purple:   #68236d;     /* H1, logo mark, hero grad stop 4 */
+  --c-brand-blue:     #0056b3;     /* H2, links (legacy) */
+  --c-accent-coral:   #cf4900;     /* <strong>, DOI highlight */
+  --c-accent-violet:  #4c6ef5;     /* tags, hero grad stop 3 */
+  --c-accent-red:     #ff6b6b;     /* hero grad stop 1 */
+
+  /* ---------- Interactive accent (from sl25) ---------- */
+  --c-accent-teal:    #254c4a;     /* deep editorial teal — the single interactive accent */
+  --c-accent-teal-fg: #ffffff;
+  --c-accent-teal-hover: #1d3c3a;
+
+  /* ---------- Four-stop hero gradient ---------- */
+  --hero-grad-1: #ff6b6b;
+  --hero-grad-2: #68236d;
+  --hero-grad-3: #4c6ef5;
+  --hero-grad-4: #2d1b69;
+
+  /* ---------- Paper + ink (light theme default) ---------- */
+  --c-paper:          #f3efe8;     /* warm off-white body */
+  --c-paper-tint:     #ebe5da;
+  --c-surface-strong: #fffdf9;     /* inner cards — slightly brighter than paper */
+  --c-surface-glass:  rgba(255, 253, 249, 0.72);
+
+  --fg-strong: #0f0c08;            /* near-black ink for headings */
+  --fg-1:      #1f1a15;            /* body */
+  --fg-2:      #625648;            /* muted/captions */
+  --fg-3:      #857867;            /* placeholders */
+
+  --c-border:        rgba(15, 12, 8, 0.09);
+  --c-border-strong: rgba(15, 12, 8, 0.18);
+
+  /* Translucent purple tint used on the header */
+  --glass-header: rgba(104, 35, 109, 0.08);
+
+  /* ---------- Semantic ---------- */
+  --c-success: #166534;
+  --c-warning: #b45309;
+  --c-danger:  #b91c1c;
+
+  /* ---------- Typography ----------
+     sl25 gives us a scholarly serif + clean sans pairing; comphy-lab.github.io
+     keeps Cormorant Garamond for the display hero. We use all three:
+       - Fraunces: tight-tracked, high-contrast serif with optical sizing.
+                   Does the heavy lifting for all headings with real character.
+       - IBM Plex Sans: body + UI.
+       - IBM Plex Mono: code, DOIs, emails.
+       - Cormorant Garamond: reserved for the hero title only (legacy brand). */
+  --t-display: 'Cormorant Garamond', 'Fraunces', Georgia, serif;          /* hero only */
+  --t-serif:   'Fraunces', 'Source Serif 4', 'Iowan Old Style', Georgia, serif; /* headings + editorial */
+  --t-sans:    'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --t-mono:    'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  --t-hero:     clamp(44px, 6.2vw, 88px);
+  --t-h1:       clamp(28px, 3.4vw, 36px);
+  --t-h2:       clamp(22px, 2.6vw, 28px);
+  --t-h3:       20px;
+  --t-body-lg:  18px;
+  --t-body:     16px;
+  --t-small:    14px;
+  --t-eyebrow:  12px;
+
+  --t-track-tight: -0.01em;
+  --t-track-wide:  0.08em;
+
+  --t-weight-reg:   400;
+  --t-weight-med:   500;
+  --t-weight-semi:  600;
+  --t-weight-bold:  700;
+
+  /* ---------- Spacing (4-px base) ---------- */
+  --s-1:  4px;
+  --s-2:  8px;
+  --s-3:  12px;
+  --s-4:  16px;
+  --s-5:  24px;
+  --s-6:  32px;
+  --s-7:  48px;
+  --s-8:  64px;
+  --s-9:  96px;
+
+  /* ---------- Radii ---------- */
+  --r-xs:   6px;
+  --r-sm:   12px;
+  --r-md:   18px;
+  --r-lg:   28px;
+  --r-pill: 999px;
+
+  /* ---------- Shadows ---------- */
+  --shadow-sm:   0 1px 2px rgba(15, 12, 8, 0.04), 0 1px 3px rgba(15, 12, 8, 0.06);
+  --shadow-md:   0 4px 10px rgba(15, 12, 8, 0.06), 0 2px 4px rgba(15, 12, 8, 0.04);
+  --shadow-soft: 0 12px 40px rgba(15, 12, 8, 0.06), 0 4px 12px rgba(15, 12, 8, 0.04);
+  --shadow-lg:   0 24px 60px rgba(15, 12, 8, 0.12);
+
+  /* ---------- Layout ---------- */
+  --maxw-page:  1200px;
+  --maxw-read:  68ch;
+
+  /* ---------- Motion ---------- */
+  --ease: cubic-bezier(0.2, 0.6, 0.2, 1);
+  --dur-fast: 160ms;
+  --dur:      220ms;
+
+  color-scheme: light;
+}
+
+/* =============================================================
+   Dark theme — swap surfaces + ink, keep brand hues intact.
+   ============================================================= */
+:root[data-theme="dark"] {
+  --c-paper:          #12100d;
+  --c-paper-tint:     #1a1713;
+  --c-surface-strong: #1c1915;
+  --c-surface-glass:  rgba(28, 25, 21, 0.72);
+
+  --fg-strong: #f8f4ec;
+  --fg-1:      #e6dfd0;
+  --fg-2:      #9a8e7d;
+  --fg-3:      #6e6455;
+
+  --c-border:        rgba(248, 244, 236, 0.08);
+  --c-border-strong: rgba(248, 244, 236, 0.16);
+
+  --glass-header: rgba(104, 35, 109, 0.22);
+
+  --c-accent-teal:    #6ac2bd;   /* brighter for legibility on dark */
+  --c-accent-teal-fg: #0f1c1b;
+  --c-accent-teal-hover: #88d2ce;
+
+  --shadow-sm:   0 1px 2px rgba(0,0,0,0.4);
+  --shadow-md:   0 4px 10px rgba(0,0,0,0.45);
+  --shadow-soft: 0 12px 40px rgba(0,0,0,0.5);
+  --shadow-lg:   0 24px 60px rgba(0,0,0,0.65);
+
+  color-scheme: dark;
+}
+
+/* =============================================================
+   Base reset + paper surface
+   ============================================================= */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: var(--t-sans);
+  font-size: var(--t-body);
+  line-height: 1.6;
+  color: var(--fg-1);
+  background: var(--c-paper);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Soft 32-px grid overlay evokes the editorial feel; low opacity. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image:
+    linear-gradient(to right, rgba(15,12,8,0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(15,12,8,0.035) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+:root[data-theme="dark"] body::before {
+  background-image:
+    linear-gradient(to right, rgba(248,244,236,0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(248,244,236,0.04) 1px, transparent 1px);
+}
+
+a { color: var(--c-brand-blue); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--c-brand-blue) 30%, transparent); transition: color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease); }
+a:hover { color: var(--c-accent-teal); border-bottom-color: var(--c-accent-teal); }
+/* Prose links only. :where() keeps this at the old `a` specificity so
+   classed components and page-level `nav a` / caption rules still win. */
+:root[data-theme="dark"] a:where(:not([class])) { color: #8fb8ff; border-bottom-color: rgba(143,184,255,0.3); }
+
+strong { color: var(--c-accent-coral); font-weight: var(--t-weight-semi); }
+
+code { font-family: var(--t-mono); font-size: 0.92em; background: color-mix(in srgb, var(--c-brand-purple) 7%, transparent); padding: 0.08em 0.35em; border-radius: 4px; color: var(--fg-strong); }
+:root[data-theme="dark"] code { background: color-mix(in srgb, var(--c-brand-purple) 22%, transparent); color: #f1dcf4; }
+
+/* =============================================================
+   Headings
+   ============================================================= */
+h1, h2, h3, h4 { font-family: var(--t-serif); font-weight: var(--t-weight-semi); line-height: 1.2; letter-spacing: -0.015em; color: var(--fg-strong); margin: 0; font-variation-settings: "opsz" 48; }
+h1 { font-size: var(--t-h1); }
+h2 { font-size: var(--t-h2); }
+h3 { font-size: var(--t-h3); }
+
+/* The hero headline — only place the brand gradient clips into type. */
+.hero-title {
+  font-family: var(--t-display);
+  font-weight: 500;
+  font-style: italic;
+  font-size: var(--t-hero);
+  line-height: 1.02;
+  letter-spacing: -0.015em;
+  background: linear-gradient(90deg, var(--hero-grad-1) 0%, var(--hero-grad-2) 45%, var(--hero-grad-3) 55%, var(--hero-grad-4) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  margin: 0;
+}
+
+.eyebrow {
+  font-family: var(--t-sans);
+  font-size: var(--t-eyebrow);
+  font-weight: var(--t-weight-semi);
+  letter-spacing: var(--t-track-wide);
+  text-transform: uppercase;
+  color: var(--c-brand-purple);
+}
+:root[data-theme="dark"] .eyebrow { color: #c09bc4; }
+
+.lede { font-size: var(--t-body-lg); line-height: 1.55; color: var(--fg-1); max-width: var(--maxw-read); }
+
+/* =============================================================
+   Panel — the universal scholarly surface
+   ============================================================= */
+.panel {
+  background: var(--c-surface-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  padding: var(--s-6);
+  box-shadow: var(--shadow-soft);
+}
+
+.card {
+  background: var(--c-surface-strong);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  padding: var(--s-5);
+  box-shadow: var(--shadow-sm);
+}
+
+/* =============================================================
+   Buttons
+   ============================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+  padding: 10px 20px;
+  background: var(--c-accent-teal);
+  color: var(--c-accent-teal-fg);
+  border: 1px solid var(--c-accent-teal);
+  border-radius: var(--r-pill);
+  font: inherit;
+  font-weight: var(--t-weight-semi);
+  font-size: var(--t-small);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+  text-decoration: none;
+}
+.btn:hover { background: var(--c-accent-teal-hover); color: var(--c-accent-teal-fg); border-bottom-color: var(--c-accent-teal-hover); transform: translateY(-1px); }
+:root[data-theme="dark"] .btn { color: #0c1a19; }
+:root[data-theme="dark"] .btn:hover { color: #0c1a19; }
+
+/* Legacy pill button (homepage hero) */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 22px;
+  background: var(--c-brand-blue);
+  color: #fff;
+  border-radius: var(--r-pill);
+  font-weight: var(--t-weight-semi);
+  font-size: var(--t-small);
+  text-decoration: none;
+  border-bottom: 0;
+}
+.btn-pill:hover { background: #034a9a; color: #fff; border-bottom-color: transparent; }
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  background: transparent;
+  color: var(--fg-1);
+  border: 1px solid var(--c-border-strong);
+  border-radius: var(--r-pill);
+  font-weight: var(--t-weight-med);
+  font-size: var(--t-small);
+  cursor: pointer;
+  text-decoration: none;
+}
+.btn-ghost:hover { background: color-mix(in srgb, var(--c-accent-teal) 8%, transparent); border-color: var(--c-accent-teal); color: var(--c-accent-teal); border-bottom-color: var(--c-accent-teal); }
+
+/* =============================================================
+   Chips / tags
+   ============================================================= */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  background: color-mix(in srgb, var(--fg-strong) 5%, transparent);
+  color: var(--fg-1);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-pill);
+  font-family: var(--t-sans);
+  font-weight: var(--t-weight-med);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  line-height: 1.6;
+}
+.chip--brand { background: color-mix(in srgb, var(--c-brand-purple) 10%, transparent); color: var(--c-brand-purple); border-color: color-mix(in srgb, var(--c-brand-purple) 22%, transparent); }
+.chip--blue  { background: color-mix(in srgb, var(--c-brand-blue) 10%, transparent); color: var(--c-brand-blue); border-color: color-mix(in srgb, var(--c-brand-blue) 22%, transparent); }
+.chip--coral { background: color-mix(in srgb, var(--c-accent-coral) 10%, transparent); color: var(--c-accent-coral); border-color: color-mix(in srgb, var(--c-accent-coral) 22%, transparent); }
+:root[data-theme="dark"] .chip--brand { color: #d99adc; }
+:root[data-theme="dark"] .chip--blue  { color: #8fb8ff; }
+:root[data-theme="dark"] .chip--coral { color: #ff9966; }
+
+/* =============================================================
+   Form inputs
+   ============================================================= */
+.field { display: grid; gap: 6px; }
+.field-label { font-size: var(--t-small); font-weight: var(--t-weight-semi); color: var(--fg-1); }
+.field-hint  { font-size: 12px; color: var(--fg-2); margin: 0; }
+
+.input {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--c-surface-strong);
+  color: var(--fg-1);
+  border: 1px solid var(--c-border-strong);
+  border-radius: var(--r-sm);
+  font: inherit;
+  font-size: var(--t-body);
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.input::placeholder { color: var(--fg-3); }
+.input:focus { outline: none; border-color: var(--c-accent-teal); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c-accent-teal) 20%, transparent); }
+
+/* =============================================================
+   Utility: copyable value
+   ============================================================= */
+.copyable { font-family: var(--t-mono); cursor: copy; }
