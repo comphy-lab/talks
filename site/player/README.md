@@ -8,8 +8,9 @@ The static player behind `comphy-lab.org/talks/<slug>/`. It implements
 |---|---|
 | `talk.template.html` | Page template. The build replaces `{{TITLE}}`, `{{DESCRIPTION}}` and `{{SLUG}}` (HTML-escaped) and writes `site/<slug>/index.html`. Holds the per-page CSP. |
 | `player.js` | ES module. Reads `./manifest.json` and plays the talk. |
-| `player.css` | Player and site shell (talk page and talks index), on top of `../vendor/ds/tokens.css`. |
-| `theme.js` | Classic script in `<head>`: sets `data-theme` from `localStorage` key `theme` before first paint and wires `[data-theme-toggle]` buttons. |
+| `player.css` | Player and page layout (talk page and talks index), on top of `../vendor/ds/tokens.css` and the vendored comphy-lab.org header and footer styles. |
+| `theme.js` | Classic script in `<head>`: sets `data-theme` from `localStorage` key `theme` before first paint and wires `[data-theme-toggle]`, the one theme toggle, in the site header. |
+| `header.js` | Classic deferred script for both pages: the site header's Menu drawer (below 1024 px), the footer's "Back to top" and current year. The header and footer markup are static, ported from comphy-lab.org (`../vendor/comphy-lab/SOURCE.md`). |
 | `dev/manifest.json` | Mock talk for development. Its file names are placeholders; no media is committed. |
 
 ## Behaviour worth knowing
@@ -39,7 +40,13 @@ The static player behind `comphy-lab.org/talks/<slug>/`. It implements
   clickers keep working. Touches inside the embed cannot navigate.
 - **Full screen.** While the stage fills the screen (element full screen or
   the phone fallback), the header, controls, help and footer are `inert`;
-  focus returns to where it was on leaving.
+  focus returns to where it was on leaving. The phone fallback also hides
+  the fixed site header, and an open Menu drawer closes.
+- **Site header.** It handles no player key: only Escape and Tab while its
+  Menu drawer is open (`header.js` listens in the capture phase and cancels
+  Escape). While the drawer is open the player ignores every key, so the
+  arrows scroll the drawer rather than change the slide hidden behind it; it
+  only keeps cancelling Backspace (WebKit's History Back).
 - **Announcements.** The live region names a new slide ("Slide n of N, step 1
   of K: title") and then each later step of it ("Step k of K").
 

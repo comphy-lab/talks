@@ -391,6 +391,10 @@ def test_overlay_has_no_seams_when_scaled(open_talk, talk: Talk, engine: str, ov
         tp.wait_videos_playing(min_time=0.1)
         tp.page.evaluate(VIDEOS_STYLE_JS, "black")
         tp.page.wait_for_timeout(300)
+        # Discarded: WebKit's first capture of a page can land one device pixel
+        # off the later ones when the stage sits at a fractional offset, which
+        # would read as a difference across the whole slide.
+        _device_stage(tp)
         black = _device_stage(tp)
         tp.page.evaluate(VIDEOS_STYLE_JS, "white")
         tp.page.wait_for_timeout(300)

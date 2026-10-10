@@ -17,7 +17,8 @@ NO_ELEMENT_FULLSCREEN = """
 delete Element.prototype.requestFullscreen; delete Element.prototype.webkitRequestFullscreen;
 delete Document.prototype.exitFullscreen; delete Document.prototype.webkitExitFullscreen;
 """
-CONTROLS = ["#btn-prev", "#btn-next", "#btn-pause", "#btn-fullscreen", ".controls [data-theme-toggle]"]
+# The theme control is in the site header (its Menu drawer on a phone): see test_shell.py.
+CONTROLS = ["#btn-prev", "#btn-next", "#btn-pause", "#btn-fullscreen"]
 
 REACH_JS = """
 (sel) => {
@@ -31,7 +32,7 @@ REACH_JS = """
 """
 
 
-CHROME = [".skip-link", ".site-header", ".talk-head", ".progress", ".controls", ".about", ".site-footer"]
+CHROME = [".skip-link", ".s-header", ".talk-head", ".progress", ".controls", ".about", ".site-footer"]
 
 FOCUS_JS = """
 () => {

@@ -1,0 +1,187 @@
+/* =============================================================
+   comphy-lab.org footer v2, ported for the talks pages.
+   Source: comphy-lab/comphy-lab.github.io (see SOURCE.md):
+   assets/css/footer-v2.css (verbatim apart from the legacy-layout
+   neutraliser it carries), plus the rules from styles.css and
+   bridge.css that shape the same footer on comphy-lab.org
+   (.site-footer flex box and its 768 px centring, .invert-on-light).
+   Changes are marked "talks:". Loads after ../ds/tokens.css.
+   ============================================================= */
+
+.c-footer {
+  display: flex; /* styles.css .site-footer */
+  background: var(--c-paper-tint);
+  border-top: 1px solid var(--c-border);
+  padding: var(--s-8) 0 var(--s-6);
+  margin-top: var(--s-9);
+  color: var(--fg-1);
+  position: relative;
+  z-index: 1;
+}
+
+.c-footer__wrap {
+  width: min(100% - 20px, var(--maxw-page)); /* 2rem at the main site's 10 px root */
+  margin: 0 auto;
+}
+
+.c-footer__top {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: var(--s-6);
+  padding-bottom: var(--s-6);
+  border-bottom: 1px solid var(--c-border);
+}
+
+.c-footer__brand { display: grid; gap: var(--s-3); align-content: start; }
+
+.c-footer__mark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-3);
+  font-family: var(--t-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 22px;
+  color: var(--fg-strong);
+  text-decoration: none;
+  border-bottom: 0;
+}
+
+.c-footer__mark:hover { color: var(--c-accent-teal); }
+
+.c-footer__mark img { height: 56px; width: auto; }
+
+.c-footer__tag {
+  font-family: var(--t-serif);
+  font-size: 14px;
+  color: var(--fg-2);
+  line-height: 1.5;
+  max-width: 36ch;
+  font-variation-settings: "opsz" 14;
+  margin: 0;
+}
+
+/* talks: the column headings are <h2> (the main site uses <h4> after no
+   <h3>); they keep the main site's look. */
+.c-footer__col h2 {
+  font-family: var(--t-sans);
+  font-size: var(--t-eyebrow);
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: var(--t-track-wide);
+  text-transform: uppercase;
+  color: var(--fg-2);
+  font-variation-settings: normal;
+  margin: 0 0 var(--s-3);
+}
+
+.c-footer__col a {
+  display: block;
+  font-size: 13px;
+  padding: 3px 0;
+  color: var(--fg-1);
+  border-bottom: 0;
+  text-decoration: none;
+}
+
+.c-footer__col a:hover { color: var(--c-accent-teal); }
+
+/* --- Partner strip ----------------------------------------- */
+.c-footer__partners {
+  padding-top: var(--s-5);
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: var(--s-5);
+}
+
+.c-footer__partners-label {
+  font-family: var(--t-sans);
+  font-size: var(--t-eyebrow);
+  font-weight: 600;
+  letter-spacing: var(--t-track-wide);
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+
+.c-footer__partners-logos {
+  display: flex;
+  align-items: center;
+  gap: var(--s-7);
+  flex-wrap: wrap;
+}
+
+.c-footer__partners-logos a {
+  display: inline-flex;
+  align-items: center;
+  border-bottom: 0;
+  opacity: 0.75;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.c-footer__partners-logos a:hover { opacity: 1; }
+
+.c-footer__partners-logos img {
+  height: 72px;
+  width: auto;
+  display: block;
+}
+
+/* Durham: two discrete assets swap by theme. */
+.c-footer__partners-logos .logo-dark-only { display: none; }
+
+:root[data-theme="dark"] .c-footer__partners-logos .logo-light-only { display: none; }
+
+:root[data-theme="dark"] .c-footer__partners-logos .logo-dark-only { display: block; }
+
+/* bridge.css: white-on-transparent marks darkened on paper. */
+.invert-on-light { filter: invert(1) brightness(0.4); }
+
+:root[data-theme="dark"] .invert-on-light { filter: none; }
+
+/* --- Legal strip ------------------------------------------- */
+.c-footer__legal {
+  margin-top: var(--s-6);
+  padding-top: var(--s-5);
+  border-top: 1px solid var(--c-border);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--s-4);
+  font-size: 12px;
+  color: var(--fg-2);
+}
+
+.c-footer__legal a {
+  color: var(--fg-2);
+  border-bottom: 1px solid var(--c-border-strong);
+  text-decoration: none;
+}
+
+.c-footer__legal a:hover {
+  color: var(--c-accent-teal);
+  border-bottom-color: var(--c-accent-teal);
+}
+
+/* --- Responsive -------------------------------------------- */
+@media (max-width: 820px) {
+  .c-footer__top { grid-template-columns: 1fr 1fr; }
+
+  .c-footer__partners { flex-direction: column; align-items: flex-start; }
+}
+
+/* styles.css: .site-footer centres its text at 768 px and below. */
+@media (max-width: 768px) {
+  .c-footer { text-align: center; }
+}
+
+@media (max-width: 520px) {
+  .c-footer__top { grid-template-columns: 1fr; }
+
+  .c-footer__partners-logos { gap: var(--s-5); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .c-footer__partners-logos a { transition: none; }
+}

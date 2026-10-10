@@ -5,8 +5,9 @@ This is the contract between the three parts of the repository:
 - `tools/`: the build pipeline. It turns a Keynote HTML export plus a
   human-authored `talks-src/<slug>/talk.yaml` into media files and a
   manifest.
-- `site/`: the static player, deployed by GitHub Pages at
-  `https://comphy-lab.org/talks/`.
+- `site/`: the static player and the talks index, deployed by GitHub Pages
+  at `https://comphy-lab.org/talks/`, inside comphy-lab.org's header and
+  footer (Section 5).
 - `tests/`: unit tests for the pipeline and browser tests for the player.
 
 Media (slide images and videos) is hosted on Cloudflare R2 at
@@ -225,11 +226,14 @@ not the size, so a video lines up with the poster frame baked into the still.
     the black full-screen backdrop a light inner ring keeps the indicator
     above 3:1 in both themes.
   - While the stage fills the screen (element full screen, or the phone
-    fallback that fills the viewport), the page around it is `inert`, so
-    focus and screen readers reach only what is visible; focus returns to
-    where it was on leaving.
+    fallback that fills the viewport), the page around it, the site header
+    included, is `inert`, so focus and screen readers reach only what is
+    visible; focus returns to where it was on leaving. The phone fallback
+    also hides the fixed site header, which would otherwise paint over it.
 - **Theme.** The design system's `data-theme` on `<html>`, with
-  `localStorage` key `theme` (shared with comphy-lab.org).
+  `localStorage` key `theme` (shared with comphy-lab.org). Each page has
+  exactly one theme control, the toggle in the site header (Section 5); the
+  player's control bar has none.
 - **Security.**
   - A per-page `<meta http-equiv="Content-Security-Policy">` sets:
     - `default-src 'self'`
@@ -280,3 +284,50 @@ not the size, so a video lines up with the poster frame baked into the still.
 - **Deduplication.** The same source used on several slides is encoded once.
   Deduplicate by decoded stream identity (Keynote re-muxes copies with
   different container timestamps), not by file hash.
+
+## 5. Site header and footer
+
+The talks index and every talk page carry comphy-lab.org's header and footer,
+so that `/talks/` reads as part of the main site. Markup and CSS are ported
+from the main-site repository and vendored in `site/vendor/comphy-lab/`;
+`site/vendor/comphy-lab/SOURCE.md` records the source commit, what was
+taken, and every deliberate difference.
+
+- **Header.** Fixed at the top, 80 px high, as on comphy-lab.org (60 px on a
+  phone held sideways, at most 520 px high, to leave room for the slides).
+  The page is padded by the header's height and in-page targets scroll clear
+  of it; the talk page's stage and controls fit the viewport below it. From
+  left to right: the lab logo linking to `/`, then the theme toggle, Google
+  Scholar, GitHub, Team (`/team/`), Research (`/research`), Project docs
+  (`/projects/`), Talks (`/talks/`), Teaching (`/teaching`), Join Us
+  (`/join`), Blog and Bluesky. Talks is the current section: it carries
+  `aria-current="page"` on the talks index, the page it links to, and
+  `aria-current="true"` on a talk page, which lies inside that section. Links to the main site
+  are root-relative, since the talks are served from the same origin. Icons
+  are inline SVG; no icon font or CDN is loaded.
+- **Menu drawer.** Below 1120 px wide (the same breakpoint as comphy-lab.org) the items move into a drawer that a
+  "Menu" button opens (`aria-expanded`, `aria-controls`). Opening it moves
+  focus into it and Tab stays inside it; Escape, the Close button, a click
+  outside it or following one of its links closes it, and focus returns to
+  the Menu button. A click outside only closes the drawer: it does not reach
+  the stage. The drawer scrolls on short screens, is hidden once closed, and
+  closes when the header becomes inert (full screen) or the window widens.
+- **Keys.** The header handles no key the player uses. While the drawer is
+  open it takes Escape (and cancels it) and Tab, and the player ignores every
+  key, so the drawer behaves as a modal: the arrows and Page Up/Down scroll
+  it, Space and Enter activate its links and buttons, and nothing changes the
+  slide hidden behind it. The player still cancels Backspace, its "previous"
+  key, since WebKit's default for it is History Back. Once the drawer is
+  closed every key reaches the player, wherever the focus is.
+- **Command palette.** comphy-lab.org's ⌘K palette is not included: it needs
+  the main site's search index and Fuse.js, and a second global key handler
+  on a talk page would compete with the player's shortcuts.
+- **Footer.** comphy-lab.org's footer v2: brand blurb; Explore (Research,
+  Project docs, News & talks, Talks, Team, Teaching); Work with us; Code &
+  data; partner logos; legal strip. "Edit on GitHub" points at this
+  repository. "Back to top" scrolls without changing the URL hash, which
+  holds the talk's deep link.
+- **Constraints.** The page CSP in Section 3.2 is unchanged: header and
+  footer are static markup, styled from `site/vendor/comphy-lab/`, with
+  behaviour in `site/player/header.js` (same origin, no inline script or
+  style).

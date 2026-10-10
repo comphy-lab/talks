@@ -4,8 +4,9 @@ Web versions of CoMPhy Lab project talks, served at
 <https://comphy-lab.org/talks/>. Each project has one living talk at
 `comphy-lab.org/talks/<project-slug>/`, updated as the work moves on.
 
-A talk is played by a small static player (`site/player/`), not by Keynote's
-HTML export. Each click state is one image. Real `<video>` elements sit on top
+The pages carry comphy-lab.org's header and footer (`docs/SPEC.md`,
+Section 5). A talk is played by a small static player (`site/player/`), not
+by Keynote's HTML export. Each click state is one image. Real `<video>` elements sit on top
 of the image, and a video that continues across slides is a single element that
 keeps playing. Slide images and videos are content-addressed files on
 Cloudflare R2 (`media.comphy-lab.org`); this repository holds only code,
@@ -18,6 +19,7 @@ site/                 deployed to GitHub Pages
   index.html          talks index
   player/             player (ES module, CSS, page template)
   vendor/ds/          CoMPhy design-system tokens and fonts (vendored)
+  vendor/comphy-lab/  comphy-lab.org header and footer styles and logos (vendored)
   <slug>/             one talk: index.html + manifest.json (generated)
 talks-src/<slug>/     talk.yaml: decisions the Keynote export does not record
 tools/                build pipeline (Python): export -> media + manifest -> R2

@@ -1,0 +1,397 @@
+/* =============================================================
+   comphy-lab.org site header, ported for the talks pages.
+   Source: comphy-lab/comphy-lab.github.io (see SOURCE.md):
+   assets/css/styles.css section 6 "Header & navigation" and its
+   Menu drawer media query, with the legacy colour variables it reads
+   (styles.css :root and [data-theme="dark"]) resolved to values.
+   Trimmed to what the talks pages use; changes are marked "talks:".
+   Loads after ../ds/tokens.css.
+   ============================================================= */
+
+/* talks: comphy-lab.org's bridge.css lifts the dark surfaces off the
+   tokens' near-black; the whole page shares them so header, footer and
+   body match the main site in dark mode. */
+:root[data-theme="dark"] {
+  --c-paper: #1b1814;
+  --c-paper-tint: #241f18;
+  --c-surface-strong: #2b251d;
+  --c-surface-glass: rgba(43, 37, 29, 0.78);
+  --c-border: rgba(248, 244, 236, 0.14);
+  --c-border-strong: rgba(248, 244, 236, 0.22);
+}
+
+:root {
+  --header-h: 80px;
+  --s-header-bg: rgba(104, 35, 109, 0.15);
+  --s-header-shadow: rgba(104, 35, 109, 0.2);
+  --s-nav-item-bg: rgba(255, 255, 255, 0.25);
+  --s-nav-item-color: #1a1a1a;
+  --s-nav-item-hover-bg: rgba(255, 255, 255, 0.35);
+  --s-mobile-nav-bg: rgba(255, 255, 255, 0.95);
+  --s-mobile-nav-shadow: rgba(0, 0, 0, 0.1);
+  --s-mobile-nav-item-hover-bg: rgba(255, 255, 255, 0.35);
+  --s-icon-github: #1a1a1a;
+  --s-icon-bluesky: #0085ff;
+  --s-transition: all 0.3s ease;
+}
+
+:root[data-theme="dark"] {
+  --s-header-bg: rgba(40, 15, 45, 0.75);
+  --s-header-shadow: rgba(0, 0, 0, 0.4);
+  --s-nav-item-bg: rgba(30, 30, 30, 0.6);
+  /* comphy-lab.org: the tokens' dark prose-link colour wins over the
+     header's own --nav-item-color, so its nav links read #8fb8ff. */
+  --s-nav-item-color: #8fb8ff;
+  --s-nav-item-hover-bg: rgba(40, 40, 40, 0.8);
+  --s-mobile-nav-bg: rgba(30, 30, 35, 0.95);
+  --s-mobile-nav-shadow: rgba(0, 0, 0, 0.3);
+  --s-mobile-nav-item-hover-bg: rgba(60, 60, 70, 0.5);
+  --s-icon-github: #fff;
+  --s-icon-bluesky: #fff;
+}
+
+/* talks: the header is fixed, as on comphy-lab.org; content starts below it
+   and in-page targets scroll clear of it. */
+html {
+  scroll-padding-top: var(--header-h);
+}
+
+body {
+  padding-top: var(--header-h);
+}
+
+.s-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-h);
+  background: var(--s-header-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  box-shadow: 0 4px 16px var(--s-header-shadow);
+  transition: var(--s-transition);
+}
+
+.s-header__logo {
+  height: 65px;
+  flex: none;
+}
+
+.s-header__logo a {
+  border-bottom: 0; /* the tokens' prose-link underline; comphy-lab.org shows none */
+}
+
+.s-header__logo img {
+  height: 100%;
+  max-height: 65px;
+  width: auto;
+}
+
+/* Menu toggle (shown below the breakpoint). talks: a <button>, not a link. */
+.s-header__menu-toggle {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--fg-1);
+  font: inherit;
+  cursor: pointer;
+}
+
+.s-header__menu-text {
+  font-size: 16px;
+}
+
+.s-header__menu-icon {
+  position: relative;
+  display: block;
+  width: 24px;
+  height: 2px;
+  background-color: currentColor;
+}
+
+.s-header__menu-icon::before,
+.s-header__menu-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: currentColor;
+  transition: transform 0.3s ease;
+}
+
+.s-header__menu-icon::before {
+  transform: translateY(-8px);
+}
+
+.s-header__menu-icon::after {
+  transform: translateY(8px);
+}
+
+/* Navigation */
+.s-header__nav {
+  display: flex;
+  align-items: center;
+}
+
+.s-header__nav-list {
+  display: flex;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.s-header__nav-list li {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.s-header__nav-list a {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 5px;
+  background: var(--s-nav-item-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--s-nav-item-color);
+  font-size: 16px;
+  white-space: nowrap; /* never wrap a label (comphy-lab.org has the same rule since its Talks link) */
+  text-decoration: none;
+  transition: var(--s-transition);
+}
+
+.s-header__nav-list a:hover {
+  background: var(--s-nav-item-hover-bg);
+  color: var(--s-nav-item-color);
+  transform: translateY(-2px);
+}
+
+/* Icon links: Google Scholar, GitHub, Bluesky (inline SVG; the main site
+   uses icon fonts at 1.75em). */
+.s-header__nav-list .s-header__item--icon a {
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: none;
+}
+
+.s-header__icon {
+  display: block;
+  height: 1.75em;
+  width: auto;
+  fill: currentColor;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.s-header__nav-list a:hover .s-header__icon {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.s-header__icon--github {
+  color: var(--s-icon-github);
+}
+
+.s-header__icon--bluesky {
+  color: var(--s-icon-bluesky);
+}
+
+/* talks: the page's own section, marked aria-current="page" on the talks
+   index (the page the link opens) and aria-current="true" on a talk page
+   (inside that section). The main site has no current-item style; this is
+   the lightest one that reads as such. */
+.s-header__nav-list a[aria-current="page"],
+.s-header__nav-list a[aria-current="true"] {
+  background: var(--s-nav-item-hover-bg);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+/* Close button inside the menu (shown below the breakpoint). talks: a <button>. */
+.s-header__nav-close-btn {
+  display: none;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  margin: 0 0 0 8px;
+  padding: 8px 16px;
+  border: 0;
+  border-radius: 5px;
+  background: var(--s-nav-item-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  color: var(--fg-1);
+  font: inherit;
+  font-size: 16px;
+  cursor: pointer;
+  transition: var(--s-transition);
+}
+
+.s-header__nav-close-btn:hover {
+  background: var(--s-nav-item-hover-bg);
+  color: var(--c-accent-teal);
+  transform: translateY(-2px);
+}
+
+/* Theme toggle. talks: a <button> (the main site's is an unfocusable <div>). */
+.theme-toggle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--s-nav-item-bg);
+  color: var(--fg-1);
+  font: inherit;
+  cursor: pointer;
+  transition: var(--s-transition);
+}
+
+.theme-toggle:hover {
+  background: var(--s-nav-item-hover-bg);
+  transform: translateY(-2px);
+}
+
+.theme-toggle-icon {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  transition: opacity 0.3s ease, transform 0.5s ease;
+  pointer-events: none;
+}
+
+.theme-toggle-icon.moon {
+  opacity: 1;
+}
+
+.theme-toggle-icon.sun {
+  opacity: 0;
+  transform: rotate(90deg);
+}
+
+:root[data-theme="dark"] .theme-toggle-icon.moon {
+  opacity: 0;
+  transform: rotate(-90deg);
+}
+
+:root[data-theme="dark"] .theme-toggle-icon.sun {
+  opacity: 1;
+  transform: rotate(0);
+}
+
+/* ---------- Menu below the breakpoint ----------
+   Same breakpoint as comphy-lab.org (max-width 1119px), so the header keeps
+   its form when moving between the two sites. The talks bar (no
+   command-palette button) needs only about 1003 px, so it always fits. */
+@media (max-width: 1119px) {
+  .s-header__menu-toggle {
+    display: flex;
+    z-index: 90;
+  }
+
+  .s-header__nav {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 300px;
+    height: 100vh;
+    height: 100dvh;
+    padding: 20px;
+    flex-direction: column;
+    align-items: flex-start;
+    background: var(--s-mobile-nav-bg);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: -2px 0 10px var(--s-mobile-nav-shadow);
+    z-index: 100;
+    /* talks: scrolls on short screens; hidden (so out of the tab order and
+       the accessibility tree) once it has slid out. */
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    visibility: hidden;
+    transition: right 0.3s ease, visibility 0s linear 0.3s;
+  }
+
+  .s-header__nav.is-active {
+    right: 0;
+    visibility: visible;
+    transition: right 0.3s ease, visibility 0s linear 0s;
+  }
+
+  .s-header__nav-close-btn {
+    display: block;
+  }
+
+  .s-header__nav-list {
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+  }
+
+  .s-header__nav-list li {
+    width: 100%;
+    height: auto;
+    margin: 10px 0;
+  }
+
+  .s-header__nav-list a {
+    width: 100%;
+    height: auto;
+    padding: 10px 0;
+    justify-content: center;
+    text-align: center;
+    font-size: 18px;
+    background: none;
+  }
+
+  .s-header__nav-list a:hover {
+    background: var(--s-mobile-nav-item-hover-bg);
+  }
+
+  .s-header__nav-list .s-header__item--icon {
+    justify-content: center;
+  }
+
+  .s-header__nav-list .s-header__item--icon a {
+    width: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .s-header,
+  .s-header *,
+  .s-header *::before,
+  .s-header *::after {
+    transition: none !important;
+  }
+
+  .s-header__nav-list a:hover,
+  .s-header__nav-list a:hover .s-header__icon,
+  .s-header__nav-close-btn:hover,
+  .theme-toggle:hover {
+    transform: none;
+  }
+}

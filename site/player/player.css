@@ -1,11 +1,13 @@
 /* =============================================================
-   CoMPhy Lab talks: player and site shell.
+   CoMPhy Lab talks: player and page layout.
    Builds on site/vendor/ds/tokens.css; never redefines its tokens.
+   The comphy-lab.org header and footer are styled by
+   site/vendor/comphy-lab/ (loaded before this file), which also sets
+   --header-h, the height of the fixed header.
    ============================================================= */
 
 :root {
   --gutter: clamp(12px, 2.4vw, 32px);
-  --header-h: 56px;
   --head-h: 96px;
   --controls-h: 48px;
   --progress-h: 3px;
@@ -13,10 +15,9 @@
   --app-maxw: 1760px;
 }
 
-/* Page content sits above the design system's fixed grid overlay. */
-.site-header,
-main,
-.site-footer {
+/* Page content sits above the design system's fixed grid overlay (the
+   footer does so in footer-v2.css, the fixed header in header.css). */
+main {
   position: relative;
   z-index: 1;
 }
@@ -43,7 +44,7 @@ main,
   position: absolute;
   top: var(--s-2);
   left: var(--s-2);
-  z-index: 100;
+  z-index: 200; /* above the fixed header */
   padding: var(--s-2) var(--s-4);
   border-radius: var(--r-pill);
   background: var(--c-accent-teal);
@@ -59,80 +60,12 @@ main,
   color: var(--c-accent-teal-fg);
 }
 
-/* ---------- Header ---------- */
-
-.site-header {
-  height: var(--header-h);
-  background: var(--glass-header);
-  border-bottom: 1px solid var(--c-border);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.site-header__inner {
-  width: min(100% - 2 * var(--gutter), var(--app-maxw));
-  height: 100%;
-  margin-inline: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--s-4);
-}
-
-.site-header__tools {
-  display: flex;
-  align-items: center;
-  gap: var(--s-3);
-}
-
-.brand {
-  display: inline-flex;
-  align-items: baseline;
-  gap: var(--s-3);
-  color: var(--fg-strong);
-  border-bottom: 0;
-  white-space: nowrap;
-}
-
-.brand:hover {
-  color: var(--c-accent-teal);
-}
-
-.brand__lab {
-  font-family: var(--t-display);
-  font-style: italic;
-  font-weight: var(--t-weight-med);
-  font-size: 23px; /* between --t-h3 and --t-h2; no type token matches the wordmark */
-  letter-spacing: -0.005em;
-}
-
-.brand__section {
-  font-size: var(--t-eyebrow);
-  font-weight: var(--t-weight-semi);
-  letter-spacing: var(--t-track-wide);
-  text-transform: uppercase;
-  color: var(--fg-2);
-}
-
-.site-header__link {
-  font-size: var(--t-small);
-  font-weight: var(--t-weight-med);
-  color: var(--fg-1);
-  border-bottom: 0;
-  padding: var(--s-2) var(--s-3);
-  border-radius: var(--r-xs);
-}
-
-.site-header__link:hover {
-  color: var(--c-accent-teal);
-  background: color-mix(in srgb, var(--c-accent-teal) 10%, transparent);
-}
-
 /* ---------- Talk page: title, stage and controls fill one viewport ---------- */
 
 .talk-app {
   width: min(100% - 2 * var(--gutter), var(--app-maxw));
   margin-inline: auto;
+  /* The viewport below the fixed header (body is padded by --header-h). */
   height: calc(100vh - var(--header-h));
   height: calc(100dvh - var(--header-h));
   min-height: 380px;
@@ -492,15 +425,12 @@ main,
 .ctl__icon--play,
 .ctl[data-paused="true"] .ctl__icon--pause,
 .ctl__icon--exit-fs,
-.ctl[data-active="true"] .ctl__icon--enter-fs,
-.ctl__icon--sun,
-:root[data-theme="dark"] .ctl__icon--moon {
+.ctl[data-active="true"] .ctl__icon--enter-fs {
   display: none;
 }
 
 .ctl[data-paused="true"] .ctl__icon--play,
-.ctl[data-active="true"] .ctl__icon--exit-fs,
-:root[data-theme="dark"] .ctl__icon--sun {
+.ctl[data-active="true"] .ctl__icon--exit-fs {
   display: block;
 }
 
@@ -565,6 +495,12 @@ main,
 :root.is-pseudo-fullscreen,
 :root.is-pseudo-fullscreen body {
   overflow: hidden;
+}
+
+/* The fixed header would otherwise paint over the stage: the stage's z-index
+   counts only inside main's stacking context. */
+:root.is-pseudo-fullscreen .s-header {
+  display: none;
 }
 
 :root.is-pseudo-fullscreen .stage-frame {
@@ -746,24 +682,8 @@ kbd {
   font-variant-numeric: tabular-nums;
 }
 
-/* ---------- Footer ---------- */
-
-.site-footer {
-  width: min(100% - 2 * var(--gutter), var(--maxw-page));
-  margin: var(--s-7) auto 0;
-  padding: var(--s-5) 0 var(--s-6);
-  border-top: 1px solid var(--c-border);
-  color: var(--fg-2);
-  font-size: var(--t-small);
-}
-
-.site-footer p {
-  margin: 0;
-}
-
 /* :root raises specificity over the tokens' dark-theme prose-link colour:
-   teal is the only interactive accent. */
-:root .site-footer a,
+   teal is the only interactive accent in the page's own content. */
 :root .about a {
   color: var(--c-accent-teal);
   border-bottom-color: color-mix(in srgb, var(--c-accent-teal) 35%, transparent);
@@ -917,12 +837,7 @@ kbd {
 
 @media (max-width: 699px) {
   :root {
-    --header-h: 52px;
     --viewer-gap: 8px;
-  }
-
-  .site-header__link {
-    display: none;
   }
 
   .stage-box {
@@ -943,10 +858,11 @@ kbd {
   }
 }
 
-/* Short landscape screens (phones on their side): give the stage the room. */
+/* Short landscape screens (phones on their side): give the stage the room,
+   with a lower header than comphy-lab.org's 80 px. */
 @media (orientation: landscape) and (max-height: 520px) {
   :root {
-    --header-h: 44px;
+    --header-h: 60px;
     --head-h: 0px;
     --controls-h: 44px;
     --viewer-gap: 6px;
@@ -965,6 +881,10 @@ kbd {
     padding: 0;
     overflow: hidden;
     clip-path: inset(50%);
+  }
+
+  .s-header__logo {
+    height: 48px;
   }
 }
 

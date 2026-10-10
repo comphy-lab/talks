@@ -18,27 +18,45 @@
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="vendor/ds/fonts/fonts.css">
   <link rel="stylesheet" href="vendor/ds/tokens.css">
+  <link rel="stylesheet" href="vendor/comphy-lab/header.css">
+  <link rel="stylesheet" href="vendor/comphy-lab/footer-v2.css">
   <link rel="stylesheet" href="player/player.css">
   <script src="player/theme.js"></script>
+  <script src="player/header.js" defer></script>
   <script type="module" src="index.js"></script>
 </head>
-<body class="index-page">
+<body id="top" class="index-page">
   <a class="skip-link" href="#talks-title">Skip to the talks</a>
 
-  <header class="site-header">
-    <div class="site-header__inner">
-      <a class="brand" href="./" aria-current="page">
-        <span class="brand__lab">CoMPhy Lab</span>
-        <span class="brand__section">Talks</span>
-      </a>
-      <div class="site-header__tools">
-        <a class="site-header__link" href="https://comphy-lab.org/">comphy-lab.org</a>
-        <button class="ctl" type="button" data-theme-toggle aria-label="Switch to dark theme" title="Switch theme">
-          <svg class="ctl__icon ctl__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
-          <svg class="ctl__icon ctl__icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-        </button>
-      </div>
+  <header class="s-header">
+    <div class="s-header__logo">
+      <a href="/"><img src="vendor/comphy-lab/logos/CoMPhy-Lab-no-name.png" alt="CoMPhy Lab" width="295" height="196"></a>
     </div>
+    <button class="s-header__menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
+      <span class="s-header__menu-text">Menu</span>
+      <span class="s-header__menu-icon" aria-hidden="true"></span>
+    </button>
+    <nav class="s-header__nav" id="site-nav" aria-label="Main">
+      <button class="s-header__nav-close-btn" type="button" aria-label="Close menu">Close</button>
+      <ul class="s-header__nav-list">
+        <li class="s-header__item--icon">
+          <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark theme" title="Switch theme">
+            <svg class="theme-toggle-icon moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <svg class="theme-toggle-icon sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+          </button>
+        </li>
+        <li class="s-header__item--icon"><a href="https://scholar.google.com/citations?user=tHb_qZoAAAAJ&amp;hl=en" aria-label="Google Scholar Profile"><svg class="s-header__icon s-header__icon--scholar" viewBox="0 -1755.136 2048 2048" aria-hidden="true" focusable="false"><path transform="scale(1 -1)" d="M1624.144 1414.115v124.49l90.354 70.538h-977.782l-590.432-513.25h391.57c-0.71-9.714-1.002-18.498-1.002-28.46 0-95.29 33.002-174.11 99.072-237.078 66.070-63.072 147.434-94.39 243.778-94.39 22.506 0 44.574 1.682 66.004 4.682-13.29-29.718-19.998-57.248-19.998-82.936 0-45.144 20.568-93.396 61.564-144.648-179.354-12.208-311.136-44.492-395.14-96.746-48.142-29.71-86.858-67.218-116.070-112.142-29.214-45.254-43.784-93.784-43.784-146.11 0-44.106 9.428-83.822 28.43-119.142s43.784-64.322 74.57-86.784c30.712-22.71 66.144-41.604 106.144-57 39.928-15.286 79.572-26.142 119.136-32.286 39.438-6.136 78.65-9.136 117.512-9.136 61.572 0 123.216 7.928 185.358 23.712 61.996 15.93 120.138 39.504 174.496 70.824 54.214 31.108 98.356 73.538 132.214 126.712 33.784 53.394 50.718 113.394 50.718 179.822 0 50.358-10.284 96.176-30.858 137.786-20.428 41.472-45.43 75.616-75.212 102.144-29.718 26.572-59.428 50.996-89.212 72.996-29.718 22.148-54.858 44.574-75.286 67.716-20.502 23.070-30.786 45.962-30.786 68.498 0 22.498 7.928 44.214 23.844 65.214 15.792 21.072 35.080 41.362 57.644 60.826 22.572 19.426 45.144 40.996 67.642 64.608 22.498 23.53 41.786 54.068 57.644 91.466 15.93 37.39 23.786 79.748 23.786 126.888 0 61.498-11.644 111.82-34.502 152.29-2.714 4.674-5.566 8.244-8.572 13.816l260.148 213.358v-78.256c-33.8-4.25-30.282-24.438-30.282-48.618v-588.192c0-27.238 22.286-49.526 49.526-49.526h18.234c27.238 0 49.526 22.286 49.526 49.526v588.192c0 24.122 3.554 44.288-29.996 48.596zM1133.356 397.071c5.216-3.43 16.932-12.712 35.284-27.604 18.512-14.826 31.072-26.038 37.786-33.894 6.576-7.606 16.362-19.040 29.148-34.502 12.858-15.426 21.57-28.818 26.142-39.928 4.572-11.322 9.216-24.964 13.926-40.894 4.506-15.748 6.788-31.89 6.788-48.282 0-77.934-30.004-135.68-89.856-173.070-60-37.398-131.504-56.108-214.572-56.108-41.998 0-83.214 4.996-123.714 14.606-40.426 9.676-79.14 24.394-116.070 43.894-36.93 19.464-66.64 46.644-89.146 81.356-22.572 34.926-33.858 75.038-33.858 119.998 0 47.178 12.786 88.182 38.502 122.998 25.57 34.86 59.144 61.22 100.718 79.156 41.428 18.038 83.426 30.822 125.996 38.392 42.57 7.782 85.928 11.68 130.004 11.68 20.428 0 36.278-1.148 47.564-3.182 2.078-1.002 13.86-9.464 35.358-25.432 21.504-15.828 34.86-25.578 40.002-29.184zM1118.004 856.855c-33.858-40.5-81.072-60.746-141.502-60.746-54.214 0-101.932 21.782-142.928 65.426-41.142 43.534-70.502 92.928-88.43 148.254-18 55.354-26.998 109.642-26.998 162.962 0 62.602 16.436 115.894 49.284 159.89 32.856 44.112 79.996 66.216 141.43 66.216 54.286 0 102.282-23.032 143.712-69.288 41.574-46.102 71.358-97.888 89.22-155.282 17.928-57.322 26.85-112.136 26.85-164.498 0-61.47-16.926-112.502-50.636-152.934z"/></svg></a></li>
+        <li class="s-header__item--icon"><a href="https://github.com/comphy-lab" aria-label="GitHub Organization"><svg class="s-header__icon s-header__icon--github" viewBox="0 0 496 512" aria-hidden="true" focusable="false"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></a></li>
+        <li><a href="/team/">Team</a></li>
+        <li><a href="/research">Research</a></li>
+        <li><a href="/projects/">Project docs</a></li>
+        <li><a href="/talks/" aria-current="page">Talks</a></li>
+        <li><a href="/teaching">Teaching</a></li>
+        <li><a href="/join">Join Us</a></li>
+        <li><a href="https://blogs.comphy-lab.org/">Blog</a></li>
+        <li class="s-header__item--icon"><a href="https://bsky.app/profile/comphy-lab.org" aria-label="Bluesky Profile"><svg class="s-header__icon s-header__icon--bluesky" viewBox="0 0 512 512" aria-hidden="true" focusable="false"><path d="M111.8 62.2C170.2 105.9 233 194.7 256 242.4c23-47.6 85.8-136.4 144.2-180.2c42.1-31.6 110.3-56 110.3 21.8c0 15.5-8.9 130.5-14.1 149.2C478.2 298 412 314.6 353.1 304.5c102.9 17.5 129.1 75.5 72.5 133.5c-107.4 110.2-154.3-27.6-166.3-62.9l0 0c-1.7-4.9-2.6-7.8-3.3-7.8s-1.6 3-3.3 7.8l0 0c-12 35.3-59 173.1-166.3 62.9c-56.5-58-30.4-116 72.5-133.5C100 314.6 33.8 298 15.7 233.1C10.4 214.4 1.5 99.4 1.5 83.9c0-77.8 68.2-53.4 110.3-21.8z"/></svg></a></li>
+      </ul>
+    </nav>
   </header>
 
   <main class="index" id="main">
@@ -55,8 +73,77 @@
     </section>
   </main>
 
-  <footer class="site-footer">
-    <p>Computational Multiphase Physics Lab, Durham University · <a href="https://comphy-lab.org/">comphy-lab.org</a></p>
+  <footer class="site-footer c-footer">
+    <div class="c-footer__wrap">
+      <div class="c-footer__top">
+        <div class="c-footer__brand">
+          <a class="c-footer__mark" href="/" aria-label="CoMPhy Lab home">
+            <img src="vendor/comphy-lab/logos/CoMPhy-Lab-no-name.png" alt="" width="295" height="196" loading="lazy" decoding="async">
+            <span>CoMPhy Lab</span>
+          </a>
+          <p class="c-footer__tag">
+            Computational Multiphase Physics — a research group at Durham
+            University's Department of Physics, working on non-Newtonian
+            free-surface flows and soft-matter singularities.
+          </p>
+        </div>
+
+        <nav class="c-footer__col" aria-label="Explore">
+          <h2>Explore</h2>
+          <a href="/research">Research</a>
+          <a href="/projects/">Project docs</a>
+          <a href="/news/">News &amp; talks</a>
+          <a href="/talks/">Talks</a>
+          <a href="/team/">Team</a>
+          <a href="/teaching">Teaching</a>
+        </nav>
+
+        <nav class="c-footer__col" aria-label="Work with us">
+          <h2>Work with us</h2>
+          <a href="/join">Open positions</a>
+          <a href="/research#currently">Currently working on</a>
+          <a href="mailto:vatsal.sanjay@durham.ac.uk">Email the PI</a>
+          <a href="https://www.durham.ac.uk/staff/vatsal-sanjay/" target="_blank" rel="noopener noreferrer">Durham staff page</a>
+        </nav>
+
+        <nav class="c-footer__col" aria-label="Code and data">
+          <h2>Code &amp; data</h2>
+          <a href="https://github.com/comphy-lab" target="_blank" rel="noopener noreferrer">GitHub · CoMPhy</a>
+          <a href="http://basilisk.fr/sandbox/vatsal/" target="_blank" rel="noopener noreferrer">Basilisk sandbox</a>
+          <a href="https://blogs.comphy-lab.org/" target="_blank" rel="noopener noreferrer">Blog</a>
+          <a href="https://scholar.google.com/citations?user=tHb_qZoAAAAJ&amp;hl=en" target="_blank" rel="noopener noreferrer">Google Scholar</a>
+        </nav>
+      </div>
+
+      <div class="c-footer__partners">
+        <span class="c-footer__partners-label">Partners &amp; affiliations</span>
+        <div class="c-footer__partners-logos">
+          <a href="https://www.durham.ac.uk/" target="_blank" rel="noopener noreferrer" aria-label="Durham University">
+            <img src="vendor/comphy-lab/logos/Durham-University.png" alt="Durham University" class="logo-light-only" width="417" height="173" loading="lazy" decoding="async">
+            <img src="vendor/comphy-lab/logos/Durham-University-white.png" alt="" aria-hidden="true" class="logo-dark-only" width="418" height="173" loading="lazy" decoding="async">
+          </a>
+          <a href="https://pof.tnw.utwente.nl/" target="_blank" rel="noopener noreferrer" aria-label="Physics of Fluids, Univ. Twente">
+            <img src="vendor/comphy-lab/logos/LogoPof_transparent_white.png" alt="Physics of Fluids" class="invert-on-light" width="294" height="216" loading="lazy" decoding="async">
+          </a>
+          <a href="http://basilisk.fr/" target="_blank" rel="noopener noreferrer" aria-label="Basilisk C">
+            <img src="vendor/comphy-lab/logos/logoBasilisk_TransparentBackground.png" alt="Basilisk C" width="242" height="216" loading="lazy" decoding="async">
+          </a>
+        </div>
+      </div>
+
+      <div class="c-footer__legal">
+        <div>
+          © 2019–<span data-year>2026</span> CoMPhy Lab · Maintained by
+          <a href="https://www.durham.ac.uk/staff/vatsal-sanjay/" target="_blank" rel="noopener noreferrer">V. Sanjay</a> and
+          <a href="https://github.com/comphy-lab" target="_blank" rel="noopener noreferrer">Worthy</a>
+        </div>
+        <div>
+          <a href="https://github.com/comphy-lab/talks" target="_blank" rel="noopener noreferrer">Edit on GitHub</a>
+          <span aria-hidden="true"> · </span>
+          <a class="c-footer__back" href="#top" data-back-to-top>Back to top ↑</a>
+        </div>
+      </div>
+    </div>
   </footer>
 </body>
 </html>

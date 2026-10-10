@@ -811,7 +811,7 @@ function fullscreenElement() {
  * it inert so that Tab, and a screen reader's swipe, cannot land on hidden
  * controls. The live region and the slide text stay available.
  */
-const CHROME_SELECTORS = ['.skip-link', '.site-header', '.talk-head', '.progress', '.controls', '.about', '.site-footer'];
+const CHROME_SELECTORS = ['.skip-link', '.s-header', '.talk-head', '.progress', '.controls', '.about', '.site-footer'];
 
 function setChromeInert(on) {
   for (const selector of CHROME_SELECTORS) {
@@ -879,8 +879,25 @@ function toggleFullscreen() {
   }
 }
 
+/*
+ * The site header's Menu drawer (header.js) is modal while open: Tab stays
+ * inside it and a click outside only closes it. Its keys are its own as well,
+ * so the arrows scroll the drawer rather than change the slide hidden behind
+ * it, and Space and Enter activate its links and buttons. Backspace, the
+ * player's "previous" key, stays cancelled: WebKit's default for it is
+ * History Back, which would leave the talk from the open menu.
+ */
+function siteMenuOpen() {
+  const toggle = document.querySelector('.s-header__menu-toggle');
+  return Boolean(toggle && toggle.getAttribute('aria-expanded') === 'true');
+}
+
 function onKeyDown(event) {
   if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
+  if (siteMenuOpen()) {
+    if (event.key === 'Backspace') event.preventDefault();
+    return;
+  }
   const origin = event.target instanceof Element ? event.target : null;
   if (origin && origin.closest('input, textarea, select, [contenteditable="true"]')) return;
   const onControl = Boolean(origin && origin.closest('button, a[href]'));
