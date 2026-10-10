@@ -1,0 +1,2109 @@
+{
+  "schema": 1,
+  "slug": "singular-bursting-bubbles",
+  "title": "Bursting bubbles",
+  "subtitle": "Singular Worthington jets and the drops they make",
+  "speaker": "Vatsal Sanjay",
+  "updated": "2026-10-10",
+  "canvas": {
+    "width": 1920,
+    "height": 1080
+  },
+  "media_base": "https://media.comphy-lab.org/talks/singular-bursting-bubbles/",
+  "videos": {
+    "v01": {
+      "src": "b6b2fa3fa84a454d.mp4",
+      "poster": "9c20f3cf70afd17b.webp",
+      "width": 972,
+      "height": 1080,
+      "duration": 5.48,
+      "credit": null
+    },
+    "v02": {
+      "src": "21780b173802b2f3.mp4",
+      "poster": "a7b559458299d9f0.webp",
+      "width": 218,
+      "height": 182,
+      "duration": 5.64,
+      "credit": null
+    },
+    "v03": {
+      "src": "3fa97d1b62089c5d.mp4",
+      "poster": "dbda23d9d764ee40.webp",
+      "width": 1280,
+      "height": 720,
+      "duration": 5.88,
+      "credit": null
+    },
+    "v04": {
+      "src": "f1ffad04138979aa.mp4",
+      "poster": "af895c33eeb8eaa2.webp",
+      "width": 1116,
+      "height": 1350,
+      "duration": 5.767,
+      "credit": null
+    },
+    "v05": {
+      "src": "ba6e179f427e176e.mp4",
+      "poster": "3d077f3c6524ac11.webp",
+      "width": 1116,
+      "height": 1350,
+      "duration": 5.767,
+      "credit": null
+    },
+    "v06": {
+      "src": "22cfdd2b1902b7ea.mp4",
+      "poster": "b33d8326b3d8a4aa.webp",
+      "width": 1116,
+      "height": 1350,
+      "duration": 5.767,
+      "credit": null
+    },
+    "v07": {
+      "src": "a8ca95cfbe3d4f27.mp4",
+      "poster": "45ff0cebd6894479.webp",
+      "width": 840,
+      "height": 1600,
+      "duration": 12.0,
+      "credit": null
+    },
+    "v08": {
+      "src": "793570f7384c6723.mp4",
+      "poster": "744c89203c3dbe48.webp",
+      "width": 512,
+      "height": 828,
+      "duration": 8.267,
+      "credit": null
+    },
+    "v09": {
+      "src": "d9433b5f81681faf.mp4",
+      "poster": "b40e8efc991987ba.webp",
+      "width": 1320,
+      "height": 1134,
+      "duration": 17.444,
+      "credit": null
+    },
+    "v10": {
+      "src": "013881d4ce730948.mp4",
+      "poster": "ce55c3cab6d11d65.webp",
+      "width": 1620,
+      "height": 880,
+      "duration": 7.5,
+      "credit": null
+    },
+    "v11": {
+      "src": "7f415b63c9510510.mp4",
+      "poster": "eec6e885ebcada1e.webp",
+      "width": 1620,
+      "height": 880,
+      "duration": 10.4,
+      "credit": null
+    },
+    "v12": {
+      "src": "aec6d53ddfab62e5.mp4",
+      "poster": "c37a05e92b513ced.webp",
+      "width": 1320,
+      "height": 1142,
+      "duration": 19.458,
+      "credit": null
+    },
+    "v13": {
+      "src": "b5151ff1be36a511.mp4",
+      "poster": "35845b4fb3667842.webp",
+      "width": 3280,
+      "height": 1260,
+      "duration": 7.5,
+      "credit": null
+    },
+    "v14": {
+      "src": "4061e3866112b05e.mp4",
+      "poster": "d80c6d8691939289.webp",
+      "width": 3280,
+      "height": 1260,
+      "duration": 10.4,
+      "credit": null
+    }
+  },
+  "youtube": {
+    "y01": {
+      "id": "a9hUsVq9q7U",
+      "start": 7.191,
+      "end": 63.397,
+      "title": "Mud pots, Yellowstone National Park",
+      "credit": "Yellowstone National Park: video from https://www.youtube.com/watch?v=a9hUsVq9q7U"
+    }
+  },
+  "slides": [
+    {
+      "id": "5A0B53AD-0521-4013-9611-018CCD967084",
+      "n": 1,
+      "title": "Bursting bubbles",
+      "text": "Bursting bubbles Vatsal Sanjay Contact CoMPhy Lab",
+      "states": [
+        {
+          "image": "2b5376394134eb5d.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "141558D1-7266-4542-8909-711D411441CA",
+      "n": 2,
+      "title": "Singularities in a glass of champagne",
+      "text": "Singularities in a glass of champagne Ghabache E., Liger-Belair G., Antkowiak A. & Séon T. Sci. Rep. 6, 25148 (2016) Source: Arup K. Das & Thomas Séon Institut d'Alembert, Sorbonne Université",
+      "states": [
+        {
+          "image": "1883075f4f0bbf93.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        },
+        {
+          "image": "eb62e40777708e37.webp",
+          "overlay": "5ada3d865bbf37cd.webp",
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v01",
+              "rect": [
+                1032,
+                223,
+                635,
+                706
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B037333B-0401-416C-81A9-8F4729D2CEE8",
+      "n": 3,
+      "title": "Bursting Bubble: Process",
+      "text": "Bursting Bubble: Process Film droplets Gas Gas 1. Bubble approaches the free surface 3. Rupture of lm to form droplets fi H. Lhuissier & E. Villermaux, J. Fluid Mech., 696, 5-44 (2012) Gas Liquid 2. Bubble deforms the interface H. M. Princen, J. Colloid Sci., 18:2, 178-195 (1963) 4. Collapse of bubble cavity",
+      "states": [
+        {
+          "image": "1a1899e3b6261a8d.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        },
+        {
+          "image": "358e66d47f3a7c6a.webp",
+          "overlay": null,
+          "transition": "dissolve",
+          "media": []
+        },
+        {
+          "image": "6017c592a7fa827c.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        },
+        {
+          "image": "dc6aff68619d8eea.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        },
+        {
+          "image": "5903bae0efa9f418.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "6BDE34AF-C6F3-4830-829F-9C89C9310573",
+      "n": 4,
+      "title": "Bursting Bubble in a Newtonian medium",
+      "text": "Bursting Bubble in a Newtonian medium Ghabache et al. (2014), PoF Ghabache et al. (2016), Sci. Rep. (c) Alain Cornu/Collection CIVC Walls, Henaux & Bird (2015), Phys. Rev. E 92, 021002",
+      "states": [
+        {
+          "image": "223c419bc37f178e.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v02",
+              "rect": [
+                58,
+                411,
+                508,
+                426
+              ]
+            }
+          ]
+        },
+        {
+          "image": "6a083498e5a12bd4.webp",
+          "overlay": "2a4ec535755dc0ea.webp",
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v03",
+              "rect": [
+                942,
+                267,
+                1156,
+                650
+              ]
+            },
+            {
+              "kind": "video",
+              "ref": "v02",
+              "rect": [
+                58,
+                411,
+                508,
+                426
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A93FACD8-C00D-4561-A88D-BCAA5C2FEACB",
+      "n": 5,
+      "title": "Viscosity enhances the jet",
+      "text": "Viscosity enhances the jet Velocity 0 Viscous dissipation 2 -2 1 5",
+      "states": [
+        {
+          "image": "47bddaf145480a6a.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        },
+        {
+          "image": "bb5262f44adb1f79.webp",
+          "overlay": "d3fb26fc5dc76261.webp",
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v04",
+              "rect": [
+                1318,
+                279,
+                558,
+                675
+              ]
+            },
+            {
+              "kind": "video",
+              "ref": "v05",
+              "rect": [
+                686,
+                280,
+                558,
+                675
+              ]
+            },
+            {
+              "kind": "video",
+              "ref": "v06",
+              "rect": [
+                62,
+                279,
+                558,
+                675
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B47A6023-3D84-4F1B-9E00-F5153B91555B",
+      "n": 6,
+      "title": "Bursting Bubble in a non-Newtonian medium",
+      "text": "Bursting Bubble in a non-Newtonian medium Yellowstone National Park: Video from https://www.youtube.com/watch?v=a9hUsVq9q7U",
+      "states": [
+        {
+          "image": "56edc90e2b8fd374.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        },
+        {
+          "image": "e1a7070b9d06903f.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "youtube",
+              "ref": "y01",
+              "rect": [
+                224,
+                185,
+                1472,
+                828
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "84ECF9EC-EA9E-473B-A604-EEBD638DFBAA",
+      "n": 7,
+      "title": "On the menu today",
+      "text": "On the menu today (a) pinch-off cutoff outer flow (b) moving contact line outer scale gas hmin θapp ℓm solid U (c) interfacial cusp imposed flow large curvature tip core (d) beyond interfaces compression wrinkle/ridge stress focusing defect core topological cutoff What is a singularity? V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) A bursting bubble as a canonical singularity",
+      "states": [
+        {
+          "image": "0c4ff0fae7ee52e4.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "9F13BBD8-4A56-483C-86E1-FD437FE8EEA2",
+      "n": 8,
+      "title": "Bubble bursting journey",
+      "text": "Bubble bursting journey Detlef Lohse Ayush Dixit Maziyar (Mazi) Jalaal Alexandros Oratis Arivazhagan G. Balasubramanian Ricardo Vinuesa Outi Tammisola Konstantinos Zinelis Ricardo Constante-Amores Jie Feng José M. Gordillo Javier Rodríguez-Rodríguez",
+      "states": [
+        {
+          "image": "f67a7095cb5d6f83.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "5377503B-DC89-4539-9FC7-7579744E73E8",
+      "n": 9,
+      "title": "Computational Multiphase Physics Lab",
+      "text": "Computational Multiphase Physics Lab #ilovefs Numerics: Basilisk C Cauchy momentum + VoF Stéphane Popinet & collaborators CoMPhy Lab",
+      "states": [
+        {
+          "image": "ba3ad763e0cd69a3.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "80B0C974-6AB5-4F9D-80EB-31F14FF9C11E",
+      "n": 10,
+      "title": "On the menu today",
+      "text": "On the menu today (a) pinch-off cutoff outer flow (b) moving contact line outer scale gas hmin θapp ℓm solid U (c) interfacial cusp imposed flow large curvature tip core (d) beyond interfaces compression wrinkle/ridge stress focusing defect core topological cutoff What is a singularity? V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) A bursting bubble as a canonical singularity",
+      "states": [
+        {
+          "image": "b85fc68cc5e7bd4d.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "D03CA31C-B15A-4179-B728-43730144FEA8",
+      "n": 11,
+      "title": "Singularities in soft matter systems 101",
+      "text": "Singularities in soft matter systems 101",
+      "states": [
+        {
+          "image": "b0760d9f2404ac7f.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "41ADA25C-034C-4287-B046-90155C47E53E",
+      "n": 12,
+      "title": "Continuum theories fail locally",
+      "text": "Continuum theories fail locally (a) pinch-off cutoff outer flow (b) moving contact line outer scale gas hmin θapp ℓm solid U (c) interfacial cusp imposed flow large curvature tip core (d) beyond interfaces compression wrinkle/ridge stress focusing defect core topological cutoff V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026)",
+      "states": [
+        {
+          "image": "89e173e6738ab2b4.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "3719E599-0C89-43CE-A9BE-B7C601752F8C",
+      "n": 13,
+      "title": "Continuum theories fail locally",
+      "text": "Continuum theories fail locally (a) pinch-off cutoff outer flow (b) moving contact line outer scale gas hmin θapp ℓm solid U (c) interfacial cusp imposed flow large curvature tip core (d) beyond interfaces compression wrinkle/ridge stress focusing defect core topological cutoff V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) a length → 0",
+      "states": [
+        {
+          "image": "695df4b2ee308d19.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "F49E4910-3591-47F3-90FC-9D62621AD3C9",
+      "n": 14,
+      "title": "Continuum theories fail locally",
+      "text": "Continuum theories fail locally (a) pinch-off cutoff outer flow (b) moving contact line outer scale gas hmin θapp ℓm solid U (c) interfacial cusp imposed flow large curvature tip core (d) beyond interfaces compression wrinkle/ridge stress focusing defect core topological cutoff V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) a length → 0 curvature, stress → ∞",
+      "states": [
+        {
+          "image": "4178bb029f7ab248.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "077A8A9C-7E68-42F0-9C26-920F354E38B8",
+      "n": 15,
+      "title": "Continuum theories fail locally",
+      "text": "Continuum theories fail locally (a) pinch-off cutoff outer flow (b) moving contact line outer scale gas hmin θapp ℓm solid U (c) interfacial cusp imposed flow large curvature tip core (d) beyond interfaces compression wrinkle/ridge stress focusing defect core topological cutoff V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) a length → 0 curvature, stress → ∞ a cutoff ℓm stops it",
+      "states": [
+        {
+          "image": "1874e339c885bb1c.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "E0312898-AA71-4E00-BD0A-64C2B6B84FD0",
+      "n": 16,
+      "title": "A neck reaches zero radius in finite time",
+      "text": "A neck reaches zero radius in finite time τ = 0 0.950 τ0 log10 Φ −3 −1 0.980 τ0 0.995 τ0 |v| 1 0 Φ: viscous dissipation V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) − τ ≃ τ0 1.5 + τ ≃ τ0 3",
+      "states": [
+        {
+          "image": "55170e13a8cf989e.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "62499A24-3CEB-4777-A2AA-FF81D3474469",
+      "n": 17,
+      "title": "A neck reaches zero radius in finite time",
+      "text": "A neck reaches zero radius in finite time τ = 0 0.950 τ0 log10 Φ −3 −1 0.980 τ0 0.995 τ0 |v| 1 0 Φ: viscous dissipation α hmin ∼ A |τ̄ | , V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) τ̄ ≡ τ − τ0 − τ ≃ τ0 1.5 + τ ≃ τ0 3",
+      "states": [
+        {
+          "image": "9acd12ec0af023cd.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "3CB98C01-A0EE-4ADE-B53D-48ACDAD342F4",
+      "n": 18,
+      "title": "Dominant force balance",
+      "text": "Dominant force balance inertia ∼ capillarity 10 0 ρ ḣ ∼ σ/h ⇒ h ∼ |τ̄ | 2/3 hmin/R0 2 10 −2 Oh = 0 V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) 10 −4 ∝ |τ̄ |2/3 10 −4 −2 10 10 |τ̄ | = τ0 − τ 0",
+      "states": [
+        {
+          "image": "bb356ec82c144e66.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "08A55700-40FB-438F-B064-6B8805603051",
+      "n": 19,
+      "title": "Dominant force balance",
+      "text": "Dominant force balance inertia ∼ capillarity 10 0 ρ ḣ ∼ σ/h ⇒ h ∼ |τ̄ | 2/3 viscosity ∼ capillarity hmin/R0 2 10 −2 Oh = 0 µ ḣ/h ∼ σ/h ⇒ h ∼ |τ̄ |/Oh V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) 10 −4 ∝ |τ̄ |2/3 Oh = 10−2 0.0709 |τ̄ |/Oh 10 −4 −2 10 10 |τ̄ | = τ0 − τ 0",
+      "states": [
+        {
+          "image": "bd6bb6ac51255fdf.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "02DB6980-C9E7-43BB-91F6-4B4220BF0ADE",
+      "n": 20,
+      "title": "Dominant force balance",
+      "text": "Dominant force balance inertia ∼ capillarity 10 0 ρ ḣ ∼ σ/h ⇒ h ∼ |τ̄ | 2/3 viscosity ∼ capillarity hmin/R0 2 10 −2 Oh = 0 µ ḣ/h ∼ σ/h ⇒ h ∼ |τ̄ |/Oh 2 ℓν = µ /(ρσ) V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) 10 −4 ∝ |τ̄ |2/3 Oh = 10−2 0.0709 |τ̄ |/Oh 10 −4 −2 10 10 |τ̄ | = τ0 − τ 0",
+      "states": [
+        {
+          "image": "6d1e0c474d16eaf3.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "3279C3AB-D4D3-4EE0-84B0-625692E75496",
+      "n": 21,
+      "title": "Rulebook for singular thinking",
+      "text": "Rulebook for singular thinking singular? which length → 0 in finite time? C. I. Verschuur, A. T. Oratis, V. Sanjay & J. H. Snoeijer, Phys. Rev. Fluids, 11:7, 073302 (2026) V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026)",
+      "states": [
+        {
+          "image": "87394196921f9558.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v07",
+              "rect": [
+                1348,
+                0,
+                567,
+                1080
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "13F413C1-6765-47F0-BBC8-B0B6F8678BC2",
+      "n": 22,
+      "title": "Rulebook for singular thinking",
+      "text": "Rulebook for singular thinking singular? which length → 0 in finite time? self-similar? do rescaled profiles collapse? C. I. Verschuur, A. T. Oratis, V. Sanjay & J. H. Snoeijer, Phys. Rev. Fluids, 11:7, 073302 (2026) V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026)",
+      "states": [
+        {
+          "image": "7397cd472e9a7145.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v07",
+              "rect": [
+                1348,
+                0,
+                567,
+                1080
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "00A7ED50-F07B-4A53-A233-BE7D55246788",
+      "n": 23,
+      "title": "Rulebook for singular thinking",
+      "text": "Rulebook for singular thinking singular? which length → 0 in finite time? self-similar? do rescaled profiles collapse? universal? what does the local region forget? C. I. Verschuur, A. T. Oratis, V. Sanjay & J. H. Snoeijer, Phys. Rev. Fluids, 11:7, 073302 (2026) V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026)",
+      "states": [
+        {
+          "image": "0044a9d070ef5409.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v07",
+              "rect": [
+                1348,
+                0,
+                567,
+                1080
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EC0A4DE2-0A02-474B-96E7-FED08A2C0F2C",
+      "n": 24,
+      "title": "Rulebook for singular thinking",
+      "text": "Rulebook for singular thinking singular? which length → 0 in finite time? self-similar? do rescaled profiles collapse? universal? what does the local region forget? regularised? which physics stops the divergence? C. I. Verschuur, A. T. Oratis, V. Sanjay & J. H. Snoeijer, Phys. Rev. Fluids, 11:7, 073302 (2026) V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026)",
+      "states": [
+        {
+          "image": "5c6d3e0d456f933d.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v07",
+              "rect": [
+                1348,
+                0,
+                567,
+                1080
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "712BD50F-F934-4D75-9396-8B780022E08E",
+      "n": 25,
+      "title": "On the menu today",
+      "text": "On the menu today (a) pinch-off cutoff outer flow (b) moving contact line outer scale gas hmin θapp ℓm solid U (c) interfacial cusp imposed flow large curvature tip core (d) beyond interfaces compression wrinkle/ridge stress focusing defect core topological cutoff What is a singularity? V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) A bursting bubble as a canonical singularity",
+      "states": [
+        {
+          "image": "537dd2c204c21e83.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "2C96E379-6691-4D51-A21B-F7488196D914",
+      "n": 26,
+      "title": "A bursting bubble ejects a Worthington jet",
+      "text": "A bursting bubble ejects a Worthington jet µ Oh = √ = 0.03, ρσR 2 Bo = ρgR /σ = 0 water: R ≈ 15 µm ! lengths R, velocities Vc = σ/(ρR) left: viscous dissipation right: speed J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) log10 Φ −3 −1 1 0 0.5 1 |v|",
+      "states": [
+        {
+          "image": "7a55099140554ec8.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v08",
+              "rect": [
+                113,
+                152,
+                496,
+                802
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "0D447A45-F179-4CB1-AB6B-E06C4DB09B4D",
+      "n": 27,
+      "title": "The cavity focuses into a cone",
+      "text": "The cavity focuses into a cone Oh = 0.03 β = 38.4° a tiny bubble is trapped τ in units of R/Vc right: adaptive mesh J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "116e8a0f19ddd635.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v09",
+              "rect": [
+                133,
+                157,
+                891,
+                766
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "F34EE16E-DE0E-4515-A9F6-567107814FA1",
+      "n": 28,
+      "title": "Streamlines meet the cone at right angles",
+      "text": "Streamlines meet the cone at right angles −1.9 × 10−3 −2.1 × 10−4 −1.3 × 10−4 +1.0 × 10−4 +2.3 × 10−3 +5.4 × 10−3 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) |v| 0 25 50 Oh = 0.03, τ̄ ≡ τ − τ0",
+      "states": [
+        {
+          "image": "cabff70555d071d9.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "3E4FD3EB-57F0-4C73-B261-07F5FEC62A7A",
+      "n": 29,
+      "title": "The local problem has no length scale",
+      "text": "The local problem has no length scale β J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "4b2f37999bc633ab.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "9ABC2475-AB88-4BE3-9A9C-D57994278967",
+      "n": 30,
+      "title": "The local problem has no length scale",
+      "text": "The local problem has no length scale vj rj β J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "6e8507f129ace30d.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "FBDBF919-65DE-44EF-BE7E-493AEA8D192F",
+      "n": 31,
+      "title": "The local problem has no length scale",
+      "text": "The local problem has no length scale vj rj β θ r J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "f035b7b36c2f58e2.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "E5731419-BD9D-4D1F-BFF6-7D9FDDCECD4C",
+      "n": 32,
+      "title": "The local problem has no length scale",
+      "text": "The local problem has no length scale vj rj β rj ≪ r ≪ 1 θ r J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "ea92b0933ae36908.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "A1C03534-34C3-4C75-AD04-DAA7623E1660",
+      "n": 33,
+      "title": "The local problem has no length scale",
+      "text": "The local problem has no length scale vj rj β rj ≪ r ≪ 1 α rj ∝ |τ̄ | , θ r J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) α =?",
+      "states": [
+        {
+          "image": "dde76ffc7866ecb6.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "D33AD57D-A4A3-456B-BA14-71FBFA3AE2AF",
+      "n": 34,
+      "title": "The inertio-capillary answer",
+      "text": "The inertio-capillary answer 2 ρ vj ∼ σ/rj , vj ∼ r˙j log10 Φ −3 −1 1 0.5 1 Φ: viscous dissipation |v| 0 B. W. Zeff, B. Kleber, J. Fineberg & D. P. Lathrop, Nature, 403:6768, 401-404 (2000) C.-Y. Lai, J. Eggers & L. Deike, Phys. Rev. Lett., 121:14, 144501 (2018)",
+      "states": [
+        {
+          "image": "7d748e9cf3ec2164.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v08",
+              "rect": [
+                1304,
+                42,
+                616,
+                996
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "ACCDE880-0E32-4E73-88C4-51B2BF296AC3",
+      "n": 35,
+      "title": "The inertio-capillary answer",
+      "text": "The inertio-capillary answer 2 ρ vj ∼ σ/rj , ⇒ rj ∼ |τ̄ | 2/3 ⇒ vj ∼ |τ̄ | vj ∼ r˙j −1/3 log10 Φ −3 −1 1 0.5 1 Φ: viscous dissipation |v| 0 B. W. Zeff, B. Kleber, J. Fineberg & D. P. Lathrop, Nature, 403:6768, 401-404 (2000) C.-Y. Lai, J. Eggers & L. Deike, Phys. Rev. Lett., 121:14, 144501 (2018)",
+      "states": [
+        {
+          "image": "4179d6ada5e455a9.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v08",
+              "rect": [
+                1304,
+                42,
+                616,
+                996
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "63274095-3777-4102-B604-045493DB4300",
+      "n": 36,
+      "title": "The inertio-capillary answer",
+      "text": "The inertio-capillary answer 2 ρ vj ∼ σ/rj , ⇒ rj ∼ |τ̄ | 2/3 ⇒ vj ∼ |τ̄ | ⇒ We j ≡ vj ∼ r˙j −1/3 2 ρ vj rj σ = const = O(1) log10 Φ −3 −1 1 0.5 1 Φ: viscous dissipation |v| 0 B. W. Zeff, B. Kleber, J. Fineberg & D. P. Lathrop, Nature, 403:6768, 401-404 (2000) C.-Y. Lai, J. Eggers & L. Deike, Phys. Rev. Lett., 121:14, 144501 (2018)",
+      "states": [
+        {
+          "image": "ed82c903256d8441.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v08",
+              "rect": [
+                1304,
+                42,
+                616,
+                996
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C385D37E-FD70-4EE9-A02B-8945BA7C813B",
+      "n": 37,
+      "title": "Self-similar collapse before and after inception",
+      "text": "Self-similar collapse before and after inception before inception z−zj 0.2 1 0.1 0 −0.4 0 rp Oh = 0.03 2 (z−zj)/|τ̄| 2/3 0.3 0 0.4 −3 0 3 2/3 rp/|τ̄ | |τ̄ | 10−3 10−2 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "085e84573a0cc7bf.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        },
+        {
+          "image": "085e84573a0cc7bf.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v10",
+              "rect": [
+                72,
+                307,
+                857,
+                466
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CA8F7CDE-AF4C-4BFC-9131-23C9F39BD587",
+      "n": 38,
+      "title": "Self-similar collapse before and after inception",
+      "text": "Self-similar collapse before and after inception 0 0.4 (z−zj)/|τ̄| 0.2 1 0.1 Oh = 0.03 2 z−zj z−zj 0.2 0 −0.4 0 rp 0.4 (z−zj)/|τ̄| 2/3 0.3 after inception 8 2/3 before inception 4 0 −3 0 3 2/3 rp/|τ̄ | |τ̄ | 10−3 0 −0.2 0 0.2 rp 10−2 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) −5 0 5 2/3 rp/|τ̄ |",
+      "states": [
+        {
+          "image": "2cd9f89fe17fb5e9.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v11",
+              "rect": [
+                970,
+                307,
+                856,
+                466
+              ]
+            },
+            {
+              "kind": "video",
+              "ref": "v10",
+              "rect": [
+                72,
+                307,
+                857,
+                466
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2D7DEDAF-9B87-4131-A908-C52B6C959862",
+      "n": 39,
+      "title": "What about the local Weber number?",
+      "text": "What about the local Weber number?",
+      "states": [
+        {
+          "image": "92d2da9f26a31bec.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "D58AADC7-5A98-4E9F-85A6-C0A2CECBA0F6",
+      "n": 40,
+      "title": "What about the local Weber number?",
+      "text": "What about the local Weber number? Is it really O(1)? Wej 10 10 10 2 1 We j ≡ (ℓpre, ℓpost) (12, 13) (13, 14) (14, 15) (15, 15) 10 σ all pre- and post-inception levels (12, 14) (13, 15) (14, 16) (15, 16) 0 −2 2 ρ vj rj 10 rj −1 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 10 0",
+      "states": [
+        {
+          "image": "5f9366dbff1a0936.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "03C9E3B6-AA8C-47B3-A130-E10CD1D2C046",
+      "n": 41,
+      "title": "What about the local Weber number?",
+      "text": "What about the local Weber number? Is it really O(1)? Wej 10 10 10 2 1 We j ≡ (ℓpre, ℓpost) (12, 13) (13, 14) (14, 15) (15, 15) 10 σ all pre- and post-inception levels (12, 14) (13, 15) (14, 16) (15, 16) We j ≈ 10 0 −2 2 ρ vj rj 10 rj −1 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 10 0 2 and rising as rj → 0",
+      "states": [
+        {
+          "image": "362227f510ec4fd7.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "A87ECD0E-9BC0-4690-B763-9655AA96BEA7",
+      "n": 42,
+      "title": "Consequences of inertio-capillary theory",
+      "text": "Consequences of inertio-capillary theory 2 ρ vj ∼ σ/rj J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "4da0b24dd685cf6d.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "C4C6DDE2-0F1A-4530-9E9B-8F90C21CB039",
+      "n": 43,
+      "title": "Consequences of inertio-capillary theory",
+      "text": "Consequences of inertio-capillary theory 2 ρ vj ∼ σ/rj ⇒ rj ∝ |τ̄ | 2/3 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) ✓ shapes collapse",
+      "states": [
+        {
+          "image": "4cc625ff69c36a46.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "89E81104-11FD-4D1D-9CFA-63E011CE68E5",
+      "n": 44,
+      "title": "Consequences of inertio-capillary theory",
+      "text": "Consequences of inertio-capillary theory 2 ρ vj ∼ σ/rj ⇒ rj ∝ |τ̄ | 2/3 ⇒ We j = O(1), constant J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) ✓ ✗ shapes collapse 2 DNS: 10 , rising",
+      "states": [
+        {
+          "image": "a6412c0788f4e61a.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "97427C99-90AC-4502-88D2-99E132213762",
+      "n": 45,
+      "title": "Consequences of inertio-capillary theory",
+      "text": "Consequences of inertio-capillary theory 2 ρ vj ∼ σ/rj ⇒ rj ∝ |τ̄ | 2/3 ⇒ We j = O(1), constant keep both predictions, or neither J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) ✓ ✗ shapes collapse 2 DNS: 10 , rising",
+      "states": [
+        {
+          "image": "37fbc69eb1f51821.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "55574654-9545-41D5-8A14-3295CD35DF85",
+      "n": 46,
+      "title": "An alternate theory: inertia dominates (We j ≫ 1)",
+      "text": "An alternate theory: inertia dominates (We j ≫ 1) v = ∇ϕ, 2 ∇ ϕ = 0 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "652d7d5c67b642c0.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "9AF407DB-498D-46B6-B356-B6D42009668C",
+      "n": 47,
+      "title": "An alternate theory: inertia dominates (We j ≫ 1)",
+      "text": "An alternate theory: inertia dominates (We j ≫ 1) v = ∇ϕ, 2 ∇ ϕ = 0 ∂ϕ 1 2 + |∇ϕ| = 0 ∂τ 2 on F = 0 (Bernoulli) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "9ea285134f48d841.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "5EB0F0D1-C182-4288-B61C-404B5A1338D7",
+      "n": 48,
+      "title": "An alternate theory: inertia dominates (We j ≫ 1)",
+      "text": "An alternate theory: inertia dominates (We j ≫ 1) v = ∇ϕ, 2 ∇ ϕ = 0 ∂ϕ 1 2 + |∇ϕ| = 0 ∂τ 2 on F = 0 (Bernoulli) ∂F + ∇ϕ · ∇F = 0 ∂τ kinematic F = rp − rs (z, τ ) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "8574c520f4567b4a.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "193053BB-DF69-49F7-BC64-9C2077AE8DFD",
+      "n": 49,
+      "title": "An alternate theory: inertia dominates (We j ≫ 1)",
+      "text": "An alternate theory: inertia dominates (We j ≫ 1) v = ∇ϕ, 2 ∇ ϕ = 0 ∂ϕ 1 2 + |∇ϕ| = 0 ∂τ 2 on F = 0 (Bernoulli) ∂F + ∇ϕ · ∇F = 0 ∂τ kinematic F = rp − rs (z, τ ) valid where We j ≫ 1 and Re j ≫ 1 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "a91487d6c2291b46.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "7C3327EC-6BD3-45D3-A4D5-CE409C88DC08",
+      "n": 50,
+      "title": "Search for self-similarity",
+      "text": "Search for self-similarity ! z rp ϕ = |τ̄ | h , ϵ ϵ |τ̄ | |τ̄ | ! \" z ϵ rs = |τ̄ | g ϵ |τ̄ | δ \" B. W. Zeff, B. Kleber, J. Fineberg & D. P. Lathrop, Nature, 403:6768, 401-404 (2000)",
+      "states": [
+        {
+          "image": "f8aeada120ba62f3.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "C8CA1C12-D2A4-4F46-BFB7-020BB12DB374",
+      "n": 51,
+      "title": "Search for self-similarity",
+      "text": "Search for self-similarity ! z rp ϕ = |τ̄ | h , ϵ ϵ |τ̄ | |τ̄ | ! \" z ϵ rs = |τ̄ | g ϵ |τ̄ | δ ϵ ⇒ rj ∝ |τ̄ | , \" vj ∝ |τ̄ | ϵ−1 B. W. Zeff, B. Kleber, J. Fineberg & D. P. Lathrop, Nature, 403:6768, 401-404 (2000)",
+      "states": [
+        {
+          "image": "6f7bbec10b2a4fd2.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "B8252A25-9FCE-41F8-91C5-B5BE54A758AC",
+      "n": 52,
+      "title": "Search for self-similarity",
+      "text": "Search for self-similarity ! z rp ϕ = |τ̄ | h , ϵ ϵ |τ̄ | |τ̄ | ! \" z ϵ rs = |τ̄ | g ϵ |τ̄ | δ ϵ ⇒ rj ∝ |τ̄ | , \" vj ∝ |τ̄ | ϵ−1 two unknown exponents: δ, ϵ B. W. Zeff, B. Kleber, J. Fineberg & D. P. Lathrop, Nature, 403:6768, 401-404 (2000)",
+      "states": [
+        {
+          "image": "402e64885523dca7.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "F1B732D4-EBE4-45CC-8BCE-15EE9B6F1EE5",
+      "n": 53,
+      "title": "Kinematic and dynamic boundary conditions",
+      "text": "Kinematic and dynamic boundary conditions ∂ϕ δ−1 ∼ |τ̄ | , ∂τ 2 |∇ϕ| ∼ |τ̄ | 2(δ−ϵ) B. W. Zeff, B. Kleber, J. Fineberg & D. P. Lathrop, Nature, 403:6768, 401-404 (2000)",
+      "states": [
+        {
+          "image": "100edcedbd49b223.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "0497034A-881D-4F51-B799-8FF61B598FB6",
+      "n": 54,
+      "title": "Kinematic and dynamic boundary conditions",
+      "text": "Kinematic and dynamic boundary conditions ∂ϕ δ−1 ∼ |τ̄ | , ∂τ 2 |∇ϕ| ∼ |τ̄ | δ − 1 = 2δ − 2ϵ 2(δ−ϵ) ⇒ δ = 2ϵ − 1 B. W. Zeff, B. Kleber, J. Fineberg & D. P. Lathrop, Nature, 403:6768, 401-404 (2000)",
+      "states": [
+        {
+          "image": "5e0d10950e96ffea.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "91B67CA3-72DC-423A-AB1C-1AD7F065D62B",
+      "n": 55,
+      "title": "Kinematic and dynamic boundary conditions",
+      "text": "Kinematic and dynamic boundary conditions ∂ϕ δ−1 ∼ |τ̄ | , ∂τ 2 |∇ϕ| ∼ |τ̄ | δ − 1 = 2δ − 2ϵ 2(δ−ϵ) ⇒ δ = 2ϵ − 1 kinematics gives the same: ∂rs /∂τ ∼ |τ̄ | ϵ−1 ∼ |∇ϕ| ∼ |τ̄ | δ−ϵ B. W. Zeff, B. Kleber, J. Fineberg & D. P. Lathrop, Nature, 403:6768, 401-404 (2000)",
+      "states": [
+        {
+          "image": "ebd6874ead21b7e2.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "14623BBD-98BC-4AE8-83A9-2174999C0AED",
+      "n": 56,
+      "title": "We need a closure",
+      "text": "We need a closure",
+      "states": [
+        {
+          "image": "105e4e63b9e31ec0.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "1759A81D-B25C-44B5-B0B6-5150A478F1CC",
+      "n": 57,
+      "title": "Capillary closure gives 2/3",
+      "text": "Capillary closure gives 2/3 ∂ϕ 1 2 + |∇ϕ| + κ = 0, ∂τ 2 κ ∼ |τ̄ | −ϵ B. W. Zeff, B. Kleber, J. Fineberg & D. P. Lathrop, Nature, 403:6768, 401-404 (2000) κ: interface curvature",
+      "states": [
+        {
+          "image": "d199bc79090df78a.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "18480CA5-5832-44EE-9DCD-EF2002763D86",
+      "n": 58,
+      "title": "Capillary closure gives 2/3",
+      "text": "Capillary closure gives 2/3 ∂ϕ 1 2 + |∇ϕ| + κ = 0, ∂τ 2 κ ∼ |τ̄ | −ϵ 2 1 2ϵ−2 −ϵ |τ̄ | ∼ |τ̄ | ⇒ ϵ = , δ = 3 3 B. W. Zeff, B. Kleber, J. Fineberg & D. P. Lathrop, Nature, 403:6768, 401-404 (2000) κ: interface curvature",
+      "states": [
+        {
+          "image": "f1ab5cc89a99c408.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "BCF8EADA-23C8-4DAA-8DBC-8150EC39CCED",
+      "n": 59,
+      "title": "Capillary closure gives 2/3",
+      "text": "Capillary closure gives 2/3 ∂ϕ 1 2 + |∇ϕ| + κ = 0, ∂τ 2 κ ∼ |τ̄ | −ϵ 2 1 2ϵ−2 −ϵ |τ̄ | ∼ |τ̄ | ⇒ ϵ = , δ = 3 3 2 3ϵ−2 0 We j = vj rj ∝ |τ̄ | = |τ̄ | B. W. Zeff, B. Kleber, J. Fineberg & D. P. Lathrop, Nature, 403:6768, 401-404 (2000) κ: interface curvature",
+      "states": [
+        {
+          "image": "1698719c88a945fb.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "E4F6DE09-FD49-4282-B872-0F84558DBB9E",
+      "n": 60,
+      "title": "Capillary closure gives 2/3",
+      "text": "Capillary closure gives 2/3 ∂ϕ 1 2 + |∇ϕ| + κ = 0, ∂τ 2 κ ∼ |τ̄ | −ϵ 2 1 2ϵ−2 −ϵ |τ̄ | ∼ |τ̄ | ⇒ ϵ = , δ = 3 3 2 3ϵ−2 0 We j = vj rj ∝ |τ̄ | = |τ̄ | exponents from dimensions alone: first-kind similarity B. W. Zeff, B. Kleber, J. Fineberg & D. P. Lathrop, Nature, 403:6768, 401-404 (2000) κ: interface curvature",
+      "states": [
+        {
+          "image": "49f5696bf0b82ff3.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "988548DE-2E1D-4152-A61E-96CB73EC0208",
+      "n": 61,
+      "title": "We need a closure!!!",
+      "text": "We need a closure!!!",
+      "states": [
+        {
+          "image": "d7a5fecb195bedf9.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "94DE574A-0746-4E43-8833-912FBCA8BAA4",
+      "n": 62,
+      "title": "The proposed closure",
+      "text": "The proposed closure left: Oh = 0.01 truncated cone right: Oh = 0.03 cone, trapped bubble J. M. Gordillo & F. J. Blanco-Rodríguez, Phys. Rev. Fluids, 8:7, 073606 (2023) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "c9af208bfb4becc1.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v12",
+              "rect": [
+                111,
+                169,
+                858,
+                742
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "4EDFCE1E-572B-4323-A5A2-74B23CFE22D2",
+      "n": 63,
+      "title": "The far field must close the problem",
+      "text": "The far field must close the problem rp ∂ϕ/∂rp → −q∞ truncated cone, Oh ↭ 0.02 J. M. Gordillo & F. J. Blanco-Rodríguez, Phys. Rev. Fluids, 8:7, 073606 (2023) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "1152235c257f61e7.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "11940A8E-F988-4FE6-9357-EB3CF31990D9",
+      "n": 64,
+      "title": "The far field must close the problem",
+      "text": "The far field must close the problem rp ∂ϕ/∂rp → −q∞ truncated cone, Oh ↭ 0.02 J. M. Gordillo & F. J. Blanco-Rodríguez, Phys. Rev. Fluids, 8:7, 073606 (2023) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) ϕ = 0 on θ = β cone, 0.0275 ↭ Oh ↭ 0.045",
+      "states": [
+        {
+          "image": "f731fe97bef58c19.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "289974B9-733B-46B3-B4C7-763EBA7ADF3A",
+      "n": 65,
+      "title": "Truncated cone: a line sink",
+      "text": "Truncated cone: a line sink ∂ϕ rp → −q∞ ⇒ ϕ ∼ −q∞ ln rp ∂rp J. M. Gordillo & F. J. Blanco-Rodríguez, Phys. Rev. Fluids, 8:7, 073606 (2023)",
+      "states": [
+        {
+          "image": "1f8cd3899f2921fd.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "4B3C9CB5-DC97-4EBD-9EFA-9F081CFA7328",
+      "n": 66,
+      "title": "Truncated cone: a line sink",
+      "text": "Truncated cone: a line sink ∂ϕ rp → −q∞ ⇒ ϕ ∼ −q∞ ln rp ∂rp independent of time ⇒ δ = 0 ⇒ ϵ = 1/2 J. M. Gordillo & F. J. Blanco-Rodríguez, Phys. Rev. Fluids, 8:7, 073606 (2023)",
+      "states": [
+        {
+          "image": "6dd5fecca675ac5d.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "35D8FAC7-4D4B-49F8-BC6F-B1BF44B3642D",
+      "n": 67,
+      "title": "Truncated cone: a line sink",
+      "text": "Truncated cone: a line sink ∂ϕ rp → −q∞ ⇒ ϕ ∼ −q∞ ln rp ∂rp independent of time ⇒ δ = 0 ⇒ ϵ = 1/2 rj ∝ |τ̄ | 1/2 , We j ∝ |τ̄ | vj ∝ |τ̄ | −1/2 −1 ∝ rj −1/2 Oh ↭ 0.02 J. M. Gordillo & F. J. Blanco-Rodríguez, Phys. Rev. Fluids, 8:7, 073606 (2023)",
+      "states": [
+        {
+          "image": "c94c614870d74703.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "CC1074FC-3902-4766-9295-2717BCBC25EA",
+      "n": 68,
+      "title": "Cone: the wall potential stays at zero",
+      "text": "Cone: the wall potential stays at zero 2 rj ≪ r ≪ 1, |τ̄ | ≪ 1: |∇ϕ| negligible H. Wagner, Z. Angew. Math. Mech., 12:4, 193-215 (1932) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) τ̄ = −1.3 × 10−4 |v| 0 25 50",
+      "states": [
+        {
+          "image": "cb16e6fe59e1df1a.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "0F4225D5-2877-4AE5-B554-AB9CBC83E767",
+      "n": 69,
+      "title": "Cone: the wall potential stays at zero",
+      "text": "Cone: the wall potential stays at zero 2 rj ≪ r ≪ 1, |τ̄ | ≪ 1: |∇ϕ| negligible ∂ϕ ⇒ ≃ 0 on F = 0 ∂τ H. Wagner, Z. Angew. Math. Mech., 12:4, 193-215 (1932) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) τ̄ = −1.3 × 10−4 |v| 0 25 50",
+      "states": [
+        {
+          "image": "2e1dbac4373ad3af.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "0375E1A8-DD34-41B0-B217-8A7A1AAAB26E",
+      "n": 70,
+      "title": "Cone: the wall potential stays at zero",
+      "text": "Cone: the wall potential stays at zero 2 rj ≪ r ≪ 1, |τ̄ | ≪ 1: |∇ϕ| negligible ∂ϕ ⇒ ≃ 0 on F = 0 ∂τ ⇒ ϕ frozen at its inception value ⇒ ϕ ≃ 0 on θ = β H. Wagner, Z. Angew. Math. Mech., 12:4, 193-215 (1932) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) τ̄ = −1.3 × 10−4 |v| 0 25 50",
+      "states": [
+        {
+          "image": "9f08652d030e7f7e.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "A3D5F1BF-A152-4D35-86D0-F0FB8DBD344F",
+      "n": 71,
+      "title": "Cone: the wall potential stays at zero",
+      "text": "Cone: the wall potential stays at zero 2 rj ≪ r ≪ 1, |τ̄ | ≪ 1: |∇ϕ| negligible ∂ϕ ⇒ ≃ 0 on F = 0 ∂τ ⇒ ϕ frozen at its inception value ⇒ ϕ ≃ 0 on θ = β as for impact (Wagner 1932) H. Wagner, Z. Angew. Math. Mech., 12:4, 193-215 (1932) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) τ̄ = −1.3 × 10−4 |v| 0 25 50",
+      "states": [
+        {
+          "image": "4daf354818582c87.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "0DFF99AC-3351-4001-A2E0-51616D976B5B",
+      "n": 72,
+      "title": "Laplace in a cone selects ν(β)",
+      "text": "Laplace in a cone selects ν(β) ν ϕ = A r Pν (− cos θ) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "590a49dcca09610a.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "61F3C77F-97CA-488D-BC00-8D53C2B62CA1",
+      "n": 73,
+      "title": "Laplace in a cone selects ν(β)",
+      "text": "Laplace in a cone selects ν(β) ν ϕ = A r Pν (− cos θ) ϕ(θ = β) = 0 ⇒ Pν (− cos β) = 0 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "4f1afe0d7cadb006.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "6C3A7D54-A1F7-4C92-BFA0-0CF5F985232D",
+      "n": 74,
+      "title": "Laplace in a cone selects ν(β)",
+      "text": "Laplace in a cone selects ν(β) ϕ = A r Pν (− cos θ) 0.6 ϕ(θ = β) = 0 0.4 ν Oh = 0.03 ν ⇒ Pν (− cos β) = 0 Taylor cone 0.2 Pν : Legendre function of degree ν J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 0 0 20 β (◦) 40 60",
+      "states": [
+        {
+          "image": "2deca56e16296ec8.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "64082342-C9A3-477E-B8AB-C4CF19D341C9",
+      "n": 75,
+      "title": "Matching closes the problem",
+      "text": "Matching closes the problem ν ϕ → A r Pν = A |τ̄ | ϵν ! r ϵ |τ̄ | \"ν Pν ⇒ δ = νϵ J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "50f3c638016f2ed1.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "AA111FD0-2B55-4C1F-8BCF-2412C69340FF",
+      "n": 76,
+      "title": "Matching closes the problem",
+      "text": "Matching closes the problem ν ϕ → A r Pν = A |τ̄ | ϵν ! r ϵ |τ̄ | \"ν Pν ⇒ δ = νϵ δ = 2ϵ − 1 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "24a912ffd54ff20b.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "EE95AEE1-06FD-4463-83EA-9BEEF5D84655",
+      "n": 77,
+      "title": "Matching closes the problem",
+      "text": "Matching closes the problem ν ϕ → A r Pν = A |τ̄ | ϵν ! r ϵ |τ̄ | \"ν Pν ⇒ δ = νϵ δ = 2ϵ − 1 1 α ≡ ϵ = 2 − ν(β) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "a9bb2ce2959fc8a4.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "DC7D8FB1-5BA2-4462-902E-246422992E06",
+      "n": 78,
+      "title": "Matching closes the problem",
+      "text": "Matching closes the problem ν ϕ → A r Pν = A |τ̄ | ϵν ! r ϵ |τ̄ | \"ν Pν ⇒ δ = νϵ δ = 2ϵ − 1 1 α ≡ ϵ = 2 − ν(β) the exponent remembers the cone: second-kind similarity J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "85cfde4455e460e0.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "266FB331-D772-47FD-862E-273331E4879A",
+      "n": 79,
+      "title": "Everything follows from ν(β)",
+      "text": "Everything follows from ν(β) rj ∝ |τ̄ | 1/(2−ν) , vj ∝ |τ̄ | (ν−1)/(2−ν) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "7477fecb7f8b3d2b.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "777B389A-DFF7-4F9A-8665-F515297FD34B",
+      "n": 80,
+      "title": "Everything follows from ν(β)",
+      "text": "Everything follows from ν(β) rj ∝ |τ̄ | 1/(2−ν) , vj ∝ |τ̄ | (ν−1)/(2−ν) 2 (2ν−1)/(2−ν) We j = vj rj ∝ |τ̄ | J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "3ecd37f72265631d.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "66101A72-A337-4624-B3EF-BE762DB6D21F",
+      "n": 81,
+      "title": "Everything follows from ν(β)",
+      "text": "Everything follows from ν(β) rj ∝ |τ̄ | 1/(2−ν) , vj ∝ |τ̄ | (ν−1)/(2−ν) 2 (2ν−1)/(2−ν) We j = vj rj ∝ |τ̄ | (2α−1)/α qj = vj rj ∝ rj , (3α−1)/α Qj = π rj qj ∝ rj J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "775ee9546926f90f.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "694AE843-E0B6-40AC-A24B-93005493C1EA",
+      "n": 82,
+      "title": "Everything follows from ν(β)",
+      "text": "Everything follows from ν(β) rj ∝ |τ̄ | 1/(2−ν) , vj ∝ |τ̄ | (ν−1)/(2−ν) 2 (2ν−1)/(2−ν) We j = vj rj ∝ |τ̄ | (2α−1)/α qj = vj rj ∝ rj , (3α−1)/α Qj = π rj qj ∝ rj (3α−2)/α 2ν−1 2 We j = qj /rj ∝ rj = rj J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "140e846ce96a32a4.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "27CDBCF2-E028-4477-AEB7-74E61D076C03",
+      "n": 83,
+      "title": "The 2/3 exponent is a special case of this closure",
+      "text": "The 2/3 exponent is a special case of this closure 0.7 α=1/(2−ν) 2/3 0.6 0.5 0 20 β (◦) 40 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 60",
+      "states": [
+        {
+          "image": "d348ba0de33b8526.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "4785CDAB-4433-4D8C-9A4F-9FBCC4441AC3",
+      "n": 84,
+      "title": "The 2/3 exponent is a special case of this closure",
+      "text": "The 2/3 exponent is a special case of this closure ν → 0: α → 1/2 0.7 slender, truncated α=1/(2−ν) 2/3 0.6 0.5 0 20 β (◦) 40 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 60",
+      "states": [
+        {
+          "image": "c9b7439990ab4ce9.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "37888C35-530D-4ECD-A2B6-7836D65FC56D",
+      "n": 85,
+      "title": "The 2/3 exponent is a special case of this closure",
+      "text": "The 2/3 exponent is a special case of this closure ν → 0: α → 1/2 0.7 slender, truncated α=1/(2−ν) 2/3 β = 49.3°: α = 2/3 0.6 Taylor cone 0.5 0 20 β (◦) 40 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 60",
+      "states": [
+        {
+          "image": "f8fd411fae0ac7c3.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "96F63085-A29A-4D38-BD03-2E7427143934",
+      "n": 86,
+      "title": "The 2/3 exponent is a special case of this closure",
+      "text": "The 2/3 exponent is a special case of this closure ν → 0: α → 1/2 0.7 slender, truncated α=1/(2−ν) 2/3 β = 49.3°: α = 2/3 0.6 Taylor cone β = 38.4°: α = 0.629 0.5 bursting, Oh = 0.03 0 20 β (◦) 40 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 60",
+      "states": [
+        {
+          "image": "9949ebc5fdbf4ae9.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "5B1C381E-30F8-4F70-B0CD-0E0A96AEEC51",
+      "n": 87,
+      "title": "β < 49.3° ⟺ We j → ∞",
+      "text": "β < 49.3° ⟺ We j → ∞ 2ν−1 We j ∝ rj , ν < 1/2 for β < 49.3° J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "49b254fa2968108c.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "BC3116AD-ED9E-451F-8CB5-D1B6C3A38851",
+      "n": 88,
+      "title": "β < 49.3° ⟺ We j → ∞",
+      "text": "β < 49.3° ⟺ We j → ∞ 2ν−1 We j ∝ rj , ν < 1/2 for β < 49.3 Oh = 0.03: ν = 0.41 ⇒ ◦ −0.18 We j ∝ rj J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "a7e427b07b3ce4d7.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "1E5A754E-8DE4-4583-888A-82457D4F973E",
+      "n": 89,
+      "title": "β < 49.3° ⟺ We j → ∞",
+      "text": "β < 49.3° ⟺ We j → ∞ 2ν−1 We j ∝ rj , ν < 1/2 for β < 49.3 Oh = 0.03: ν = 0.41 ⇒ ◦ −0.18 We j ∝ rj slow, but a power-law divergence: 4 rj → rj /10 ⇒ We j → 5 We j J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "fd48a9c4856b3a16.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "3F9E7CA8-1196-4792-9C3C-5FEF3DB8F05A",
+      "n": 90,
+      "title": "β < 49.3° ⟺ We j → ∞",
+      "text": "β < 49.3° ⟺ We j → ∞ 2ν−1 We j ∝ rj , ν < 1/2 for β < 49.3 Oh = 0.03: ν = 0.41 ⇒ ◦ −0.18 We j ∝ rj slow, but a power-law divergence: 4 rj → rj /10 ⇒ We j → 5 We j 2/3 needs a Taylor cone; bursting cavities are sharper J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "a5cb896278682423.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "08D99D47-7491-4450-AF42-ED0DEDDAD591",
+      "n": 91,
+      "title": "Geometry selects β; β selects α",
+      "text": "Geometry selects β; β selects α 2/3 Bo = 0 0.66 −3 α Bo = 10 0.64 0.627 ≤ α ≤ 0.636 0.62 all below 2/3 0.60 0.02 0.03 Oh 0.04 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "c2f23e87e8f9933f.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "47198E9B-C325-4CE1-B4A2-B8DEFA32DFF7",
+      "n": 92,
+      "title": "We j decides between the two",
+      "text": "We j decides between the two Wej 10 10 10 2 1 (ℓpre, ℓpost) (12, 13) (13, 14) (14, 15) (15, 15) 2/3: We j = O(1) 10 (12, 14) (13, 15) (14, 16) (15, 16) 0 −2 2/3: 0 We j ∝ rj 10 rj −1 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 10 0",
+      "states": [
+        {
+          "image": "12bca02d42e179d0.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "67B30DB6-00BF-455D-B91D-CE6B426AC295",
+      "n": 93,
+      "title": "We j decides between the two",
+      "text": "We j decides between the two Wej 10 10 10 2 1 (ℓpre, ℓpost) (12, 13) (13, 14) (14, 15) (15, 15) 2/3: We j = O(1) 10 cone: −0.18 We j ∝ rj (12, 14) (13, 15) (14, 16) (15, 16) 0 −2 2/3: 0 We j ∝ rj 10 rj −1 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 10 0",
+      "states": [
+        {
+          "image": "1e635c3e50ee67de.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "1A757427-37D7-40B7-AB8C-85649F35D991",
+      "n": 94,
+      "title": "We j decides between the two",
+      "text": "We j decides between the two Wej 10 10 10 2 1 (ℓpre, ℓpost) (12, 13) (13, 14) (14, 15) (15, 15) 2/3: We j = O(1) 10 cone: −0.18 We j ∝ rj DNS: rising as rj → 0 (12, 14) (13, 15) (14, 16) (15, 16) 0 −2 2/3: 0 We j ∝ rj 10 rj −1 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 10 0",
+      "states": [
+        {
+          "image": "0a35da063d62990c.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "38187173-3254-4443-B258-9BAE008D1A89",
+      "n": 95,
+      "title": "We j decides between the two",
+      "text": "We j decides between the two Wej 10 10 10 2 1 (ℓpre, ℓpost) (12, 13) (13, 14) (14, 15) (15, 15) −1 later: We j ∝ rj 2/3: We j = O(1) 10 cone: −0.18 We j ∝ rj DNS: rising as rj → 0 (12, 14) (13, 15) (14, 16) (15, 16) 0 −2 2/3: 0 We j ∝ rj 10 rj −1 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 10 0",
+      "states": [
+        {
+          "image": "ea94a6779e4c68c7.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "F3CD04B4-C344-46E3-A786-F1E1AF498F11",
+      "n": 96,
+      "title": "Qj is not enough to differentiate",
+      "text": "Qj is not enough to differentiate cone: 1.41 Qj ∝ rj 0 Qj 10 2/3: 3/2 Qj ∝ rj 10 10 −1 −2 10 −2 10 rj −1 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 10 0 (ℓpre, ℓpost) (12, 13) (13, 14) (14, 15) (15, 15) (12, 14) (13, 15) (14, 16) (15, 16)",
+      "states": [
+        {
+          "image": "e0edc89ffd5b02a6.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "319B292D-E8F8-403F-8C7C-0E0FE5838630",
+      "n": 97,
+      "title": "Shape is not enough to differentiate",
+      "text": "Shape is not enough to differentiate α = 2/3 α = 0.629 2 (z−zj)/|τ̄| α 0.3 before inception z−zj 0.2 1 0.1 0 0 −0.4 0 rp 0.4 −3 0 α rp/|τ̄ | Oh = 0.03, one τ0 for both α J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) −3 3 |τ̄ | 0 α rp/|τ̄ | 10−3 10−2 3",
+      "states": [
+        {
+          "image": "70f33b2559d319b1.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v13",
+              "rect": [
+                133,
+                222,
+                1654,
+                636
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "687F5517-C872-46DD-A5D0-38A8674DD2B5",
+      "n": 98,
+      "title": "Shape is not enough to differentiate",
+      "text": "Shape is not enough to differentiate α = 2/3 8 α = 0.629 0 0 z−zj 0.2 (z−zj)/|τ̄| α 0.4 after inception 4 −0.2 0 rp 0.2 −5 0 α rp/|τ̄ | Oh = 0.03, τ0 fitted for each α J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) −5 5 |τ̄ | 0 α rp/|τ̄ | 10−3 10−2 5",
+      "states": [
+        {
+          "image": "710c5e04f9003846.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v14",
+              "rect": [
+                133,
+                222,
+                1654,
+                636
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E7C2F767-3B02-418B-92DE-9BF0E45EC750",
+      "n": 99,
+      "title": "Collapse is inertial",
+      "text": "Collapse is inertial inertio-capillary conical, inertial exponent 2/3 1/(2 − ν) = 0.629 collapse ✓ ✓ J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "8c1277e5d16c2bdb.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "3BDC93C0-BEEE-49F6-8ACF-D83B906291B0",
+      "n": 100,
+      "title": "Collapse is inertial",
+      "text": "Collapse is inertial inertio-capillary conical, inertial exponent 2/3 1/(2 − ν) = 0.629 collapse ✓ ✓ We j O(1) ✗ −0.18 rj →∞ ✓ J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "3f50baf97875ae3e.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "631FD1E2-98F5-423F-ADEC-0D4BDE77798E",
+      "n": 101,
+      "title": "Collapse is inertial",
+      "text": "Collapse is inertial inertio-capillary conical, inertial exponent 2/3 1/(2 − ν) = 0.629 collapse ✓ ✓ We j O(1) ✗ −0.18 rj →∞ ✓ origin of α dimensions cone, Pν (− cos β) = 0 J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026)",
+      "states": [
+        {
+          "image": "bdb68cb4058ff604.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "E25A8DD9-0630-4AA3-B649-0DEC73AB7F8F",
+      "n": 102,
+      "title": "Where does the divergence stop?",
+      "text": "Where does the divergence stop? Re j = qj /Oh ∼ 1 ⇒ rm ∝ Oh α/(2α−1) rj(Rej=20) J. M. Gordillo & J. Rodríguez-Rodríguez, J. Fluid Mech., 867, 556-571 (2019) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 10 −2 10 −3 α = 0.629 α = 2/3 low-Oh plateau ℓpre = 14 ℓpre = 15 ℓpre = 16 0.02 0.03 Oh 0.05",
+      "states": [
+        {
+          "image": "a09f1731de308df8.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "A3CA454C-21C8-45EF-A851-C9D8E91C8889",
+      "n": 103,
+      "title": "Where does the divergence stop?",
+      "text": "Where does the divergence stop? Re j = qj /Oh ∼ 1 ⇒ rm ∝ Oh α/(2α−1) µ (2−3α)/(2α−1) Rm ∼ Oh ρσ σ (3α−2)/(2α−1) VM ∼ Oh µ rj(Rej=20) 2 J. M. Gordillo & J. Rodríguez-Rodríguez, J. Fluid Mech., 867, 556-571 (2019) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 10 −2 10 −3 α = 0.629 α = 2/3 low-Oh plateau ℓpre = 14 ℓpre = 15 ℓpre = 16 0.02 0.03 Oh 0.05",
+      "states": [
+        {
+          "image": "ee96da82f7c3f07c.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "2156D400-DF12-430C-ABB1-9DE6D9501B4E",
+      "n": 104,
+      "title": "Where does the divergence stop?",
+      "text": "Where does the divergence stop? Re j = qj /Oh ∼ 1 ⇒ rm ∝ Oh α/(2α−1) µ (2−3α)/(2α−1) Rm ∼ Oh ρσ σ (3α−2)/(2α−1) VM ∼ Oh µ water, Oh = 0.03: Rm ∼ 3 nm, VM ∼ 330 m s −1 rj(Rej=20) 2 J. M. Gordillo & J. Rodríguez-Rodríguez, J. Fluid Mech., 867, 556-571 (2019) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 10 −2 10 −3 α = 0.629 α = 2/3 low-Oh plateau ℓpre = 14 ℓpre = 15 ℓpre = 16 0.02 0.03 Oh 0.05",
+      "states": [
+        {
+          "image": "1f1096007a0fc024.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "ECEC8AC3-0D5B-4D2D-ACBB-5DF1CB654E50",
+      "n": 105,
+      "title": "Where does the divergence stop?",
+      "text": "Where does the divergence stop? Re j = qj /Oh ∼ 1 ⇒ rm ∝ Oh α/(2α−1) µ (2−3α)/(2α−1) Rm ∼ Oh ρσ σ (3α−2)/(2α−1) VM ∼ Oh µ water, Oh = 0.03: Rm ∼ 3 nm, VM ∼ 330 m s −1 rj(Rej=20) 2 in DNS, the grid size regularises first; the continuum description is itself in question there J. M. Gordillo & J. Rodríguez-Rodríguez, J. Fluid Mech., 867, 556-571 (2019) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 10 −2 10 −3 α = 0.629 α = 2/3 low-Oh plateau ℓpre = 14 ℓpre = 15 ℓpre = 16 0.02 0.03 Oh 0.05",
+      "states": [
+        {
+          "image": "fcbaaeb78723ced0.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "52756D28-B151-4C65-8CBA-C0C4B2F386A1",
+      "n": 106,
+      "title": "The four singular questions we asked",
+      "text": "The four singular questions we asked singular? 2ν−1 We j ∝ rj →∞ rj → 0, log10 Φ J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) −3 V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) |v| 0 −1 1 0.5 1",
+      "states": [
+        {
+          "image": "65470d49c7d09cae.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v08",
+              "rect": [
+                1409,
+                147,
+                486,
+                786
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E17C7CC9-915D-4392-908C-915AE61ACADD",
+      "n": 107,
+      "title": "The four singular questions we asked",
+      "text": "The four singular questions we asked singular? 2ν−1 We j ∝ rj →∞ rj → 0, α self-similar? rj ∝ |τ̄ | , collapse before and after inception log10 Φ J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) −3 V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) |v| 0 −1 1 0.5 1",
+      "states": [
+        {
+          "image": "38b38deb6f9509ff.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v08",
+              "rect": [
+                1409,
+                147,
+                486,
+                786
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "BDDD4763-C39A-40EF-829E-31846D2EC01F",
+      "n": 108,
+      "title": "The four singular questions we asked",
+      "text": "The four singular questions we asked singular? 2ν−1 We j ∝ rj →∞ rj → 0, α self-similar? rj ∝ |τ̄ | , collapse before and after inception universal? no: α = 1/(2 − ν(β)) remembers the cone log10 Φ J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) −3 V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) |v| 0 −1 1 0.5 1",
+      "states": [
+        {
+          "image": "26b64c544570aad8.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v08",
+              "rect": [
+                1409,
+                147,
+                486,
+                786
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "97212B7F-C7F0-4DC3-BA91-16DEFBACA18A",
+      "n": 109,
+      "title": "The four singular questions we asked",
+      "text": "The four singular questions we asked singular? 2ν−1 We j ∝ rj →∞ rj → 0, α self-similar? rj ∝ |τ̄ | , collapse before and after inception universal? no: α = 1/(2 − ν(β)) remembers the cone regularised? viscosity, Re j ∼ 1, Rm ∼ 3 nm; in DNS, the grid log10 Φ J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) −3 V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) |v| 0 −1 1 0.5 1",
+      "states": [
+        {
+          "image": "770e6900a363859f.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v08",
+              "rect": [
+                1409,
+                147,
+                486,
+                786
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D985CA93-A9BD-41DD-9B7D-27002003B90F",
+      "n": 110,
+      "title": "The four singular questions we asked",
+      "text": "The four singular questions we asked singular? 2ν−1 We j ∝ rj →∞ rj → 0, α self-similar? rj ∝ |τ̄ | , collapse before and after inception universal? no: α = 1/(2 − ν(β)) remembers the cone regularised? viscosity, Re j ∼ 1, Rm ∼ 3 nm; in DNS, the grid a straight log-log line can hide the wrong balance log10 Φ J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) −3 V. Sanjay, Contemp. Phys., doi:10.1080/00107514.2026.2721118 (2026) |v| 0 −1 1 0.5 1",
+      "states": [
+        {
+          "image": "58ad95d5e18ab19c.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v08",
+              "rect": [
+                1409,
+                147,
+                486,
+                786
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2163740B-ED4B-4F3D-9473-7E113718DADB",
+      "n": 111,
+      "title": "One more thing …",
+      "text": "One more thing …",
+      "states": [
+        {
+          "image": "aaa381046dbe6177.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "50146860-2F4D-41F0-A8C2-20668C5E17F7",
+      "n": 112,
+      "title": "One more thing . . .",
+      "text": "One more thing . . . experiments their Eq. (6), α = 2/3 inertial, α = 0.654 60 −1 Vj(ms) 80 β ≈ 46° ⇒ α = 0.654 40 20 0 M. Cattaneo, L. Presse & O. Supponen, Phys. Rev. Lett., 135:20, 204002 (2025) J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) 10 15 h (µm) 20",
+      "states": [
+        {
+          "image": "fd05660f25259188.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "37287068-5ED9-4BDB-86E1-41D2D957E74A",
+      "n": 113,
+      "title": "Bubble bursting journey",
+      "text": "Bubble bursting journey Detlef Lohse Ayush Dixit Maziyar (Mazi) Jalaal Alexandros Oratis Arivazhagan G. Balasubramanian Ricardo Vinuesa Outi Tammisola Konstantinos Zinelis Ricardo Constante-Amores Jie Feng José M. Gordillo Javier Rodríguez-Rodríguez",
+      "states": [
+        {
+          "image": "f67a7095cb5d6f83.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "CCA63AA2-F758-4030-A486-8D6DC50618CD",
+      "n": 114,
+      "title": "Thanks!",
+      "text": "Thanks! Contact Questions? CoMPhy Lab log10 Φ −3 −1 1 |v| 0.5 1 0",
+      "states": [
+        {
+          "image": "647f412952354043.webp",
+          "overlay": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v08",
+              "rect": [
+                637,
+                17,
+                646,
+                1046
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "changelog": [
+    {
+      "date": "2026-10-10",
+      "note": "First web version of the UIUC talk."
+    }
+  ]
+}

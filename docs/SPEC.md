@@ -56,10 +56,16 @@ for the authoritative example. Its fields:
   on-slide box.
 - `youtube[]`: movies replaced by a YouTube embed. Each entry gives the slide
   UUID, the source movie name prefix, the YouTube id, start and end in seconds,
-  the embed rectangle, and the attribution text.
+  the embed rectangle, and the attribution text. `before_start` says what a
+  click state shows when Keynote shows the movie's poster before the click
+  that starts it: `poster` (default) draws that poster frame, fitted into the
+  embed rectangle, as Keynote does; `embed` mounts the embed already, so it
+  plays from that state on.
 - `patches[]`: corrections drawn onto slide images. Each gives the slide UUID,
   the rectangle to cover, the replacement text and style. They are used until
   the `.key` file itself is fixed.
+- `titles`: optional map from slide UUID to a human-written title, for a
+  slide whose title derived from its text (Section 3) is wrong.
 - `changelog[]`: `{date, note}`.
 
 ## 2. Pipeline outputs
@@ -77,7 +83,10 @@ writes:
 `build/<slug>/media/` not already present, under
 `talks/<slug>/<file>`, using the `cf` CLI with the correct
 `Content-Type`. Because files are content-addressed, an existing key is never
-overwritten.
+overwritten. The slug must be a valid talk slug and equal the manifest's
+`slug`. The existing keys are listed page by page with `--start-after` (the
+`cf` CLI does not pass on the API's cursor) until a page brings no new key;
+if the listing fails or does not finish, nothing is uploaded.
 
 `python -m talks_build validate site/<slug>/manifest.json` checks the
 manifest against `tools/schema/manifest.schema.json` and the invariants in
@@ -106,7 +115,7 @@ Section 3.3.
       "id": "<Keynote slide UUID>",                  // stable deep-link key
       "n": 1,                                         // 1-based show order
       "title": "…",                                   // first text line, for UI and screen readers
-      "text": "…",                                    // all slide text, for screen readers and search
+      "text": "…",                                    // all text shown on the slide, for screen readers and search
       "states": [                                     // one per click (rest state)
         {
           "image":   "<hash>.webp",                   // full-canvas still, videos excluded
@@ -125,7 +134,9 @@ Section 3.3.
 ```
 
 All rectangles are in canvas pixels (origin top-left). They may extend past the
-canvas; the stage clips them.
+canvas; the stage clips them. Media rectangles are whole pixels: the pipeline
+rounds each *edge* of the Keynote rectangle (`w = round(x + w) - round(x)`),
+not the size, so a video lines up with the poster frame baked into the still.
 
 ### 3.1 Still images
 
@@ -135,10 +146,21 @@ canvas; the stage clips them.
 - `overlay` exists when Keynote layers sit *above* a movie (labels, masks,
   arrows). It contains only those layers on a transparent background, so the
   player can draw them over the playing video. When nothing overlaps a movie,
-  `overlay` is null.
+  `overlay` is null. Where those layers reach a movie's edge, the overlay
+  continues for 16 canvas pixels past the edge with the state's own `image`
+  (opaque), never over another media rectangle: a browser that scales the
+  stage blends the overlay's edge with what lies beyond it, and without the
+  band the movie's edge pixels would show through as a hairline.
 - For a `youtube` placement, `image` must not contain the movie poster under
   the embed rectangle. YouTube forbids overlays on its player, so the
-  slide's title and credit must lie outside `rect`.
+  slide's title and credit must lie outside `rect`. A state of that slide
+  without the placement (before the click that starts the movie, with
+  `before_start: poster`) shows the poster fitted into the same rectangle.
+- `title` and `text` come from the flat PDF export, as a viewer reads the
+  slide: TeX glyphs are decoded from the fonts' own glyph names where the
+  export's `ToUnicode` maps contradict them, and text painted at zero
+  opacity (Beamer overlays kept for later slides) is left out. `text` covers
+  every click state of the slide.
 
 ### 3.2 Player semantics
 
@@ -165,8 +187,11 @@ canvas; the stage clips them.
   it, with host `https://www.youtube-nocookie.com`, `mute: 1`, `controls: 0`,
   `playsinline: 1` and `rel: 0`. Start at `start` and stop at `end`. When it
   reaches the end (`ENDED`), seek back to `start` and play: this is the loop.
-  If the API cannot load (blocked network), show the poster region with a
-  "Watch on YouTube" link and the credit.
+  If the API cannot load (blocked network), or the player has not reported
+  ready 10 s after it was created (the embed host blocked), show the poster
+  region with a "Watch on YouTube" link and the credit. A click inside the
+  embed moves keyboard focus into YouTube's frame; the player returns it to
+  the stage frame at once, so keys and presenter clickers keep working.
 - **Pause control.** A visible button pauses and resumes all media. This
   satisfies WCAG 2.2.2. Under `prefers-reduced-motion: reduce`, media starts
   paused and the button resumes it.
@@ -178,24 +203,42 @@ canvas; the stage clips them.
   - Home and End go to the first and last state.
   - `F` toggles fullscreen. `P` and `K` toggle pause.
   - Presenter clickers send PageUp and PageDown.
-- **Deep links.** `#<first 8 hex chars of slide UUID>` or `#<…>.<state>`.
-  The hash updates on every state change; `history.replaceState` avoids
-  flooding history.
+  - Clicks and swipes inside a YouTube embed go to YouTube's cross-origin
+    frame and cannot navigate; the page's help says to swipe outside the
+    video or use the arrow buttons there.
+- **Deep links.** `#<first 8 hex chars of slide UUID>` or `#<…>.<k>`, where
+  `k` counts the slide's states from 1 (`#<…>.1` is the same as `#<…>`). The
+  hash follows the state on screen, written without a suffix for a slide's
+  first state. `history.replaceState` avoids flooding history; writes are
+  coalesced to at most one per 250 ms, because WebKit throws after 100
+  `replaceState` calls in 10 s (holding an arrow key reaches that).
 - **Preloading.** Stills for the next two states and the previous one. Video
   elements are created only when needed.
 - **Accessibility.**
   - The stage has `role="img"` with `aria-label` set to the slide title.
-  - A visually hidden live region announces "Slide n of N: title".
+  - A visually hidden live region announces "Slide n of N: title" on
+    reaching a slide (", step k of K" before the colon when the slide has
+    K > 1 click states) and "Step k of K" on the later steps of the same
+    slide.
   - The slide `text` is in a visually hidden element for screen readers.
-  - All controls are keyboard reachable with a visible teal focus ring.
+  - All controls are keyboard reachable with a visible teal focus ring. On
+    the black full-screen backdrop a light inner ring keeps the indicator
+    above 3:1 in both themes.
+  - While the stage fills the screen (element full screen, or the phone
+    fallback that fills the viewport), the page around it is `inert`, so
+    focus and screen readers reach only what is visible; focus returns to
+    where it was on leaving.
 - **Theme.** The design system's `data-theme` on `<html>`, with
   `localStorage` key `theme` (shared with comphy-lab.org).
 - **Security.**
   - A per-page `<meta http-equiv="Content-Security-Policy">` sets:
     - `default-src 'self'`
     - `img-src 'self' https://media.comphy-lab.org https://i.ytimg.com data:`
-    - `media-src https://media.comphy-lab.org`
-    - `script-src 'self' https://www.youtube.com`
+    - `media-src 'self' https://media.comphy-lab.org` (`'self'` lets the
+      local test hook below play videos; the site origin itself serves no
+      media)
+    - `script-src 'self' https://www.youtube.com/iframe_api https://www.youtube.com/s/player/`
+      (the IFrame API and the widget script it loads, nothing else on that host)
     - `frame-src https://www.youtube-nocookie.com`
     - `style-src 'self'`
     - `font-src 'self'`
@@ -207,7 +250,12 @@ canvas; the stage clips them.
     `createElement`/`textContent` only, never `innerHTML`.
 - **Test hook.** When the page is served from `localhost` or `127.0.0.1`,
   `?media=<path>` may override `media_base` with a same-origin relative path.
-  This override is ignored on any other host.
+  This override is ignored on any other host. The browser tests serve
+  `site/` at `/talks/` and `build/<slug>/media/` at `/media/<slug>/`, as in
+  production, and open `/talks/<slug>/?media=/media/<slug>/`.
+  `window.__talk` is a frozen, read-only object for tests: `state()` returns
+  `{slide, stateIndex, keys, paused}` (slide 1-based, stateIndex 0-based)
+  and `media()` returns the mounted media as `[{key, el}]`.
 
 ### 3.3 Manifest invariants (checked by `validate`)
 

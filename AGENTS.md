@@ -10,7 +10,8 @@ before changing any of them.
   (`media.comphy-lab.org/talks/<slug>/`) under content-hash names. Never
   overwrite an existing key; a changed file gets a new name.
 - `site/<slug>/manifest.json` is generated. Change `talks-src/<slug>/talk.yaml`
-  or the pipeline, then rebuild; do not hand-edit manifests.
+  or the pipeline, then rebuild; do not hand-edit manifests. A wrong slide
+  title is fixed with `titles:` in `talk.yaml`, never in the manifest.
 - Player code builds DOM with `createElement`/`textContent` only, with no
   `innerHTML`, no inline scripts or styles, and no third-party scripts except
   the YouTube IFrame API loaded on demand. Keep the per-page CSP in

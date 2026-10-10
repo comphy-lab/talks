@@ -1,0 +1,128 @@
+"""Command line: ``python -m talks_build {build,validate,upload}``."""
+
+from __future__ import annotations
+
+import argparse
+import json
+import os
+import sys
+from pathlib import Path
+
+from .build import BuildError, build, infer_root
+from .keynote import ExportError
+from .manifest import validate_file
+from .patches import PatchError
+from .proc import ToolError
+from .talkfile import TalkError
+
+
+def _parser() -> argparse.ArgumentParser:
+    p = argparse.ArgumentParser(prog="talks_build", description=__doc__)
+    sub = p.add_subparsers(dest="command", required=True)
+
+    b = sub.add_parser("build", help="build media, manifest and talk page from a Keynote HTML export")
+    b.add_argument("--export", required=True, type=Path, help="Keynote HTML export folder")
+    b.add_argument("--talk", required=True, type=Path, help="talks-src/<slug>/talk.yaml")
+    b.add_argument("--out-root", type=Path, default=None, help="repository root (default: inferred from --talk)")
+    b.add_argument("--pdf", type=Path, default=None, help="flat PDF export for slide text (default: <export>.pdf)")
+    b.add_argument("--jobs", type=int, default=min(4, os.cpu_count() or 1), help="parallel encodes")
+    b.add_argument(
+        "--prune",
+        action="store_true",
+        help="delete media files in build/<slug>/media that this build did not produce",
+    )
+    b.add_argument(
+        "--preview",
+        default="",
+        help="comma-separated slide numbers whose state images/overlays are also saved as PNG in build/<slug>/preview",
+    )
+
+    v = sub.add_parser("validate", help="check a manifest against the schema and invariants")
+    v.add_argument("manifest", type=Path)
+    v.add_argument("--media-dir", type=Path, default=None, help="also check that every media file exists here")
+
+    u = sub.add_parser("upload", help="upload build/<slug>/media to R2 (never overwrites)")
+    u.add_argument("--slug", required=True)
+    u.add_argument("--root", type=Path, default=None, help="repository root (default: parent of tools/)")
+    u.add_argument("--dry-run", action="store_true", help="print what would be uploaded; no remote writes")
+    u.add_argument(
+        "--check-remote",
+        action="store_true",
+        help="with --dry-run, also list existing R2 keys (read-only); a real upload always does",
+    )
+    return p
+
+
+def _repo_root_default() -> Path:
+    return Path(__file__).resolve().parent.parent.parent
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = _parser().parse_args(argv)
+    if args.command == "build":
+        previews = {int(x) for x in args.preview.split(",") if x.strip()}
+        try:
+            report = build(
+                args.export,
+                args.talk,
+                args.out_root,
+                pdf=args.pdf,
+                jobs=args.jobs,
+                previews=previews,
+                prune=args.prune,
+            )
+        except (BuildError, ExportError, TalkError, PatchError, ToolError, ValueError) as exc:
+            print(f"build failed: {exc}", file=sys.stderr)
+            return 1
+        summary = {
+            k: report[k]
+            for k in ("slides", "states", "videos", "youtube", "overlays", "media_files", "media_bytes", "seconds")
+        }
+        print(json.dumps(summary))
+        return 0
+    if args.command == "validate":
+        problems = validate_file(args.manifest, args.media_dir)
+        if problems:
+            for line in problems:
+                print(line, file=sys.stderr)
+            return 1
+        print(f"{args.manifest.name}: valid")
+        return 0
+    if args.command == "upload":
+        from .manifest import media_files
+        from .upload import check_slug, upload
+
+        try:
+            check_slug(args.slug)
+        except ValueError as exc:
+            print(f"upload failed: {exc}", file=sys.stderr)
+            return 1
+        root = args.root.resolve() if args.root else _repo_root_default()
+        media_dir = root / "build" / args.slug / "media"
+        manifest_path = root / "site" / args.slug / "manifest.json"
+        if not manifest_path.is_file():
+            print(f"no manifest at site/{args.slug}/manifest.json; build first", file=sys.stderr)
+            return 1
+        problems = validate_file(manifest_path, media_dir)
+        if problems:
+            print("refusing to upload: manifest invalid or media missing:", file=sys.stderr)
+            for line in problems:
+                print("  " + line, file=sys.stderr)
+            return 1
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if manifest.get("slug") != args.slug:
+            print(f"refusing to upload: the manifest's slug is {manifest.get('slug')!r}, not {args.slug!r}",
+                  file=sys.stderr)  # fmt: skip
+            return 1
+        wanted = set(media_files(manifest))
+        try:
+            upload(media_dir, args.slug, dry_run=args.dry_run, check_remote=(not args.dry_run) or args.check_remote,
+                   only=wanted)  # fmt: skip
+        except (RuntimeError, ToolError, ValueError, FileNotFoundError) as exc:
+            print(f"upload failed: {exc}", file=sys.stderr)
+            return 1
+        return 0
+    return 2
+
+
+__all__ = ["main", "infer_root"]

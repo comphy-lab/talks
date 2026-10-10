@@ -1,0 +1,30 @@
+[project]
+name = "talks-browser-tests"
+version = "1.0.0"
+description = "Browser tests (Chromium and WebKit) for the CoMPhy Lab talks player against a real build."
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "pillow>=10.3",
+    "playwright>=1.63",
+    "pytest>=8.0",
+    "pyyaml>=6.0",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+testpaths = ["."]
+python_files = ["test_*.py"]
+addopts = "-ra"
+markers = [
+    "live: needs network access to YouTube (enable with --live-youtube)",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "B", "UP", "I"]

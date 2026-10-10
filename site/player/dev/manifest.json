@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "slug": "player-dev",
+  "title": "Player development deck",
+  "subtitle": "Mock talk for exercising the player: builds, spanning videos, overlays and a YouTube embed",
+  "speaker": "CoMPhy Lab",
+  "updated": "2026-10-10",
+  "canvas": { "width": 1920, "height": 1080 },
+  "media_base": "https://media.comphy-lab.org/talks/player-dev/",
+  "videos": {
+    "v01": { "src": "d0000000000000c1.mp4", "poster": "d0000000000000e1.webp", "width": 640, "height": 360, "duration": 20.0, "credit": null },
+    "v02": { "src": "d0000000000000c2.mp4", "poster": "d0000000000000e2.webp", "width": 640, "height": 360, "duration": 6.0, "credit": null },
+    "v03": { "src": "d0000000000000c3.mp4", "poster": "d0000000000000e3.webp", "width": 640, "height": 360, "duration": 6.0, "credit": "Deliberately missing file: the poster must stay visible" }
+  },
+  "youtube": {
+    "y01": { "id": "a9hUsVq9q7U", "start": 7.191, "end": 63.397, "title": "Mud pots, Yellowstone National Park", "credit": "Yellowstone National Park: video from https://www.youtube.com/watch?v=a9hUsVq9q7U" }
+  },
+  "slides": [
+    {
+      "id": "D1000001-0000-4000-8000-000000000001",
+      "n": 1,
+      "title": "Player development deck",
+      "text": "Player development deck. A mock talk for testing the web player.",
+      "states": [
+        { "image": "d0000000000000a1.webp", "overlay": null, "transition": "none", "media": [] }
+      ]
+    },
+    {
+      "id": "D2000002-0000-4000-8000-000000000002",
+      "n": 2,
+      "title": "A build within one slide",
+      "text": "A build within one slide. The first click adds a second video; the label stays above both videos.",
+      "states": [
+        {
+          "image": "d0000000000000a2.webp", "overlay": "d0000000000000b2.webp", "transition": "none",
+          "media": [ { "kind": "video", "ref": "v01", "rect": [1060.2, 220.4, 720.1, 405.0] } ]
+        },
+        {
+          "image": "d0000000000000a3.webp", "overlay": "d0000000000000b3.webp", "transition": "none",
+          "media": [
+            { "kind": "video", "ref": "v01", "rect": [1060.2, 220.4, 720.1, 405.0] },
+            { "kind": "video", "ref": "v02", "rect": [140.0, 560.0, 640.0, 360.0] }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D3000003-0000-4000-8000-000000000003",
+      "n": 3,
+      "title": "The same video continues across slides",
+      "text": "The same video continues across slides without restarting.",
+      "states": [
+        {
+          "image": "d0000000000000a4.webp", "overlay": null, "transition": "dissolve",
+          "media": [ { "kind": "video", "ref": "v01", "rect": [1059.8, 219.6, 719.9, 404.8] } ]
+        }
+      ]
+    },
+    {
+      "id": "D4000004-0000-4000-8000-000000000004",
+      "n": 4,
+      "title": "A new rectangle starts the video afresh",
+      "text": "A new rectangle starts the video afresh. The video extends past the right edge and is clipped.",
+      "states": [
+        {
+          "image": "d0000000000000a5.webp", "overlay": null, "transition": "none",
+          "media": [ { "kind": "video", "ref": "v01", "rect": [1500.0, 300.0, 640.0, 360.0] } ]
+        }
+      ]
+    },
+    {
+      "id": "D5000005-0000-4000-8000-000000000005",
+      "n": 5,
+      "title": "A missing video keeps its poster",
+      "text": "A missing video keeps its poster frame visible.",
+      "states": [
+        {
+          "image": "d0000000000000a6.webp", "overlay": null, "transition": "none",
+          "media": [ { "kind": "video", "ref": "v03", "rect": [640.0, 300.0, 640.0, 360.0] } ]
+        }
+      ]
+    },
+    {
+      "id": "D6000006-0000-4000-8000-000000000006",
+      "n": 6,
+      "title": "A YouTube embed with nothing over it",
+      "text": "A YouTube embed with its title and credit outside the player.",
+      "states": [
+        {
+          "image": "d0000000000000a7.webp", "overlay": null, "transition": "none",
+          "media": [ { "kind": "youtube", "ref": "y01", "rect": [360.0, 200.0, 1200.0, 675.0] } ]
+        }
+      ]
+    },
+    {
+      "id": "D7000007-0000-4000-8000-000000000007",
+      "n": 7,
+      "title": "The end",
+      "text": "The end of the mock talk.",
+      "states": [
+        { "image": "d0000000000000a8.webp", "overlay": null, "transition": "none", "media": [] }
+      ]
+    }
+  ],
+  "changelog": [
+    { "date": "2026-10-10", "note": "Mock deck for player development." }
+  ]
+}

@@ -1,0 +1,982 @@
+/* =============================================================
+   CoMPhy Lab talks: player and site shell.
+   Builds on site/vendor/ds/tokens.css; never redefines its tokens.
+   ============================================================= */
+
+:root {
+  --gutter: clamp(12px, 2.4vw, 32px);
+  --header-h: 56px;
+  --head-h: 96px;
+  --controls-h: 48px;
+  --progress-h: 3px;
+  --viewer-gap: 10px;
+  --app-maxw: 1760px;
+}
+
+/* Page content sits above the design system's fixed grid overlay. */
+.site-header,
+main,
+.site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+:focus-visible {
+  outline: 3px solid var(--c-accent-teal);
+  outline-offset: 2px;
+}
+
+.sr-only {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: var(--s-2);
+  left: var(--s-2);
+  z-index: 100;
+  padding: var(--s-2) var(--s-4);
+  border-radius: var(--r-pill);
+  background: var(--c-accent-teal);
+  color: var(--c-accent-teal-fg);
+  border-bottom: 0;
+  font-weight: var(--t-weight-semi);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus,
+.skip-link:hover {
+  transform: none;
+  color: var(--c-accent-teal-fg);
+}
+
+/* ---------- Header ---------- */
+
+.site-header {
+  height: var(--header-h);
+  background: var(--glass-header);
+  border-bottom: 1px solid var(--c-border);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.site-header__inner {
+  width: min(100% - 2 * var(--gutter), var(--app-maxw));
+  height: 100%;
+  margin-inline: auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-4);
+}
+
+.site-header__tools {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--s-3);
+  color: var(--fg-strong);
+  border-bottom: 0;
+  white-space: nowrap;
+}
+
+.brand:hover {
+  color: var(--c-accent-teal);
+}
+
+.brand__lab {
+  font-family: var(--t-display);
+  font-style: italic;
+  font-weight: var(--t-weight-med);
+  font-size: 23px; /* between --t-h3 and --t-h2; no type token matches the wordmark */
+  letter-spacing: -0.005em;
+}
+
+.brand__section {
+  font-size: var(--t-eyebrow);
+  font-weight: var(--t-weight-semi);
+  letter-spacing: var(--t-track-wide);
+  text-transform: uppercase;
+  color: var(--fg-2);
+}
+
+.site-header__link {
+  font-size: var(--t-small);
+  font-weight: var(--t-weight-med);
+  color: var(--fg-1);
+  border-bottom: 0;
+  padding: var(--s-2) var(--s-3);
+  border-radius: var(--r-xs);
+}
+
+.site-header__link:hover {
+  color: var(--c-accent-teal);
+  background: color-mix(in srgb, var(--c-accent-teal) 10%, transparent);
+}
+
+/* ---------- Talk page: title, stage and controls fill one viewport ---------- */
+
+.talk-app {
+  width: min(100% - 2 * var(--gutter), var(--app-maxw));
+  margin-inline: auto;
+  height: calc(100vh - var(--header-h));
+  height: calc(100dvh - var(--header-h));
+  min-height: 380px;
+  padding-block: var(--s-2) var(--s-4);
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+}
+
+.viewer {
+  min-height: 0;
+  container-type: size;
+  display: grid;
+  place-items: center;
+  outline: none;
+}
+
+/* Heading, stage, progress and controls share one column, as wide as the
+   largest 16:9 stage that fits beside the reserved heading and controls. */
+.viewer__col {
+  width: min(100cqw, calc((100cqh - var(--head-h) - var(--controls-h) - var(--progress-h) - 2 * var(--viewer-gap)) * 16 / 9));
+  min-width: 0;
+}
+
+.talk-head {
+  height: var(--head-h);
+  display: grid;
+  align-content: end;
+  gap: 2px;
+  min-width: 0;
+  padding-bottom: var(--s-3);
+}
+
+.talk-head > * {
+  margin: 0;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.talk-head__title {
+  font-size: clamp(22px, 2.3vw, 30px);
+  line-height: 1.2;
+}
+
+.talk-head__subtitle {
+  color: var(--fg-2);
+  font-size: var(--t-body);
+  line-height: 1.4;
+}
+
+/* ---------- Stage ---------- */
+
+.stage-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  container-type: size;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  touch-action: pan-y pinch-zoom;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.stage-frame.is-loading {
+  cursor: progress;
+}
+
+.stage-box {
+  position: relative;
+  width: min(100cqw, calc(100cqh * 16 / 9));
+  height: min(100cqh, calc(100cqw * 9 / 16));
+  overflow: hidden;
+  isolation: isolate;
+  /* The slide itself: Keynote's white background, not paper. */
+  background: #fff;
+  border-radius: var(--r-sm);
+  box-shadow: var(--shadow-soft);
+  outline: 1px solid var(--c-border);
+  container-type: inline-size;
+}
+
+.stage,
+.layer,
+.stage-ui {
+  position: absolute;
+  inset: 0;
+}
+
+.layer--image {
+  z-index: 1;
+}
+
+.layer--media {
+  z-index: 2;
+}
+
+.layer--overlay {
+  z-index: 3;
+  pointer-events: none;
+}
+
+.stage-ui {
+  z-index: 4;
+  pointer-events: none;
+}
+
+.stage-ui > * {
+  pointer-events: auto;
+}
+
+.still {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  pointer-events: none;
+}
+
+.still.is-broken {
+  visibility: hidden;
+}
+
+.media {
+  position: absolute;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.media--video {
+  object-fit: fill;
+  background: transparent;
+  pointer-events: none;
+}
+
+/* A failed video reveals the poster frame baked into the still beneath. */
+.media--video.is-failed {
+  visibility: hidden;
+}
+
+.media--youtube {
+  background: #000;
+}
+
+.media--youtube > iframe,
+.media__slot {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.media--youtube.is-fallback {
+  background: transparent;
+}
+
+/* Dissolve: CSS opacity, 0.5 s. */
+.fade {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.is-transparent {
+  opacity: 0;
+}
+
+/* ---------- YouTube fallback (UI layer, above the overlay) ---------- */
+
+.yt-fallback {
+  position: absolute;
+  display: grid;
+  place-items: end start;
+  overflow: hidden;
+  background: #111;
+  color: #fff;
+  border-bottom: 0;
+  font-size: clamp(11px, 1.5cqw, 26px);
+  line-height: 1.35;
+  text-decoration: none;
+}
+
+.yt-fallback:hover {
+  color: #fff;
+}
+
+.yt-fallback__thumb {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.55;
+}
+
+.yt-fallback__body {
+  position: relative;
+  display: grid;
+  gap: 0.25em;
+  padding: 1em 1.2em;
+}
+
+.yt-fallback__label {
+  justify-self: start;
+  padding: 0.35em 0.9em;
+  border-radius: var(--r-pill);
+  background: var(--c-accent-teal);
+  color: var(--c-accent-teal-fg);
+  font-weight: var(--t-weight-semi);
+}
+
+.yt-fallback:hover .yt-fallback__label {
+  background: var(--c-accent-teal-hover);
+}
+
+.yt-fallback__title {
+  font-weight: var(--t-weight-semi);
+}
+
+.yt-fallback__credit {
+  font-size: 0.8em;
+  opacity: 0.85;
+}
+
+.stage-error {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  gap: var(--s-2);
+  padding: var(--s-5);
+  text-align: center;
+  background: var(--c-surface-strong);
+  color: var(--fg-1);
+  cursor: default;
+}
+
+.stage-error p {
+  margin: 0;
+}
+
+.stage-error__title {
+  font-family: var(--t-serif);
+  font-size: var(--t-h3);
+  font-weight: var(--t-weight-semi);
+  color: var(--fg-strong);
+}
+
+.stage-error__detail {
+  color: var(--fg-2);
+  font-size: var(--t-small);
+}
+
+/* ---------- Progress and controls ---------- */
+
+.progress {
+  height: var(--progress-h);
+  margin-top: var(--viewer-gap);
+  border-radius: var(--r-pill);
+  background: var(--c-border);
+  overflow: hidden;
+}
+
+.progress__bar {
+  height: 100%;
+  background: var(--c-accent-teal);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--dur) var(--ease);
+}
+
+.controls {
+  min-height: var(--controls-h);
+  margin-top: var(--viewer-gap);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-3);
+}
+
+.controls__nav {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.controls__tools {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+.ctl {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid var(--c-border-strong);
+  border-radius: var(--r-pill);
+  background: var(--c-surface-strong);
+  color: var(--fg-1);
+  font: inherit;
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+
+.ctl:hover {
+  color: var(--c-accent-teal);
+  border-color: var(--c-accent-teal);
+  background: color-mix(in srgb, var(--c-accent-teal) 8%, var(--c-surface-strong));
+}
+
+.ctl--primary {
+  background: var(--c-accent-teal);
+  border-color: var(--c-accent-teal);
+  color: var(--c-accent-teal-fg);
+}
+
+.ctl--primary:hover {
+  background: var(--c-accent-teal-hover);
+  border-color: var(--c-accent-teal-hover);
+  color: var(--c-accent-teal-fg);
+}
+
+.ctl[aria-disabled="true"] {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.ctl[aria-disabled="true"]:hover {
+  color: var(--fg-1);
+  border-color: var(--c-border-strong);
+  background: var(--c-surface-strong);
+}
+
+.ctl--primary[aria-disabled="true"]:hover {
+  background: var(--c-accent-teal);
+  border-color: var(--c-accent-teal);
+  color: var(--c-accent-teal-fg);
+}
+
+.ctl__icon {
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+}
+
+.ctl__icon--play,
+.ctl[data-paused="true"] .ctl__icon--pause,
+.ctl__icon--exit-fs,
+.ctl[data-active="true"] .ctl__icon--enter-fs,
+.ctl__icon--sun,
+:root[data-theme="dark"] .ctl__icon--moon {
+  display: none;
+}
+
+.ctl[data-paused="true"] .ctl__icon--play,
+.ctl[data-active="true"] .ctl__icon--exit-fs,
+:root[data-theme="dark"] .ctl__icon--sun {
+  display: block;
+}
+
+.counter {
+  flex: none;
+  margin: 0 var(--s-1);
+  min-width: 4.5em;
+  text-align: center;
+  font-size: var(--t-small);
+  font-weight: var(--t-weight-semi);
+  font-variant-numeric: tabular-nums;
+  color: var(--fg-strong);
+  white-space: nowrap;
+}
+
+.counter__title {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--t-small);
+  color: var(--fg-2);
+}
+
+/* ---------- Full screen: only the stage, on black ---------- */
+
+.stage-frame:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  aspect-ratio: auto;
+  background: #000;
+  cursor: default;
+}
+
+.stage-frame:-webkit-full-screen {
+  width: 100vw;
+  height: 100vh;
+  aspect-ratio: auto;
+  background: #000;
+  cursor: default;
+}
+
+.stage-frame::backdrop {
+  background: #000;
+}
+
+.stage-frame:fullscreen .stage-box {
+  border-radius: 0;
+  box-shadow: none;
+  outline: 0;
+}
+
+.stage-frame:-webkit-full-screen .stage-box {
+  border-radius: 0;
+  box-shadow: none;
+  outline: 0;
+}
+
+/* Fallback where element full screen is unavailable (iPhone Safari). */
+:root.is-pseudo-fullscreen,
+:root.is-pseudo-fullscreen body {
+  overflow: hidden;
+}
+
+:root.is-pseudo-fullscreen .stage-frame {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  width: auto;
+  height: auto;
+  aspect-ratio: auto;
+  background: #000;
+}
+
+:root.is-pseudo-fullscreen .stage-box {
+  border-radius: 0;
+  box-shadow: none;
+  outline: 0;
+}
+
+/*
+ * Full-screen controls. The page's control bar is hidden behind a full-screen
+ * stage, so without a keyboard (phones and tablets) these are the only way to
+ * pause the media (WCAG 2.2.2) or leave full screen. They sit in the top
+ * right corner, which is letterbox or pillarbox black unless the screen is
+ * exactly 16:9.
+ */
+.stage-tools {
+  display: none;
+}
+
+:root.is-pseudo-fullscreen .stage-tools {
+  position: absolute;
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  cursor: default;
+}
+
+@media (hover: none) {
+  .stage-frame:fullscreen .stage-tools {
+    position: absolute;
+    top: max(12px, env(safe-area-inset-top));
+    right: max(12px, env(safe-area-inset-right));
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    cursor: default;
+  }
+}
+
+@media (hover: none) {
+  .stage-frame:-webkit-full-screen .stage-tools {
+    position: absolute;
+    top: max(12px, env(safe-area-inset-top));
+    right: max(12px, env(safe-area-inset-right));
+    z-index: 5;
+    display: flex;
+    flex-direction: column;
+    gap: var(--s-2);
+    cursor: default;
+  }
+}
+
+.ctl--onblack {
+  border-color: rgb(255 255 255 / 0.35);
+  background: rgb(20 20 20 / 0.75);
+  color: #fff;
+}
+
+.ctl--onblack:hover {
+  border-color: var(--c-accent-teal);
+  background: rgb(20 20 20 / 0.9);
+  color: #fff;
+}
+
+/* On the black full-screen backdrop the light-theme teal ring alone reaches
+   only 2.2:1. A light ring inside it keeps the focus indicator well above
+   3:1 (WCAG 1.4.11) in both themes, and the ring stays teal. */
+.ctl--onblack:focus-visible {
+  outline-offset: 4px;
+  box-shadow: 0 0 0 4px var(--c-surface-strong);
+}
+
+/* ---------- About panel ---------- */
+
+.about {
+  width: min(100% - 2 * var(--gutter), var(--maxw-page));
+  margin: var(--s-7) auto 0;
+}
+
+.about__panel {
+  display: grid;
+  gap: var(--s-3);
+}
+
+.about__panel .lede {
+  margin: 0;
+}
+
+.about__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr));
+  gap: var(--s-4);
+  margin-top: var(--s-3);
+}
+
+.about__grid h3 {
+  margin-bottom: var(--s-3);
+}
+
+.keys {
+  display: grid;
+  gap: var(--s-2);
+  margin: 0;
+}
+
+.keys > div {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: var(--s-3);
+  align-items: baseline;
+}
+
+.keys dt {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.keys dd {
+  margin: 0;
+  color: var(--fg-2);
+  font-size: var(--t-small);
+}
+
+kbd {
+  font-family: var(--t-mono);
+  font-size: var(--t-eyebrow);
+  line-height: 1.6;
+  padding: 1px 7px;
+  border: 1px solid var(--c-border-strong);
+  border-radius: var(--r-xs);
+  background: color-mix(in srgb, var(--fg-strong) 5%, transparent);
+  color: var(--fg-1);
+}
+
+.about__hint,
+.about__updated,
+.about__credits {
+  margin: var(--s-3) 0 0;
+  color: var(--fg-2);
+  font-size: var(--t-small);
+}
+
+.about__updated {
+  margin-top: 0;
+}
+
+.changelog {
+  list-style: none;
+  margin: var(--s-3) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--s-2);
+}
+
+.changelog li {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--s-3);
+  font-size: var(--t-small);
+}
+
+.changelog time {
+  color: var(--fg-2);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  width: min(100% - 2 * var(--gutter), var(--maxw-page));
+  margin: var(--s-7) auto 0;
+  padding: var(--s-5) 0 var(--s-6);
+  border-top: 1px solid var(--c-border);
+  color: var(--fg-2);
+  font-size: var(--t-small);
+}
+
+.site-footer p {
+  margin: 0;
+}
+
+/* :root raises specificity over the tokens' dark-theme prose-link colour:
+   teal is the only interactive accent. */
+:root .site-footer a,
+:root .about a {
+  color: var(--c-accent-teal);
+  border-bottom-color: color-mix(in srgb, var(--c-accent-teal) 35%, transparent);
+}
+
+/* ---------- Talks index ---------- */
+
+.index {
+  width: min(100% - 2 * var(--gutter), var(--maxw-page));
+  margin-inline: auto;
+}
+
+.index-hero {
+  padding: var(--s-8) 0 var(--s-6);
+  display: grid;
+  gap: var(--s-3);
+}
+
+/* Shrink to the word so the hero gradient spans the type, not the page. */
+.index-hero .hero-title {
+  justify-self: start;
+  padding-right: 0.08em;
+}
+
+.index-hero .lede {
+  margin: 0;
+}
+
+.talk-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr));
+  gap: var(--s-5);
+}
+
+.talk-card {
+  position: relative;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  background: var(--c-surface-strong);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+
+.talk-card:hover,
+.talk-card:focus-within {
+  border-color: var(--c-accent-teal);
+  box-shadow: var(--shadow-md);
+}
+
+.talk-card:hover {
+  transform: translateY(-1px);
+}
+
+.talk-card__cover {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: #fff;
+  border-bottom: 1px solid var(--c-border);
+}
+
+.talk-card__body {
+  display: grid;
+  align-content: start;
+  gap: var(--s-2);
+  padding: var(--s-5);
+}
+
+.talk-card__title {
+  font-size: var(--t-h3);
+}
+
+.talk-card__link {
+  color: var(--fg-strong);
+  border-bottom: 0;
+}
+
+.talk-card__link:hover {
+  color: var(--c-accent-teal);
+}
+
+/* The whole card is the link's hit area; focus shows on the card. */
+.talk-card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.talk-card__link:focus-visible {
+  outline: none;
+}
+
+.talk-card:focus-within {
+  outline: 3px solid var(--c-accent-teal);
+  outline-offset: 2px;
+}
+
+.talk-card__subtitle {
+  margin: 0;
+  color: var(--fg-1);
+  line-height: 1.5;
+}
+
+.talk-card__meta {
+  margin: var(--s-2) 0 0;
+  color: var(--fg-2);
+  font-size: var(--t-small);
+}
+
+.talk-list__status {
+  color: var(--fg-2);
+}
+
+.talk-list__status:empty {
+  display: none;
+}
+
+/* ---------- Narrow and portrait screens: stage fits the width ---------- */
+
+@media (orientation: portrait), (max-width: 699px) {
+  .talk-app {
+    height: auto;
+    min-height: 0;
+  }
+
+  .viewer {
+    container-type: inline-size;
+  }
+
+  .viewer__col {
+    width: 100%;
+  }
+
+  .talk-head {
+    height: auto;
+    padding-top: var(--s-2);
+  }
+
+  .talk-head > * {
+    white-space: normal;
+  }
+}
+
+@media (max-width: 699px) {
+  :root {
+    --header-h: 52px;
+    --viewer-gap: 8px;
+  }
+
+  .site-header__link {
+    display: none;
+  }
+
+  .stage-box {
+    border-radius: var(--r-xs);
+  }
+
+  .controls {
+    flex-wrap: wrap;
+    gap: var(--s-2);
+  }
+
+  /* The slide title takes its own row below the buttons. */
+  .counter__title {
+    order: 3;
+    flex-basis: 100%;
+    white-space: normal;
+    overflow: visible;
+  }
+}
+
+/* Short landscape screens (phones on their side): give the stage the room. */
+@media (orientation: landscape) and (max-height: 520px) {
+  :root {
+    --header-h: 44px;
+    --head-h: 0px;
+    --controls-h: 44px;
+    --viewer-gap: 6px;
+  }
+
+  .talk-app {
+    min-height: 0;
+    padding-block: var(--s-2);
+  }
+
+  .talk-head {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fade,
+  .progress__bar,
+  .ctl,
+  .talk-card {
+    transition: none !important;
+  }
+
+  .talk-card:hover {
+    transform: none;
+  }
+}

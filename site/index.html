@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://media.comphy-lab.org data:; script-src 'self'; style-src 'self'; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Talks · CoMPhy Lab</title>
+  <meta name="description" content="Talks from the Computational Multiphase Physics Lab at Durham University, one living talk per project, playable in the browser.">
+  <link rel="canonical" href="https://comphy-lab.org/talks/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CoMPhy Lab">
+  <meta property="og:title" content="Talks · CoMPhy Lab">
+  <meta property="og:description" content="Talks from the Computational Multiphase Physics Lab at Durham University, one living talk per project, playable in the browser.">
+  <meta property="og:url" content="https://comphy-lab.org/talks/">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="vendor/ds/fonts/fonts.css">
+  <link rel="stylesheet" href="vendor/ds/tokens.css">
+  <link rel="stylesheet" href="player/player.css">
+  <script src="player/theme.js"></script>
+  <script type="module" src="index.js"></script>
+</head>
+<body class="index-page">
+  <a class="skip-link" href="#talks-title">Skip to the talks</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="./" aria-current="page">
+        <span class="brand__lab">CoMPhy Lab</span>
+        <span class="brand__section">Talks</span>
+      </a>
+      <div class="site-header__tools">
+        <a class="site-header__link" href="https://comphy-lab.org/">comphy-lab.org</a>
+        <button class="ctl" type="button" data-theme-toggle aria-label="Switch to dark theme" title="Switch theme">
+          <svg class="ctl__icon ctl__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+          <svg class="ctl__icon ctl__icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="index" id="main">
+    <section class="index-hero">
+      <span class="eyebrow">Computational Multiphase Physics Lab</span>
+      <h1 class="hero-title">Talks</h1>
+      <p class="lede">One living talk per project, updated as the work moves on. Each plays in the browser with its original builds and movies.</p>
+    </section>
+
+    <section aria-labelledby="talks-title">
+      <h2 class="sr-only" id="talks-title" tabindex="-1">All talks</h2>
+      <ul class="talk-list" id="talk-list"></ul>
+      <p class="talk-list__status" id="talk-list-status" role="status">Loading talks…</p>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Computational Multiphase Physics Lab, Durham University · <a href="https://comphy-lab.org/">comphy-lab.org</a></p>
+  </footer>
+</body>
+</html>

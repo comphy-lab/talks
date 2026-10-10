@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en-GB" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' https://media.comphy-lab.org https://i.ytimg.com data:; media-src 'self' https://media.comphy-lab.org; script-src 'self' https://www.youtube.com/iframe_api https://www.youtube.com/s/player/; frame-src https://www.youtube-nocookie.com; style-src 'self'; font-src 'self'; connect-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Bursting bubbles · CoMPhy Lab talks</title>
+  <meta name="description" content="Singular Worthington jets and the drops they make. A talk by Vatsal Sanjay. First given at the University of Illinois Urbana-Champaign, October 2026.">
+  <link rel="canonical" href="https://comphy-lab.org/talks/singular-bursting-bubbles/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="CoMPhy Lab">
+  <meta property="og:title" content="Bursting bubbles">
+  <meta property="og:description" content="Singular Worthington jets and the drops they make. A talk by Vatsal Sanjay. First given at the University of Illinois Urbana-Champaign, October 2026.">
+  <meta property="og:url" content="https://comphy-lab.org/talks/singular-bursting-bubbles/">
+  <meta property="og:locale" content="en_GB">
+  <meta name="twitter:card" content="summary">
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../vendor/ds/fonts/fonts.css">
+  <link rel="stylesheet" href="../vendor/ds/tokens.css">
+  <link rel="stylesheet" href="../player/player.css">
+  <script src="../player/theme.js"></script>
+  <script type="module" src="../player/player.js"></script>
+</head>
+<body class="talk-page">
+  <a class="skip-link" href="#viewer">Skip to the slides</a>
+
+  <header class="site-header">
+    <div class="site-header__inner">
+      <a class="brand" href="../">
+        <span class="brand__lab">CoMPhy Lab</span>
+        <span class="brand__section">Talks</span>
+      </a>
+      <a class="site-header__link" href="https://comphy-lab.org/">comphy-lab.org</a>
+    </div>
+  </header>
+
+  <main class="talk" id="main">
+    <div class="talk-app">
+      <section class="viewer" id="viewer" aria-labelledby="talk-title" tabindex="-1">
+        <div class="viewer__col">
+          <div class="talk-head">
+            <p class="eyebrow talk-head__eyebrow" id="talk-speaker">Talk</p>
+            <h1 class="talk-head__title" id="talk-title">Bursting bubbles</h1>
+            <p class="talk-head__subtitle" id="talk-subtitle"></p>
+          </div>
+          <div class="stage-frame" id="stage-frame">
+            <div class="stage-box" id="stage-box">
+              <div class="stage" id="stage" role="img" aria-label="Loading slides" aria-describedby="slide-text">
+                <div class="layer layer--image" id="layer-image"></div>
+                <div class="layer layer--media" id="layer-media"></div>
+                <div class="layer layer--overlay" id="layer-overlay"></div>
+              </div>
+              <div class="stage-ui" id="stage-ui"></div>
+            </div>
+            <div class="stage-tools" id="stage-tools" role="group" aria-label="Full-screen controls">
+              <button class="ctl ctl--onblack" type="button" id="btn-pause-fs" aria-label="Pause videos" title="Pause videos (P or K)">
+                <svg class="ctl__icon ctl__icon--pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6v12M15 6v12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+                <svg class="ctl__icon ctl__icon--play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
+              </button>
+              <button class="ctl ctl--onblack" type="button" id="btn-exit-fs" aria-label="Exit full screen" title="Exit full screen (F or Esc)">
+                <svg class="ctl__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+          </div>
+          <div class="progress" aria-hidden="true"><div class="progress__bar" id="progress-bar"></div></div>
+          <div class="controls" role="group" aria-label="Slide controls">
+            <div class="controls__nav">
+              <button class="ctl" type="button" id="btn-prev" aria-label="Previous" title="Previous (Left arrow)">
+                <svg class="ctl__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <p class="counter" id="counter">
+                <span class="counter__num" id="counter-num">– / –</span>
+              </p>
+              <button class="ctl ctl--primary" type="button" id="btn-next" aria-label="Next" title="Next (Right arrow or Space)">
+                <svg class="ctl__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+            </div>
+            <p class="counter__title" id="counter-title"></p>
+            <div class="controls__tools">
+              <button class="ctl" type="button" id="btn-pause" aria-label="Pause videos" title="Pause videos (P or K)">
+                <svg class="ctl__icon ctl__icon--pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6v12M15 6v12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
+                <svg class="ctl__icon ctl__icon--play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
+              </button>
+              <button class="ctl" type="button" id="btn-fullscreen" aria-label="Enter full screen" title="Full screen (F)">
+                <svg class="ctl__icon ctl__icon--enter-fs" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                <svg class="ctl__icon ctl__icon--exit-fs" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <button class="ctl" type="button" data-theme-toggle aria-label="Switch to dark theme" title="Switch theme">
+                <svg class="ctl__icon ctl__icon--moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>
+                <svg class="ctl__icon ctl__icon--sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="sr-only" id="slide-text"></div>
+      <div class="sr-only" id="announcer" role="status" aria-live="polite" aria-atomic="true"></div>
+    </div>
+
+    <section class="about" aria-labelledby="about-title">
+      <div class="panel about__panel">
+        <span class="eyebrow">About this talk</span>
+        <h2 id="about-title">How to use this page</h2>
+        <p class="lede">Each click of the original talk is one step here. Videos play muted and loop; the pause button, or P, stops them.</p>
+        <div class="about__grid">
+          <div class="card">
+            <h3>Keyboard</h3>
+            <dl class="keys">
+              <div><dt><kbd>→</kbd> <kbd>Space</kbd> <kbd>Page Down</kbd></dt><dd>Next step</dd></div>
+              <div><dt><kbd>←</kbd> <kbd>Page Up</kbd></dt><dd>Previous step</dd></div>
+              <div><dt><kbd>Home</kbd> <kbd>End</kbd></dt><dd>First or last step</dd></div>
+              <div><dt><kbd>F</kbd></dt><dd>Full screen</dd></div>
+              <div><dt><kbd>P</kbd> <kbd>K</kbd></dt><dd>Pause or play videos</dd></div>
+            </dl>
+            <p class="about__hint">On a touch screen, swipe left or right; on a slide with a YouTube video, swipe outside the video or use the arrow buttons. A click on the right half of a slide moves on; the left half goes back.</p>
+          </div>
+          <div class="card">
+            <h3>Changes</h3>
+            <p class="about__updated" id="talk-updated"></p>
+            <ul class="changelog" id="changelog"></ul>
+          </div>
+        </div>
+        <p class="about__credits">Slides include figures and movies from other groups. Each is credited on the slide where it appears and remains its owners’.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>Computational Multiphase Physics Lab, Durham University · <a href="../">All talks</a></p>
+  </footer>
+</body>
+</html>
