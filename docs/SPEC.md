@@ -237,12 +237,14 @@ not the size, so a video lines up with the poster frame baked into the still.
     - `media-src 'self' https://media.comphy-lab.org` (`'self'` lets the
       local test hook below play videos; the site origin itself serves no
       media)
-    - `script-src 'self' https://www.youtube.com/iframe_api https://www.youtube.com/s/player/`
+    - `script-src 'self' https://www.youtube.com/iframe_api https://www.youtube.com/s/player/
+      https://static.cloudflareinsights.com/beacon.min.js https://static.cloudflareinsights.com/beacon.min.js/`
+      (the Cloudflare Web Analytics beacon the zone injects, as allowed on comphy-lab.org)
       (the IFrame API and the widget script it loads, nothing else on that host)
     - `frame-src https://www.youtube-nocookie.com`
     - `style-src 'self'`
     - `font-src 'self'`
-    - `connect-src 'self'`
+    - `connect-src 'self' https://cloudflareinsights.com`
     - `base-uri 'none'`
     - `form-action 'none'`
     - `object-src 'none'`
