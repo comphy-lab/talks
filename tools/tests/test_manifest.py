@@ -6,7 +6,7 @@ import json
 import pytest
 
 from talks_build.cli import main
-from talks_build.manifest import placement_key, validate
+from talks_build.manifest import media_files, placement_key, validate
 
 H = "0123456789abcdef"
 
@@ -118,3 +118,47 @@ def test_validate_checks_media_dir(tmp_path):
     for name in (f"{H}.mp4", f"{H}.webp"):
         (media / name).write_bytes(b"x")
     assert validate(good(), media) == []
+
+
+def test_schema_two_density_assets_and_schema_one_compatibility():
+    m = good()
+    m["schema"] = 2
+    state = m["slides"][0]["states"][0]
+    hi = "fedcba9876543210.webp"
+    state.update(image2x=hi, overlay2x=None)
+    assert validate(m) == []
+    assert hi in media_files(m)
+    m["schema"] = 1
+    assert any("require schema 2" in e for e in validate(m))
+    del state["image2x"], state["overlay2x"]
+    assert validate(m) == []
+
+
+@pytest.mark.parametrize(
+    "density,overlay,needle",
+    [
+        ({"image2x": "fedcba9876543210.webp"}, None, "together"),
+        ({"overlay2x": None}, None, "together"),
+        ({"image2x": "fedcba9876543210.webp", "overlay2x": None}, f"{H}.webp", "presence"),
+        ({"image2x": "fedcba9876543210.webp", "overlay2x": f"{H}.webp"}, None, "presence"),
+    ],
+)
+def test_density_pairs_must_have_matching_layers(density, overlay, needle):
+    m = good()
+    m["schema"] = 2
+    m["slides"][0]["states"][0].update(overlay=overlay, **density)
+    assert any(needle in e for e in validate(m))
+
+
+def test_density_validator_rejects_an_upscaled_name_with_one_x_pixels(tmp_path):
+    from PIL import Image
+
+    m = good()
+    m["schema"] = 2
+    hi = "fedcba9876543210.webp"
+    m["slides"][0]["states"][0].update(image2x=hi, overlay2x=None)
+    Image.new("RGB", (1920, 1080), "white").save(tmp_path / f"{H}.webp")
+    Image.new("RGB", (1920, 1080), "white").save(tmp_path / hi)
+    (tmp_path / f"{H}.mp4").write_bytes(b"x")
+    errors = validate(m, tmp_path)
+    assert len(errors) == 1 and "expected 3840 x 2160, got 1920 x 1080" in errors[0]

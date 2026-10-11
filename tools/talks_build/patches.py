@@ -64,6 +64,10 @@ class AppliedPatch:
     mode: str  # "texture" (same depth as the original) or "top"
     sprite: Sprite
     erased: Image.Image
+    texture_pdf: Path
+    texture_page: int
+    erase_bounds: tuple[int, int, int, int]
+    layout_plan: Layout
     notes: list[str] = field(default_factory=list)
 
     def describe(self) -> dict:
@@ -272,15 +276,16 @@ def layout_ok(layout: Layout, obstacles: list[Rect], canvas: Rect) -> bool:
     return not any(layout.box.intersects(o) for o in obstacles)
 
 
-def draw_layout(layout: Layout, path: Path, colour: tuple[int, int, int]) -> Sprite:
-    font = _font(path, layout.size)
+def draw_layout(layout: Layout, path: Path, colour: tuple[int, int, int], scale: int = 1) -> Sprite:
+    """Draw a logical layout directly at its target density, without resizing ink."""
+    font = _font(path, layout.size * scale)
     box = layout.box.inflate(4)
     x0, y0 = int(np.floor(box.x)), int(np.floor(box.y))
     w, h = int(np.ceil(box.x2)) - x0, int(np.ceil(box.y2)) - y0
-    img = Image.new("RGBA", (w, h), (0, 0, 0, 0))
+    img = Image.new("RGBA", (w * scale, h * scale), (0, 0, 0, 0))
     draw = ImageDraw.Draw(img)
     for text, ax, ay in layout.lines:
-        draw.text((ax - x0, ay - y0), text, font=font, anchor="ls", fill=colour + (255,))
+        draw.text(((ax - x0) * scale, (ay - y0) * scale), text, font=font, anchor="ls", fill=colour + (255,))
     return Sprite(img, x0, y0)
 
 
@@ -410,6 +415,10 @@ def plan_patch(
         mode=mode,
         sprite=sprite,
         erased=erased,
+        texture_pdf=pdf,
+        texture_page=page,
+        erase_bounds=(bx1, by1, bx2, by2),
+        layout_plan=chosen,
         notes=notes,
     )
 
@@ -498,11 +507,27 @@ def _depth(slide: Slide, owner: Leaf, sprite: Sprite, compositor: Compositor) ->
 
 
 def install(compositor: Compositor, applied: list[AppliedPatch]) -> None:
-    """Register erased textures and replacement sprites with a compositor."""
+    """Register patches, re-rendering fonts at the compositor's target density.
+
+    Layout and font fitting are decided once at 1x. Higher densities keep that
+    geometry and erase the corresponding pixels of a fresh vector PDF render.
+    """
     for p in applied:
-        compositor.overrides[p.texture] = (p.erased, 0, 0)
+        if compositor.scale == 1:
+            erased, sprite = p.erased, p.sprite
+        else:
+            scale = compositor.scale
+            base = (
+                compositor.overrides[p.texture][0]
+                if p.texture in compositor.overrides
+                else compositor.pages.page(p.texture_pdf, p.texture_page, scale)
+            )
+            bounds = tuple(v * scale for v in p.erase_bounds)
+            erased = erase_box(base, bounds, ring=3 * scale)
+            sprite = draw_layout(p.layout_plan, p.font_path, p.colour, scale)
+        compositor.overrides[p.texture] = (erased, 0, 0)
         target = compositor.after if p.mode == "texture" else compositor.on_top
-        target.setdefault(p.texture, []).append(p.sprite)
+        target.setdefault(p.texture, []).append(sprite)
 
 
 def plan_slide(

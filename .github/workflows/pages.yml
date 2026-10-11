@@ -10,8 +10,8 @@ permissions:
   contents: read
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: validate-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   validate:
@@ -40,6 +40,12 @@ jobs:
         working-directory: tools
         run: python -m pytest -q -m "not slow and not export"
 
+      - name: Check shared site shell against main
+        working-directory: tools
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python -m talks_build.shell_drift
+
       - name: Site hygiene
         run: |
           # Media lives on R2; the deployed tree must not carry it.
@@ -51,6 +57,9 @@ jobs:
           fi
 
   deploy:
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: validate
     runs-on: ubuntu-latest

@@ -15,6 +15,7 @@ local server is intercepted:
 
 from __future__ import annotations
 
+import base64
 import re
 import urllib.parse
 from pathlib import Path
@@ -144,6 +145,13 @@ def open_talk(browser, server: str, talk: Talk, engine: str):
             url = route.request.url
             parts = urllib.parse.urlsplit(url)
             host, path = parts.hostname or "", parts.path
+            if host == "i.ytimg.com" and re.fullmatch(r"/vi/[A-Za-z0-9_-]{11}/hqdefault\.jpg", path):
+                # Deterministic thumbnail for the link-out UI; no external media.
+                thumbnail = base64.b64decode(
+                    "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jS1sAAAAASUVORK5CYII="
+                )
+                route.fulfill(content_type="image/png", body=thumbnail)
+                return
             if host == "media.comphy-lab.org":
                 name = path.rsplit("/", 1)[-1]
                 expected = f"/talks/{talk.slug}/{name}"

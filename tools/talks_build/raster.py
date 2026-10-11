@@ -1,9 +1,9 @@
 """Rasterise texture-atlas pages and composite layer trees.
 
 Texture pages are vector PDF pages whose size in points equals the layer
-size in canvas pixels, so rendering at 72 dpi gives one canvas pixel per
-point. Pages are rendered with ``pdftocairo -transp`` to keep their alpha.
-Layers are placed at their snapped integer origin (see ``geometry.snap``).
+size in canvas pixels, so rendering at 72 or 144 dpi gives one or two image
+pixels per point. Pages are rendered with ``pdftocairo -transp`` to keep their
+alpha. Logical geometry is snapped before multiplying by the render scale.
 """
 
 from __future__ import annotations
@@ -32,10 +32,10 @@ class PageCache:
             workdir = Path(self._tmp.name)
         self.dir = Path(workdir)
         self.dir.mkdir(parents=True, exist_ok=True)
-        self._mem: dict[tuple[str, int], Image.Image] = {}
+        self._mem: dict[tuple[str, int, int], Image.Image] = {}
         self._pdf_digest: dict[str, str] = {}
 
-    def _key(self, pdf: Path, page: int) -> str:
+    def _key(self, pdf: Path, page: int, scale: int = 1) -> str:
         """Cache key from the PDF's content (not its path) and the page."""
         pdf = Path(pdf)
         digest = self._pdf_digest.get(str(pdf))
@@ -45,14 +45,16 @@ class PageCache:
                 for chunk in iter(lambda: f.read(1 << 20), b""):
                     h.update(chunk)
             digest = self._pdf_digest[str(pdf)] = h.hexdigest()[:24]
-        return f"{digest}-{page:04d}-72"
+        return f"{digest}-{page:04d}-{72 * scale}"
 
-    def page(self, pdf: Path, page_index: int) -> Image.Image:
-        """RGBA render of 0-based ``page_index`` at 72 dpi."""
-        mkey = (str(pdf), page_index)
+    def page(self, pdf: Path, page_index: int, scale: int = 1) -> Image.Image:
+        """RGBA render of 0-based ``page_index`` at ``72 * scale`` dpi."""
+        if type(scale) is not int or scale not in (1, 2):
+            raise ValueError("render scale must be 1 or 2")
+        mkey = (str(pdf), page_index, scale)
         if mkey in self._mem:
             return self._mem[mkey]
-        stem = self.dir / self._key(pdf, page_index)
+        stem = self.dir / self._key(pdf, page_index, scale)
         png = stem.with_suffix(".png")
         if not png.exists():
             stem = self.dir / f".tmp-{os.getpid()}-{threading.get_ident()}-{stem.name}"
@@ -62,7 +64,7 @@ class PageCache:
                     "-png",
                     "-transp",
                     "-r",
-                    "72",
+                    str(72 * scale),
                     "-f",
                     str(page_index + 1),
                     "-l",
@@ -86,7 +88,7 @@ class PageCache:
 
 @dataclass
 class Sprite:
-    """An extra RGBA image drawn into a composite (patch text, for example)."""
+    """An image at the compositor's density, positioned in logical canvas pixels."""
 
     image: Image.Image
     x: int
@@ -117,11 +119,15 @@ def with_opacity(img: Image.Image, opacity: float) -> Image.Image:
 class Compositor:
     """Draws leaves of a layer tree; textures may be substituted (patches)."""
 
-    def __init__(self, slide, pages: PageCache, width: int, height: int):
+    def __init__(self, slide, pages: PageCache, width: int, height: int, scale: int = 1):
+        if type(scale) is not int or scale not in (1, 2):
+            raise ValueError("render scale must be 1 or 2")
         self.slide = slide
         self.pages = pages
         self.width = width
         self.height = height
+        self.scale = scale
+        self.size = (width * scale, height * scale)
         # texture id -> (image, dx, dy) replacing the page render; dx/dy shift
         # the image relative to the layer origin (patched textures may grow).
         self.overrides: dict[str, tuple[Image.Image, int, int]] = {}
@@ -133,18 +139,18 @@ class Compositor:
     def texture_image(self, leaf: Leaf) -> tuple[Image.Image, int, int]:
         if leaf.texture in self.overrides:
             return self.overrides[leaf.texture]
-        img = self.pages.page(self.slide.texture_pdf(leaf.texture), self.slide.texture_page(leaf.texture))
-        w, h = snap(leaf.rect.w), snap(leaf.rect.h)
-        if abs(img.size[0] - w) > 1 or abs(img.size[1] - h) > 1:
+        img = self.pages.page(self.slide.texture_pdf(leaf.texture), self.slide.texture_page(leaf.texture), self.scale)
+        w, h = snap(leaf.rect.w) * self.scale, snap(leaf.rect.h) * self.scale
+        if abs(img.size[0] - w) > self.scale or abs(img.size[1] - h) > self.scale:
             img = img.resize((max(1, w), max(1, h)), Image.Resampling.LANCZOS)
         return img, 0, 0
 
     def draw_leaf(self, canvas: Image.Image, leaf: Leaf) -> None:
         img, dx, dy = self.texture_image(leaf)
         img = with_opacity(img, leaf.opacity)
-        paste(canvas, img, snap(leaf.rect.x) + dx, snap(leaf.rect.y) + dy)
+        paste(canvas, img, (snap(leaf.rect.x) + dx) * self.scale, (snap(leaf.rect.y) + dy) * self.scale)
         for sprite in self.after.get(leaf.texture, []):
-            paste(canvas, with_opacity(sprite.image, leaf.opacity), sprite.x, sprite.y)
+            paste(canvas, with_opacity(sprite.image, leaf.opacity), sprite.x * self.scale, sprite.y * self.scale)
 
     def composite(
         self,
@@ -161,7 +167,7 @@ class Compositor:
         skips the owner (so overlays above a movie keep lifted patch text).
         """
         bg = background if background is not None else (0, 0, 0, 0)
-        canvas = Image.new("RGBA", (self.width, self.height), bg)
+        canvas = Image.new("RGBA", self.size, bg)
         visible = [leaf for leaf in leaves if leaf.visible]
         for leaf in visible:
             if include is not None and not include(leaf):
@@ -171,7 +177,7 @@ class Compositor:
             # Sprites lifted above every layer follow their owner's visibility.
             for leaf in visible:
                 for sprite in self.on_top.get(leaf.texture, []):
-                    paste(canvas, with_opacity(sprite.image, leaf.opacity), sprite.x, sprite.y)
+                    paste(canvas, with_opacity(sprite.image, leaf.opacity), sprite.x * self.scale, sprite.y * self.scale)
         return canvas
 
     def flattened(self, tree: Layer) -> Image.Image:

@@ -27,7 +27,7 @@ delete Document.prototype.exitFullscreen; delete Document.prototype.webkitExitFu
 SCHOLAR = "https://scholar.google.com/citations?user=tHb_qZoAAAAJ&hl=en"
 # (kind, accessible name, href) in comphy-lab.org's order, Talks after Project docs; no command palette.
 NAV = [
-    ("button", "Switch to dark theme", None),
+    ("button", "Dark theme", None),
     ("a", "Google Scholar Profile", SCHOLAR),
     ("a", "GitHub Organization", "https://github.com/comphy-lab"),
     ("a", "Team", "/team/"),
@@ -75,7 +75,7 @@ SHELL_JS = """
     const el = li.querySelector('a, button');
     return { kind: el.tagName.toLowerCase(), name: (el.getAttribute('aria-label') || el.textContent).trim(),
              href: el.getAttribute('href'), current: el.getAttribute('aria-current'), rect: rect(el),
-             svg: Boolean(el.querySelector('svg')) };
+             svg: Boolean(el.querySelector('svg')), navLink: el.classList.contains('s-header__nav-link') };
   });
   const logo = header.querySelector('.s-header__logo img');
   const footer = document.querySelector('footer.c-footer');
@@ -87,7 +87,9 @@ SHELL_JS = """
     header: rect(header), position: cs.position, zIndex: cs.zIndex, vw: innerWidth, vh: innerHeight,
     logo: { alt: logo.alt, href: logo.closest('a').getAttribute('href'), loaded: logo.complete && logo.naturalWidth > 0,
             rect: rect(logo) },
-    items, toggles: document.querySelectorAll('[data-theme-toggle]').length,
+    items, navigationLabel: header.querySelector('.s-header__nav').getAttribute('aria-label'),
+    themePressed: header.querySelector('[data-theme-toggle]').getAttribute('aria-pressed'),
+    toggles: document.querySelectorAll('[data-theme-toggle]').length,
     togglesInHeader: header.querySelectorAll('[data-theme-toggle]').length,
     menuToggle: getComputedStyle(header.querySelector('.s-header__menu-toggle')).display,
     footer: Boolean(footer), cols,
@@ -166,6 +168,9 @@ def check_shell(tp: TalkPage, wide: bool, which: str) -> dict:
     assert s["logo"]["alt"] == "CoMPhy Lab" and s["logo"]["href"] == "/" and s["logo"]["loaded"], s["logo"]
     got = [(i["kind"], i["name"], i["href"]) for i in s["items"]]
     assert got == NAV, got
+    assert s["navigationLabel"] == "Main navigation"
+    assert s["themePressed"] == "false"
+    assert all(i["navLink"] for i in s["items"] if i["kind"] == "a")
     current = [i["name"] for i in s["items"] if i["current"]]
     assert current == ["Talks"] and s["items"][6]["current"] == CURRENT[which], (current, s["items"][6])
     assert all(i["svg"] for i in s["items"] if i["href"] is None or i["name"].endswith(("Profile", "Organization")))
@@ -229,21 +234,68 @@ def test_theme_toggle_is_single_and_shared(open_talk, talk: Talk, engine: str):
     theme = "() => [document.documentElement.dataset.theme, localStorage.getItem('theme')]"
     assert tp.page.evaluate(theme) == ["light", None]
     button = tp.page.locator(".s-header [data-theme-toggle]")
+    assert button.get_attribute("aria-label") == "Dark theme"
+    assert button.get_attribute("aria-pressed") == "false"
     button.click()
     assert tp.page.evaluate(theme) == ["dark", "dark"]
-    assert button.get_attribute("aria-label") == "Switch to light theme"
+    assert button.get_attribute("aria-label") == "Dark theme"
+    assert button.get_attribute("aria-pressed") == "true"
     assert tp.state()["slide"] == 3, "the theme toggle changed slide"
     tp.page.reload()
     wait_until(tp.page, "() => window.__talk && window.__talk.state()")
     assert tp.page.evaluate(theme) == ["dark", "dark"]
+    assert button.get_attribute("aria-pressed") == "true"
     # The index shares the key (as comphy-lab.org does).
     open_page(tp, "index")
     assert tp.page.evaluate(theme) == ["dark", "dark"]
     assert tp.page.evaluate("() => document.querySelectorAll('[data-theme-toggle]').length") == 1
+    assert tp.page.locator(".s-header [data-theme-toggle]").get_attribute("aria-pressed") == "true"
     tp.page.locator(".s-header [data-theme-toggle]").click()
     assert tp.page.evaluate(theme) == ["light", "light"]
+    assert tp.page.locator(".s-header [data-theme-toggle]").get_attribute("aria-pressed") == "false"
     open_page(tp, "talk")
     assert tp.page.evaluate(theme) == ["light", "light"]
+    tp.assert_clean()
+
+
+@pytest.mark.parametrize("which", ["index", "talk"])
+def test_theme_button_space_and_enter_keep_toggle_state(open_talk, engine: str, which: str):
+    tp = open_talk(**DESKTOP, color_scheme="light")
+    open_page(tp, which)
+    button = tp.page.locator(".s-header [data-theme-toggle]")
+    button.focus()
+    initial = tp.state() if which == "talk" else None
+    for key, theme, pressed in (("Space", "dark", "true"), ("Enter", "light", "false")):
+        tp.press(key)
+        assert tp.page.evaluate("() => document.documentElement.dataset.theme") == theme
+        assert button.get_attribute("aria-label") == "Dark theme"
+        assert button.get_attribute("aria-pressed") == pressed
+        if initial:
+            assert (tp.state()["slide"], tp.state()["stateIndex"]) == (initial["slide"], initial["stateIndex"])
+    tp.assert_clean()
+
+
+@pytest.mark.parametrize("which", ["index", "talk"])
+@pytest.mark.parametrize("width", [1440, 390])
+@pytest.mark.parametrize("theme,colour", [("light", "rgb(26, 26, 26)"), ("dark", "rgb(255, 255, 255)")])
+def test_shared_header_normal_and_hover_colours(open_talk, engine: str, which: str, width: int, theme: str, colour: str):
+    tp = open_talk(viewport={"width": width, "height": 900}, color_scheme=theme)
+    open_page(tp, which)
+    assert tp.page.evaluate("() => document.documentElement.dataset.theme") == theme
+    button = tp.page.locator(".s-header [data-theme-toggle]")
+    assert button.get_attribute("aria-pressed") == ("true" if theme == "dark" else "false")
+    if width < 1120:
+        tp.page.locator(".s-header__menu-toggle").click()
+        wait_until(tp.page, MENU_OPEN_JS, timeout=3)
+    team = tp.page.locator(".s-header__nav-list a[href='/team/']")
+    assert team.evaluate("el => getComputedStyle(el).color") == colour
+    team.hover()
+    assert team.evaluate("el => getComputedStyle(el).color") == colour
+    close = tp.page.locator(".s-header__nav-close-btn")
+    assert close.evaluate("el => getComputedStyle(el).color") == colour
+    if width < 1120:
+        close.hover()
+        assert close.evaluate("el => getComputedStyle(el).color") == colour
     tp.assert_clean()
 
 
@@ -307,6 +359,55 @@ def test_bar_fits_or_becomes_the_menu(open_talk, talk: Talk, engine: str, width:
     tp = open_talk(viewport={"width": width, "height": 768})
     open_page(tp, "index")
     check_shell(tp, wide=not drawer, which="index")
+    tp.assert_clean()
+
+
+@pytest.mark.parametrize("which", ["index", "talk"])
+@pytest.mark.parametrize(
+    "focused,expected",
+    [
+        (".s-header__nav-close-btn", "Google Scholar Profile"),
+        (".s-header__menu-toggle", "Google Scholar Profile"),
+        (".s-header__nav-list a[href='/team/']", "Team"),
+        (".s-header [data-theme-toggle]", "Dark theme"),
+    ],
+)
+def test_drawer_to_desktop_keeps_focus_on_visible_header_control(
+    open_talk, engine: str, which: str, focused: str, expected: str
+):
+    tp = open_talk(viewport={"width": 390, "height": 844})
+    open_page(tp, which)
+    tp.page.locator(".s-header__menu-toggle").click()
+    wait_until(tp.page, MENU_OPEN_JS, timeout=3)
+    if focused == ".s-header__menu-toggle":
+        tp.press("Escape")
+        wait_until(tp.page, MENU_CLOSED_JS, timeout=3)
+    control = tp.page.locator(focused)
+    control.focus()
+    assert control.evaluate("el => el === document.activeElement")
+    initial = tp.state() if which == "talk" else None
+    tp.page.set_viewport_size({"width": 1440, "height": 900})
+    wait_until(tp.page, MENU_CLOSED_JS, timeout=3)
+    active = wait_until(
+        tp.page,
+        """() => {
+          const active = document.activeElement;
+          return active && active.getClientRects().length && active.closest('.s-header__nav-list')
+            ? (active.getAttribute('aria-label') || active.textContent).trim() : null;
+        }""",
+        timeout=3,
+    )
+    assert active == expected
+    tp.press("Alt+Tab" if engine == "webkit" else "Tab")
+    assert tp.page.evaluate(
+        """() => {
+          const active = document.activeElement;
+          return active !== document.body && active.getClientRects().length > 0
+            && document.querySelector('.s-header__nav-list').contains(active);
+        }"""
+    ), "Tab after widening lost focus to the page body"
+    if initial:
+        assert (tp.state()["slide"], tp.state()["stateIndex"]) == (initial["slide"], initial["stateIndex"])
     tp.assert_clean()
 
 

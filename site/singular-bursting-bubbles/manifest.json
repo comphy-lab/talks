@@ -1,10 +1,10 @@
 {
-  "schema": 1,
+  "schema": 2,
   "slug": "singular-bursting-bubbles",
   "title": "Bursting bubbles",
   "subtitle": "Singular Worthington jets and the drops they make",
   "speaker": "Vatsal Sanjay",
-  "updated": "2026-10-10",
+  "updated": "2026-10-11",
   "canvas": {
     "width": 1920,
     "height": 1080
@@ -141,8 +141,10 @@
       "text": "Bursting bubbles Vatsal Sanjay Contact CoMPhy Lab",
       "states": [
         {
-          "image": "2b5376394134eb5d.webp",
+          "image": "6681b1c86d1d0c85.webp",
           "overlay": null,
+          "image2x": "463e6a746a26a019.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -155,14 +157,18 @@
       "text": "Singularities in a glass of champagne Ghabache E., Liger-Belair G., Antkowiak A. & Séon T. Sci. Rep. 6, 25148 (2016) Source: Arup K. Das & Thomas Séon Institut d'Alembert, Sorbonne Université",
       "states": [
         {
-          "image": "1883075f4f0bbf93.webp",
+          "image": "d9a7c355e902a9af.webp",
           "overlay": null,
+          "image2x": "000d603d9536687c.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         },
         {
-          "image": "eb62e40777708e37.webp",
+          "image": "4514ecea3e776132.webp",
           "overlay": "5ada3d865bbf37cd.webp",
+          "image2x": "b8092087aa76c0d4.webp",
+          "overlay2x": "141d6b02bbdada6e.webp",
           "transition": "none",
           "media": [
             {
@@ -183,35 +189,45 @@
       "id": "B037333B-0401-416C-81A9-8F4729D2CEE8",
       "n": 3,
       "title": "Bursting Bubble: Process",
-      "text": "Bursting Bubble: Process Film droplets Gas Gas 1. Bubble approaches the free surface 3. Rupture of lm to form droplets fi H. Lhuissier & E. Villermaux, J. Fluid Mech., 696, 5-44 (2012) Gas Liquid 2. Bubble deforms the interface H. M. Princen, J. Colloid Sci., 18:2, 178-195 (1963) 4. Collapse of bubble cavity",
+      "text": "Bursting Bubble: Process Gas Gas 1. Bubble approaches the free surface Liquid 2. Bubble deforms the interface H. M. Princen, J. Colloid Sci., 18:2, 178-195 (1963) 3. Rupture of lm to form droplets fi H. Lhuissier & E. Villermaux, J. Fluid Mech., 696, 5-44 (2012) 4. Collapse of bubble cavity",
       "states": [
         {
-          "image": "1a1899e3b6261a8d.webp",
+          "image": "88c495b6b28ff7ce.webp",
           "overlay": null,
+          "image2x": "b758eca0ba151395.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         },
         {
-          "image": "358e66d47f3a7c6a.webp",
+          "image": "1a44138ccc472edb.webp",
           "overlay": null,
+          "image2x": "d3374636f54bcf6a.webp",
+          "overlay2x": null,
           "transition": "dissolve",
           "media": []
         },
         {
-          "image": "6017c592a7fa827c.webp",
+          "image": "42f6ca64f0a297cc.webp",
           "overlay": null,
+          "image2x": "5101e427efa9b073.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         },
         {
-          "image": "dc6aff68619d8eea.webp",
+          "image": "5904b63ec0f76758.webp",
           "overlay": null,
+          "image2x": "844425937d887826.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         },
         {
-          "image": "5903bae0efa9f418.webp",
+          "image": "37b09bdbb203a4b4.webp",
           "overlay": null,
+          "image2x": "67deced3be66968c.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -224,8 +240,10 @@
       "text": "Bursting Bubble in a Newtonian medium Ghabache et al. (2014), PoF Ghabache et al. (2016), Sci. Rep. (c) Alain Cornu/Collection CIVC Walls, Henaux & Bird (2015), Phys. Rev. E 92, 021002",
       "states": [
         {
-          "image": "223c419bc37f178e.webp",
+          "image": "b079ce33e52317ce.webp",
           "overlay": null,
+          "image2x": "cea158c2af6ae445.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -241,8 +259,10 @@
           ]
         },
         {
-          "image": "6a083498e5a12bd4.webp",
-          "overlay": "2a4ec535755dc0ea.webp",
+          "image": "9f4a83bc0261f7d8.webp",
+          "overlay": "2ea294f6c0ad0713.webp",
+          "image2x": "6e19106f27979bae.webp",
+          "overlay2x": "8a06f3f5082d2989.webp",
           "transition": "none",
           "media": [
             {
@@ -276,14 +296,18 @@
       "text": "Viscosity enhances the jet Velocity 0 Viscous dissipation 2 -2 1 5",
       "states": [
         {
-          "image": "47bddaf145480a6a.webp",
+          "image": "4d2a34609cf1a713.webp",
           "overlay": null,
+          "image2x": "89555697b224a548.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         },
         {
-          "image": "bb5262f44adb1f79.webp",
-          "overlay": "d3fb26fc5dc76261.webp",
+          "image": "e1e962684ead94e7.webp",
+          "overlay": "258137d231d78a79.webp",
+          "image2x": "45799809fd2475de.webp",
+          "overlay2x": "4734559d7431f6d9.webp",
           "transition": "none",
           "media": [
             {
@@ -327,14 +351,18 @@
       "text": "Bursting Bubble in a non-Newtonian medium Yellowstone National Park: Video from https://www.youtube.com/watch?v=a9hUsVq9q7U",
       "states": [
         {
-          "image": "56edc90e2b8fd374.webp",
+          "image": "01056d69d113ee8b.webp",
           "overlay": null,
+          "image2x": "9d71a9fa4594db29.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         },
         {
-          "image": "e1a7070b9d06903f.webp",
+          "image": "e35fe834296f554e.webp",
           "overlay": null,
+          "image2x": "ad33f2774c74cbcc.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -360,6 +388,8 @@
         {
           "image": "0c4ff0fae7ee52e4.webp",
           "overlay": null,
+          "image2x": "52f2c8e17333be32.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -374,6 +404,8 @@
         {
           "image": "f67a7095cb5d6f83.webp",
           "overlay": null,
+          "image2x": "67d60cee10f68051.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -386,8 +418,10 @@
       "text": "Computational Multiphase Physics Lab #ilovefs Numerics: Basilisk C Cauchy momentum + VoF Stéphane Popinet & collaborators CoMPhy Lab",
       "states": [
         {
-          "image": "ba3ad763e0cd69a3.webp",
+          "image": "e34ac6f6efb5c28f.webp",
           "overlay": null,
+          "image2x": "e9bdb1d979a733f9.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -402,6 +436,8 @@
         {
           "image": "b85fc68cc5e7bd4d.webp",
           "overlay": null,
+          "image2x": "56a03d2595584c08.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -414,8 +450,10 @@
       "text": "Singularities in soft matter systems 101",
       "states": [
         {
-          "image": "b0760d9f2404ac7f.webp",
+          "image": "843cdf0a11af0bf6.webp",
           "overlay": null,
+          "image2x": "689f95b549c4aa1d.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -430,6 +468,8 @@
         {
           "image": "89e173e6738ab2b4.webp",
           "overlay": null,
+          "image2x": "3c284bd0af0f682d.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -444,6 +484,8 @@
         {
           "image": "695df4b2ee308d19.webp",
           "overlay": null,
+          "image2x": "2b81d11f3ad213c1.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -458,6 +500,8 @@
         {
           "image": "4178bb029f7ab248.webp",
           "overlay": null,
+          "image2x": "a56b182040986e15.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -472,6 +516,8 @@
         {
           "image": "1874e339c885bb1c.webp",
           "overlay": null,
+          "image2x": "53003482caa66062.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -486,6 +532,8 @@
         {
           "image": "55170e13a8cf989e.webp",
           "overlay": null,
+          "image2x": "26a88d5e9b71101d.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -500,6 +548,8 @@
         {
           "image": "9acd12ec0af023cd.webp",
           "overlay": null,
+          "image2x": "49cf862f19c7e48b.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -514,6 +564,8 @@
         {
           "image": "bb356ec82c144e66.webp",
           "overlay": null,
+          "image2x": "f5eb1a12306cc376.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -528,6 +580,8 @@
         {
           "image": "bd6bb6ac51255fdf.webp",
           "overlay": null,
+          "image2x": "4333f65e38d12a1b.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -542,6 +596,8 @@
         {
           "image": "6d1e0c474d16eaf3.webp",
           "overlay": null,
+          "image2x": "ed33a39bd56df4de.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -556,6 +612,8 @@
         {
           "image": "87394196921f9558.webp",
           "overlay": null,
+          "image2x": "fb405ce4bcde5434.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -581,6 +639,8 @@
         {
           "image": "7397cd472e9a7145.webp",
           "overlay": null,
+          "image2x": "f22bfef353de9f7a.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -606,6 +666,8 @@
         {
           "image": "0044a9d070ef5409.webp",
           "overlay": null,
+          "image2x": "cf5d27c5bb89d811.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -631,6 +693,8 @@
         {
           "image": "5c6d3e0d456f933d.webp",
           "overlay": null,
+          "image2x": "621c09fba5a8df29.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -656,6 +720,8 @@
         {
           "image": "537dd2c204c21e83.webp",
           "overlay": null,
+          "image2x": "6b5c764156834722.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -670,6 +736,8 @@
         {
           "image": "7a55099140554ec8.webp",
           "overlay": null,
+          "image2x": "764c15336475f91c.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -695,6 +763,8 @@
         {
           "image": "116e8a0f19ddd635.webp",
           "overlay": null,
+          "image2x": "0161c7059037c940.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -720,6 +790,8 @@
         {
           "image": "cabff70555d071d9.webp",
           "overlay": null,
+          "image2x": "dfc7964e50e5ebf6.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -734,6 +806,8 @@
         {
           "image": "4b2f37999bc633ab.webp",
           "overlay": null,
+          "image2x": "c98fde5e8c108b02.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -748,6 +822,8 @@
         {
           "image": "6e8507f129ace30d.webp",
           "overlay": null,
+          "image2x": "0bf18af4bcfed1eb.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -762,6 +838,8 @@
         {
           "image": "f035b7b36c2f58e2.webp",
           "overlay": null,
+          "image2x": "c6fef435b1588177.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -776,6 +854,8 @@
         {
           "image": "ea92b0933ae36908.webp",
           "overlay": null,
+          "image2x": "1ff83c8f0960cdd0.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -790,6 +870,8 @@
         {
           "image": "dde76ffc7866ecb6.webp",
           "overlay": null,
+          "image2x": "5c0e7c5083544252.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -804,6 +886,8 @@
         {
           "image": "7d748e9cf3ec2164.webp",
           "overlay": null,
+          "image2x": "589b848668110b64.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -829,6 +913,8 @@
         {
           "image": "4179d6ada5e455a9.webp",
           "overlay": null,
+          "image2x": "fcea224178dc2353.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -854,6 +940,8 @@
         {
           "image": "ed82c903256d8441.webp",
           "overlay": null,
+          "image2x": "13e2de6a4ef2737e.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -879,12 +967,16 @@
         {
           "image": "085e84573a0cc7bf.webp",
           "overlay": null,
+          "image2x": "af7b48e00818576f.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         },
         {
           "image": "085e84573a0cc7bf.webp",
           "overlay": null,
+          "image2x": "af7b48e00818576f.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -910,6 +1002,8 @@
         {
           "image": "2cd9f89fe17fb5e9.webp",
           "overlay": null,
+          "image2x": "76949fc918c5dbdf.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -943,8 +1037,10 @@
       "text": "What about the local Weber number?",
       "states": [
         {
-          "image": "92d2da9f26a31bec.webp",
+          "image": "181eefcc2894c7ae.webp",
           "overlay": null,
+          "image2x": "10c032fc9b8f04c5.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -959,6 +1055,8 @@
         {
           "image": "5f9366dbff1a0936.webp",
           "overlay": null,
+          "image2x": "8448412f3c371290.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -973,6 +1071,8 @@
         {
           "image": "362227f510ec4fd7.webp",
           "overlay": null,
+          "image2x": "79bba8ba1a03a5d3.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -987,6 +1087,8 @@
         {
           "image": "4da0b24dd685cf6d.webp",
           "overlay": null,
+          "image2x": "fe40e0c9fa6168ee.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1001,6 +1103,8 @@
         {
           "image": "4cc625ff69c36a46.webp",
           "overlay": null,
+          "image2x": "db0f7e8ec13efad9.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1015,6 +1119,8 @@
         {
           "image": "a6412c0788f4e61a.webp",
           "overlay": null,
+          "image2x": "48ca44cdeb6463e5.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1029,6 +1135,8 @@
         {
           "image": "37fbc69eb1f51821.webp",
           "overlay": null,
+          "image2x": "af2a920f16cca276.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1043,6 +1151,8 @@
         {
           "image": "652d7d5c67b642c0.webp",
           "overlay": null,
+          "image2x": "fb827c94ccd43516.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1057,6 +1167,8 @@
         {
           "image": "9ea285134f48d841.webp",
           "overlay": null,
+          "image2x": "300b361ea72189a0.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1071,6 +1183,8 @@
         {
           "image": "8574c520f4567b4a.webp",
           "overlay": null,
+          "image2x": "30b24ea0d275826a.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1085,6 +1199,8 @@
         {
           "image": "a91487d6c2291b46.webp",
           "overlay": null,
+          "image2x": "809f3583fd54a2c1.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1099,6 +1215,8 @@
         {
           "image": "f8aeada120ba62f3.webp",
           "overlay": null,
+          "image2x": "e29870fe204d5c03.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1113,6 +1231,8 @@
         {
           "image": "6f7bbec10b2a4fd2.webp",
           "overlay": null,
+          "image2x": "646d04c8e66b5d22.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1127,6 +1247,8 @@
         {
           "image": "402e64885523dca7.webp",
           "overlay": null,
+          "image2x": "80865e8c758c144d.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1141,6 +1263,8 @@
         {
           "image": "100edcedbd49b223.webp",
           "overlay": null,
+          "image2x": "b0ee38c49043d729.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1155,6 +1279,8 @@
         {
           "image": "5e0d10950e96ffea.webp",
           "overlay": null,
+          "image2x": "a90ef4dcc662d971.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1169,6 +1295,8 @@
         {
           "image": "ebd6874ead21b7e2.webp",
           "overlay": null,
+          "image2x": "11a4cef43a4e77bd.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1181,8 +1309,10 @@
       "text": "We need a closure",
       "states": [
         {
-          "image": "105e4e63b9e31ec0.webp",
+          "image": "4a083ed6d3c55bac.webp",
           "overlay": null,
+          "image2x": "da3664d32d215371.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1197,6 +1327,8 @@
         {
           "image": "d199bc79090df78a.webp",
           "overlay": null,
+          "image2x": "322efd2750dd2498.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1211,6 +1343,8 @@
         {
           "image": "f1ab5cc89a99c408.webp",
           "overlay": null,
+          "image2x": "1a25edf05fb4b1d5.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1225,6 +1359,8 @@
         {
           "image": "1698719c88a945fb.webp",
           "overlay": null,
+          "image2x": "3683c43a84a5085a.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1239,6 +1375,8 @@
         {
           "image": "49f5696bf0b82ff3.webp",
           "overlay": null,
+          "image2x": "744933740fce3173.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1251,8 +1389,10 @@
       "text": "We need a closure!!!",
       "states": [
         {
-          "image": "d7a5fecb195bedf9.webp",
+          "image": "862aba6aa60e7e56.webp",
           "overlay": null,
+          "image2x": "ca1e89e8864c50a4.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1267,6 +1407,8 @@
         {
           "image": "c9af208bfb4becc1.webp",
           "overlay": null,
+          "image2x": "e719e8e4180dbfa3.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -1292,6 +1434,8 @@
         {
           "image": "1152235c257f61e7.webp",
           "overlay": null,
+          "image2x": "3e2a21724ed7125a.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1306,6 +1450,8 @@
         {
           "image": "f731fe97bef58c19.webp",
           "overlay": null,
+          "image2x": "8375d0f95343d273.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1320,6 +1466,8 @@
         {
           "image": "1f8cd3899f2921fd.webp",
           "overlay": null,
+          "image2x": "0b3f16faa65563a3.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1334,6 +1482,8 @@
         {
           "image": "6dd5fecca675ac5d.webp",
           "overlay": null,
+          "image2x": "654645cc33095241.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1348,6 +1498,8 @@
         {
           "image": "c94c614870d74703.webp",
           "overlay": null,
+          "image2x": "6f0509ed686dbfc6.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1362,6 +1514,8 @@
         {
           "image": "cb16e6fe59e1df1a.webp",
           "overlay": null,
+          "image2x": "59e829cd87d76a58.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1376,6 +1530,8 @@
         {
           "image": "2e1dbac4373ad3af.webp",
           "overlay": null,
+          "image2x": "7d555cd942eb4883.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1390,6 +1546,8 @@
         {
           "image": "9f08652d030e7f7e.webp",
           "overlay": null,
+          "image2x": "73cadbccbe05222e.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1404,6 +1562,8 @@
         {
           "image": "4daf354818582c87.webp",
           "overlay": null,
+          "image2x": "97c9e4d88cb3cd70.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1418,6 +1578,8 @@
         {
           "image": "590a49dcca09610a.webp",
           "overlay": null,
+          "image2x": "6534e9b971464397.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1432,6 +1594,8 @@
         {
           "image": "4f1afe0d7cadb006.webp",
           "overlay": null,
+          "image2x": "15598d9bb997b0cf.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1446,6 +1610,8 @@
         {
           "image": "2deca56e16296ec8.webp",
           "overlay": null,
+          "image2x": "f5e885d44274fff1.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1460,6 +1626,8 @@
         {
           "image": "50f3c638016f2ed1.webp",
           "overlay": null,
+          "image2x": "3b32e8be1817be1b.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1474,6 +1642,8 @@
         {
           "image": "24a912ffd54ff20b.webp",
           "overlay": null,
+          "image2x": "a482dbe05f0e25f8.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1488,6 +1658,8 @@
         {
           "image": "a9bb2ce2959fc8a4.webp",
           "overlay": null,
+          "image2x": "187bab4accffbf92.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1502,6 +1674,8 @@
         {
           "image": "85cfde4455e460e0.webp",
           "overlay": null,
+          "image2x": "a8e19093049ed4ca.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1516,6 +1690,8 @@
         {
           "image": "7477fecb7f8b3d2b.webp",
           "overlay": null,
+          "image2x": "d028d18e9c9b2c93.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1530,6 +1706,8 @@
         {
           "image": "3ecd37f72265631d.webp",
           "overlay": null,
+          "image2x": "08a4439728e8eefb.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1544,6 +1722,8 @@
         {
           "image": "775ee9546926f90f.webp",
           "overlay": null,
+          "image2x": "d98d716ccf5fcf64.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1558,6 +1738,8 @@
         {
           "image": "140e846ce96a32a4.webp",
           "overlay": null,
+          "image2x": "4801a2401b118405.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1572,6 +1754,8 @@
         {
           "image": "d348ba0de33b8526.webp",
           "overlay": null,
+          "image2x": "f73f55b393919968.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1586,6 +1770,8 @@
         {
           "image": "c9b7439990ab4ce9.webp",
           "overlay": null,
+          "image2x": "ab03cc1f2d065800.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1600,6 +1786,8 @@
         {
           "image": "f8fd411fae0ac7c3.webp",
           "overlay": null,
+          "image2x": "8cf89073be9f4cc8.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1614,6 +1802,8 @@
         {
           "image": "9949ebc5fdbf4ae9.webp",
           "overlay": null,
+          "image2x": "736566a5bd6e63c3.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1628,6 +1818,8 @@
         {
           "image": "49b254fa2968108c.webp",
           "overlay": null,
+          "image2x": "2825bca84323eb65.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1642,6 +1834,8 @@
         {
           "image": "a7e427b07b3ce4d7.webp",
           "overlay": null,
+          "image2x": "2d5406f5f0ae38f7.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1656,6 +1850,8 @@
         {
           "image": "fd48a9c4856b3a16.webp",
           "overlay": null,
+          "image2x": "372132cb2859dd93.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1670,6 +1866,8 @@
         {
           "image": "a5cb896278682423.webp",
           "overlay": null,
+          "image2x": "6821636270b3c702.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1684,6 +1882,8 @@
         {
           "image": "c2f23e87e8f9933f.webp",
           "overlay": null,
+          "image2x": "7ee7bfc7b3c7bdc9.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1698,6 +1898,8 @@
         {
           "image": "12bca02d42e179d0.webp",
           "overlay": null,
+          "image2x": "626303292d530ac6.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1712,6 +1914,8 @@
         {
           "image": "1e635c3e50ee67de.webp",
           "overlay": null,
+          "image2x": "6bf5529daa2736f1.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1726,6 +1930,8 @@
         {
           "image": "0a35da063d62990c.webp",
           "overlay": null,
+          "image2x": "c4a8fae00b660566.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1740,6 +1946,8 @@
         {
           "image": "ea94a6779e4c68c7.webp",
           "overlay": null,
+          "image2x": "cac5c6a775afc8e4.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1754,6 +1962,8 @@
         {
           "image": "e0edc89ffd5b02a6.webp",
           "overlay": null,
+          "image2x": "7679bee97c334bba.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1768,6 +1978,8 @@
         {
           "image": "70f33b2559d319b1.webp",
           "overlay": null,
+          "image2x": "1cb61385bd67fdcb.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -1793,6 +2005,8 @@
         {
           "image": "710c5e04f9003846.webp",
           "overlay": null,
+          "image2x": "7d3fefd5dc011c62.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -1818,6 +2032,8 @@
         {
           "image": "8c1277e5d16c2bdb.webp",
           "overlay": null,
+          "image2x": "197e26f57766cab9.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1832,6 +2048,8 @@
         {
           "image": "3f50baf97875ae3e.webp",
           "overlay": null,
+          "image2x": "3a7526aef3e52e18.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1846,6 +2064,8 @@
         {
           "image": "bdb68cb4058ff604.webp",
           "overlay": null,
+          "image2x": "4016c3d79386ac48.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1860,6 +2080,8 @@
         {
           "image": "a09f1731de308df8.webp",
           "overlay": null,
+          "image2x": "cb422676dc7d825b.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1874,6 +2096,8 @@
         {
           "image": "ee96da82f7c3f07c.webp",
           "overlay": null,
+          "image2x": "204cfd1eb95d0037.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1888,6 +2112,8 @@
         {
           "image": "1f1096007a0fc024.webp",
           "overlay": null,
+          "image2x": "b92454254ffdfa87.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1902,6 +2128,8 @@
         {
           "image": "fcbaaeb78723ced0.webp",
           "overlay": null,
+          "image2x": "789b1679c16f67b7.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -1916,6 +2144,8 @@
         {
           "image": "65470d49c7d09cae.webp",
           "overlay": null,
+          "image2x": "81bdfb1b05e45c53.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -1941,6 +2171,8 @@
         {
           "image": "38b38deb6f9509ff.webp",
           "overlay": null,
+          "image2x": "0cd55f2a38bca841.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -1966,6 +2198,8 @@
         {
           "image": "26b64c544570aad8.webp",
           "overlay": null,
+          "image2x": "5ab34b96ef90b0dc.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -1991,6 +2225,8 @@
         {
           "image": "770e6900a363859f.webp",
           "overlay": null,
+          "image2x": "06b6dad7ddabb8f0.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -2016,6 +2252,8 @@
         {
           "image": "58ad95d5e18ab19c.webp",
           "overlay": null,
+          "image2x": "7d1f9d8105cfb7f5.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -2039,8 +2277,10 @@
       "text": "One more thing …",
       "states": [
         {
-          "image": "aaa381046dbe6177.webp",
+          "image": "9ba0c8713406f0e6.webp",
           "overlay": null,
+          "image2x": "a7ad4be9f8070eca.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -2055,6 +2295,8 @@
         {
           "image": "fd05660f25259188.webp",
           "overlay": null,
+          "image2x": "7cb73e5748be294b.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -2069,6 +2311,8 @@
         {
           "image": "f67a7095cb5d6f83.webp",
           "overlay": null,
+          "image2x": "67d60cee10f68051.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": []
         }
@@ -2081,8 +2325,10 @@
       "text": "Thanks! Contact Questions? CoMPhy Lab log10 Φ −3 −1 1 |v| 0.5 1 0",
       "states": [
         {
-          "image": "647f412952354043.webp",
+          "image": "5bd3dda0f86ffe40.webp",
           "overlay": null,
+          "image2x": "4494e83f1bc1e0d8.webp",
+          "overlay2x": null,
           "transition": "none",
           "media": [
             {
@@ -2101,6 +2347,10 @@
     }
   ],
   "changelog": [
+    {
+      "date": "2026-10-11",
+      "note": "Corrected native citations and Yellowstone spelling; added high-density slide images."
+    },
     {
       "date": "2026-10-10",
       "note": "First web version of the UIUC talk."

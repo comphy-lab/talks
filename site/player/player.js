@@ -50,6 +50,7 @@ const YT_ID_RE = /^[A-Za-z0-9_-]{11}$/;
 const HASH_RE = /^#?([0-9a-f]{8})(?:\.(\d{1,4}))?$/i;
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1']);
 
+
 const YT_API_SRC = 'https://www.youtube.com/iframe_api';
 const YT_HOST = 'https://www.youtube-nocookie.com';
 const YT_API_TIMEOUT_MS = 8000;
@@ -319,7 +320,7 @@ function preloadAround(index) {
   for (const i of [index + 1, index + 2, index - 1]) {
     if (i < 0 || i >= steps.length) continue;
     const { state } = stepAt(i);
-    for (const file of [state.image, state.overlay]) {
+    for (const file of stateImages(state)) {
       const url = file ? mediaUrl(file) : null;
       if (url) wanted.add(url);
     }
@@ -335,6 +336,46 @@ function preloadAround(index) {
     if (typeof img.decode === 'function') img.decode().catch(() => undefined);
     preloaded.set(url, img);
   }
+}
+
+/** Select a matching still/overlay pair without changing logical geometry. */
+function stateImages(state) {
+  const width = ui.stage.getBoundingClientRect().width;
+  const dense = (window.devicePixelRatio || 1) * width > 1.25 * canvasW;
+  const complete = mediaUrl(state.image2x) &&
+    (state.overlay ? mediaUrl(state.overlay2x) : state.overlay2x === null);
+  return dense && complete ? [state.image2x, state.overlay2x] : [state.image, state.overlay];
+}
+
+let layoutFrame = 0;
+
+/** Refresh density and embed eligibility after layout, keeping native videos. */
+function refreshLayout() {
+  if (layoutFrame) return;
+  layoutFrame = requestAnimationFrame(() => {
+    layoutFrame = 0;
+    if (committed < 0) return;
+    for (const [key, entry] of mounted) {
+      if (entry.kind !== 'youtube') continue;
+      const size = renderedSize(entry.placement.rect);
+      const tooSmall = Boolean(size && (size.w < YT_MIN_PX || size.h < YT_MIN_PX));
+      if (tooSmall === entry.tooSmall) continue;
+      const z = entry.el.style.zIndex;
+      entry.destroy();
+      const next = createYouTubeEntry(key, entry.placement);
+      if (!next) { mounted.delete(key); continue; }
+      next.el.style.zIndex = z;
+      ui.mediaLayer.append(next.el);
+      mounted.set(key, next);
+      if (!paused) next.play();
+    }
+    go(target, { refresh: true });
+  });
+}
+
+function watchPixelRatio() {
+  const query = window.matchMedia(`(resolution: ${window.devicePixelRatio || 1}dppx)`);
+  query.addEventListener('change', () => { refreshLayout(); watchPixelRatio(); }, { once: true });
 }
 
 /* --------------------------------------------------------------- videos */
@@ -516,6 +557,8 @@ function createYouTubeEntry(key, m) {
   const entry = {
     key,
     kind: 'youtube',
+    placement: m,
+    tooSmall: false,
     el: box,
     play() {
       if (!ready) return;
@@ -538,6 +581,7 @@ function createYouTubeEntry(key, m) {
   // Too small to embed within YouTube's terms: link out instead.
   const size = renderedSize(m.rect);
   if (size && (size.w < YT_MIN_PX || size.h < YT_MIN_PX)) {
+    entry.tooSmall = true;
     box.classList.add('is-too-small');
     showFallback();
     return entry;
@@ -655,20 +699,22 @@ function commit(index, stills, animate) {
   swapLayer(ui.imageLayer, stills.image, dissolve);
   swapLayer(ui.overlayLayer, stills.overlay, dissolve);
 
+  const navigated = committed !== index;
   committed = index;
-  updateChrome(index, si);
+  updateChrome(index, si, navigated);
   preloadAround(index);
 }
 
-function go(index, { animate = false } = {}) {
+function go(index, { animate = false, refresh = false } = {}) {
   if (!steps.length) return;
   const to = clamp(index, 0, steps.length - 1);
-  if (to === target) return;
+  if (to === target && !refresh) return;
   target = to;
   const token = ++navToken;
   const { state } = stepAt(to);
-  const imageUrl = state.image ? mediaUrl(state.image) : null;
-  const overlayUrl = state.overlay ? mediaUrl(state.overlay) : null;
+  const [image, overlay] = stateImages(state);
+  const imageUrl = image ? mediaUrl(image) : null;
+  const overlayUrl = overlay ? mediaUrl(overlay) : null;
   const stills = {
     image: imageUrl ? makeStill(imageUrl, 'still--image') : null,
     overlay: overlayUrl ? makeStill(overlayUrl, 'still--overlay') : null,
@@ -752,7 +798,7 @@ function writeHash(hash) {
   hashTimer = setTimeout(flushHash, Math.max(0, lastHashWrite + HASH_WRITE_MS - performance.now()));
 }
 
-function updateChrome(index, si) {
+function updateChrome(index, si, announce) {
   const slide = slides[si];
   const title = slideTitle(slide, si);
   const n = si + 1;
@@ -761,19 +807,21 @@ function updateChrome(index, si) {
   ui.counterNum.textContent = `${n} / ${total}`;
   ui.counterTitle.textContent = title;
   ui.stage.setAttribute('aria-label', title);
-  // A new slide is announced with its title; a later click step of the same
-  // slide only with its position, so every press of Next is heard.
-  const { k } = steps[index];
-  const count = slide.states.length;
-  const step = count > 1 ? `step ${k + 1} of ${count}` : '';
-  let message;
-  if (announcedSlide !== si) {
-    message = `Slide ${n} of ${total}${step ? `, ${step}` : ''}: ${title}`;
-    announcedSlide = si;
-  } else {
-    message = step ? `${step.charAt(0).toUpperCase()}${step.slice(1)}` : `Slide ${n} of ${total}: ${title}`;
+  // Only navigation changes the live region. A density or layout refresh
+  // must retain the slide context and must not announce an extra click step.
+  if (announce) {
+    const { k } = steps[index];
+    const count = slide.states.length;
+    const step = count > 1 ? `step ${k + 1} of ${count}` : '';
+    let message;
+    if (announcedSlide !== si) {
+      message = `Slide ${n} of ${total}${step ? `, ${step}` : ''}: ${title}`;
+      announcedSlide = si;
+    } else {
+      message = step ? `${step.charAt(0).toUpperCase()}${step.slice(1)}` : `Slide ${n} of ${total}: ${title}`;
+    }
+    if (ui.announcer.textContent !== message) ui.announcer.textContent = message;
   }
-  if (ui.announcer.textContent !== message) ui.announcer.textContent = message;
   if (shownTextSlide !== si) {
     ui.slideText.textContent = typeof slide.text === 'string' ? slide.text : '';
     shownTextSlide = si;
@@ -849,6 +897,7 @@ function updateFullscreenButton() {
   ui.fullscreen.dataset.active = String(on);
   ui.fullscreen.setAttribute('aria-label', on ? 'Exit full screen' : 'Enter full screen');
   ui.fullscreen.title = on ? 'Exit full screen (F)' : 'Full screen (F)';
+  refreshLayout();
 }
 
 function toggleFullscreen() {
@@ -949,6 +998,9 @@ function onKeyDown(event) {
 
 function bindControls() {
   document.addEventListener('keydown', onKeyDown);
+  window.addEventListener('resize', refreshLayout);
+  if (window.ResizeObserver) new ResizeObserver(refreshLayout).observe(ui.stage);
+  watchPixelRatio();
 
   ui.prev.addEventListener('click', goPrev);
   ui.next.addEventListener('click', goNext);
@@ -1042,7 +1094,7 @@ function showError(message) {
 }
 
 function checkManifest(manifest) {
-  if (!manifest || manifest.schema !== 1) throw new Error('Unsupported manifest schema.');
+  if (!manifest || ![1, 2].includes(manifest.schema)) throw new Error('Unsupported manifest schema.');
   if (!Array.isArray(manifest.slides) || manifest.slides.length === 0) throw new Error('The manifest has no slides.');
   manifest.slides.forEach((slide, i) => {
     if (!slide || !Array.isArray(slide.states) || slide.states.length === 0) {

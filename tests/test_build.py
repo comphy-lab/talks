@@ -212,10 +212,41 @@ def patches(talk: Talk) -> list[dict]:
     return data.get("patches") or []
 
 
-def test_patches_in_slide_text(talk: Talk, patches: list[dict]):
-    if not patches:
-        pytest.skip("no patches")
-    for p in patches:
+NATIVE_CORRECTIONS = [
+    {
+        "slide": "6BDE34AF-C6F3-4830-829F-9C89C9310573",
+        "find": "Gabache et al. (2016), Sc. Rep.",
+        "replace": "Ghabache et al. (2016), Sci. Rep.",
+        "ocr_rect": [650, 990, 1270, 1070],
+    },
+    {
+        "slide": "6BDE34AF-C6F3-4830-829F-9C89C9310573",
+        "find": "Walls et al. (2015), PRE",
+        "replace": "Walls, Henaux & Bird (2015), Phys. Rev. E 92, 021002",
+        "ocr_rect": [1270, 950, 1920, 1080],
+    },
+    {
+        "slide": "B47A6023-3D84-4F1B-9E00-F5153B91555B",
+        "find": "Yellow Stone National Park:",
+        "replace": "Yellowstone National Park:",
+        "ocr_rect": [210, 1020, 1660, 1080],
+    },
+]
+
+
+@pytest.fixture(scope="module")
+def corrections(talk: Talk, patches: list[dict]) -> list[dict]:
+    if talk.slug != "singular-bursting-bubbles":
+        return patches
+    obsolete = {p["find"] for p in NATIVE_CORRECTIONS}
+    assert not any(p["find"] in obsolete for p in patches), "remove obsolete native-correction patches"
+    return NATIVE_CORRECTIONS + patches
+
+
+def test_corrections_in_slide_text(talk: Talk, corrections: list[dict]):
+    if not corrections:
+        pytest.skip("no corrections")
+    for p in corrections:
         slide = next(s for s in talk.manifest["slides"] if s["id"] == p["slide"])
         text = _norm(slide["text"])
         assert _norm(p["replace"]) in text, f"slide {slide['n']}: {p['replace']!r} not in {text!r}"
@@ -223,37 +254,48 @@ def test_patches_in_slide_text(talk: Talk, patches: list[dict]):
 
 
 @pytest.mark.skipif(shutil.which("tesseract") is None, reason="needs tesseract")
-def test_patches_legible_in_image(talk: Talk, patches: list[dict], tmp_path: Path):
-    """OCR the final state of each patched slide: the corrected citations are whole.
+@pytest.mark.parametrize("scale", [1, 2])
+def test_corrections_legible_in_image(talk: Talk, corrections: list[dict], tmp_path: Path, scale: int):
+    """OCR the final state at both densities, including corrections now made in Keynote.
 
-    Text over a photograph (Ghabache 2016 sits on the faded glass) needs
-    binarising, so the slide is read raw and at two thresholds; a part counts
-    as legible if any reading contains it (spacing and a final full stop
-    ignored).
+    Each citation block is read separately so OCR cannot interleave columns.
+    Text over the faded glass is read raw and at two thresholds. Accessibility
+    text checks preserve exact punctuation; pixel OCR checks letters/numbers.
     """
-    if not patches:
-        pytest.skip("no patches")
+    if not corrections:
+        pytest.skip("no corrections")
     from PIL import Image
 
     def squash(text: str) -> str:
-        return re.sub(r"\s+", "", text).rstrip(".")
+        return re.sub(r"[^a-z0-9&]", "", text.casefold())
 
-    for slide_id in sorted({p["slide"] for p in patches}):
-        slide = next(s for s in talk.manifest["slides"] if s["id"] == slide_id)
+    for i, p in enumerate(corrections):
+        slide = next(s for s in talk.manifest["slides"] if s["id"] == p["slide"])
         readings = []
-        with Image.open(talk.media_path(slide["states"][-1]["image"])) as im:
+        field = "image2x" if scale == 2 else "image"
+        if field not in slide["states"][-1]:
+            pytest.skip("no 2x images in this talk")
+        with Image.open(talk.media_path(slide["states"][-1][field])) as im:
+            if p.get("ocr_rect"):
+                im = im.crop(tuple(v * scale for v in p["ocr_rect"]))
             grey = im.convert("L")
             for threshold in (None, 90, 110):
-                png = tmp_path / f"slide{slide['n']}-{threshold}.png"
+                png = tmp_path / f"slide{slide['n']}-correction{i}-{threshold}.png"
                 (grey if threshold is None else grey.point(lambda v, t=threshold: 0 if v < t else 255)).save(png)
                 out = subprocess.run(
-                    ["tesseract", str(png), "-", "--psm", "11"], capture_output=True, text=True, check=True
+                    ["tesseract", str(png), "-", "--psm", "6" if p.get("ocr_rect") else "11"],
+                    capture_output=True, text=True, check=True,
                 )
-                readings.append(squash(out.stdout))
-        for p in (p for p in patches if p["slide"] == slide_id):
-            for part in re.split(r"(?<=,)\s+", p["replace"]):
-                assert any(squash(part) in r for r in readings), f"slide {slide['n']}: {part!r} not legible: {readings}"
-            assert not any(squash(p["find"]) in r for r in readings), f"slide {slide['n']}: {p['find']!r} still shown"
+                readings.append(out.stdout)
+        for part in re.split(r"(?<=,)\s+", p["replace"]):
+            assert any(squash(part) in squash(r) for r in readings), f"slide {slide['n']}: {part!r} not legible: {readings}"
+        if squash(p["find"]) == squash(p["replace"]):
+            # Whitespace is the correction for Yellowstone; removing all
+            # whitespace would make the old and new spelling indistinguishable.
+            old_words = r"\s+".join(re.escape(w) for w in p["find"].split())
+            assert not any(re.search(old_words, r, re.I) for r in readings), readings
+        else:
+            assert not any(squash(p["find"]) in squash(r) for r in readings), f"slide {slide['n']}: old text still shown"
 
 
 # What the export's wrong ToUnicode maps turned TeX maths into (beta -> omega,

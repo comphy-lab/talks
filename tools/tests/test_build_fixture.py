@@ -64,43 +64,47 @@ def test_span_overlay_and_transitions(built):
     assert s2["states"][2]["transition"] == "dissolve"
 
 
-def test_overlay_is_clipped_to_the_movie_plus_bleed(built):
+@pytest.mark.parametrize("scale", [1, 2])
+def test_overlay_is_clipped_to_the_movie_plus_bleed(built, scale):
     root, _report, m = built
     media = root / "build" / "fixture-talk" / "media"
     state = m["slides"][1]["states"][1]
-    ov = np.asarray(Image.open(media / state["overlay"]).convert("RGBA")).astype(int)
-    still = np.asarray(Image.open(media / state["image"]).convert("RGB")).astype(int)
-    assert ov.shape[:2] == (1080, 1920)
+    suffix = "2x" if scale == 2 else ""
+    ov = np.asarray(Image.open(media / state[f"overlay{suffix}"]).convert("RGBA")).astype(int)
+    still = np.asarray(Image.open(media / state[f"image{suffix}"]).convert("RGB")).astype(int)
+    assert ov.shape[:2] == (1080 * scale, 1920 * scale)
     alpha = ov[..., 3]
     # label at x 700-1000, y 600-660; movie at x 200-840, y 300-660
     inside = np.zeros(alpha.shape, dtype=bool)
-    inside[300:660, 200:840] = True
+    inside[300 * scale : 660 * scale, 200 * scale : 840 * scale] = True
     ys, xs = np.nonzero((alpha > 8) & inside)
-    assert xs.min() >= 700 and xs.max() < 840
-    assert ys.min() >= 600 and ys.max() < 660
+    assert xs.min() >= 700 * scale and xs.max() < 840 * scale
+    assert ys.min() >= 600 * scale and ys.max() < 660 * scale
     # Outside the movie: only the bleed band next to the label, opaque, repeating the still.
     ys, xs = np.nonzero((alpha > 0) & ~inside)
     assert len(xs) > 0, "no bleed band"
-    assert xs.min() >= 700 - OVERLAY_BLEED and xs.max() < 840 + OVERLAY_BLEED
-    assert ys.min() >= 600 - OVERLAY_BLEED and ys.max() < 660 + OVERLAY_BLEED
+    assert xs.min() >= (700 - OVERLAY_BLEED) * scale and xs.max() < (840 + OVERLAY_BLEED) * scale
+    assert ys.min() >= (600 - OVERLAY_BLEED) * scale and ys.max() < (660 + OVERLAY_BLEED) * scale
     assert (alpha[ys, xs] == 255).all()
     assert np.abs(ov[ys, xs, :3] - still[ys, xs]).max(axis=1).mean() < 4
 
 
-def _embed_area(root: Path, image: str, rect) -> np.ndarray:
-    x, y, w, h = rect
+def _embed_area(root: Path, image: str, rect, scale=1) -> np.ndarray:
+    x, y, w, h = (v * scale for v in rect)
     with Image.open(root / "build" / "fixture-talk" / "media" / image) as im:
         return np.asarray(im.convert("RGB"))[y : y + h, x : x + w].astype(int)
 
 
-def test_youtube_poster_before_the_click(built):
+@pytest.mark.parametrize("scale", [1, 2])
+def test_youtube_poster_before_the_click(built, scale):
     """Keynote shows the movie's poster before the click that starts it; so does the build (default)."""
     root, report, m = built
     st = m["slides"][3]["states"]
     rect = st[1]["media"][0]["rect"]
     assert st[0]["media"] == []
-    before = _embed_area(root, st[0]["image"], rect)
-    playing = _embed_area(root, st[1]["image"], rect)
+    field = "image2x" if scale == 2 else "image"
+    before = _embed_area(root, st[0][field], rect, scale)
+    playing = _embed_area(root, st[1][field], rect, scale)
     # the fixture poster is a flat (127, 115, 102) fill; the embed sits on plain white
     assert np.abs(before.mean(axis=(0, 1)) - (127, 115, 102)).max() < 6
     assert playing.min() > 245

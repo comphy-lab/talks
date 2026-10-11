@@ -367,3 +367,22 @@ def test_youtube_links_out_when_too_small_to_embed(open_talk, talk: Talk, engine
     tp.external = [u for u in tp.external if not u.startswith("https://i.ytimg.com/")]
     tp.console = [c for c in tp.console if not (c[0] == "error" and "ytimg" in c[2])]
     tp.assert_clean()
+
+
+def test_youtube_rechecks_minimum_size_after_resize(open_talk, talk: Talk):
+    from test_mobile import PHONE
+
+    step = youtube_steps(talk)[0]
+    tp = open_talk(youtube="stub", **PHONE)
+    tp.goto(talk.hash_for(step.n, step.k))
+    tp.page.locator("a.yt-fallback").wait_for()
+    assert tp.page.evaluate("() => !document.querySelector('script[src*=\"youtube.com/iframe_api\"]')")
+    tp.page.set_viewport_size(FULL_HD)
+    wait_until(tp.page, "() => document.querySelector('.media--youtube iframe') !== null")
+    wait_until(tp.page, "() => window.__ytStub.created.length === 1")
+    assert tp.page.evaluate("() => document.querySelector('a.yt-fallback') === null")
+    tp.page.set_viewport_size(PHONE["viewport"])
+    tp.page.locator("a.yt-fallback").wait_for()
+    assert tp.page.evaluate("() => document.querySelectorAll('iframe').length") == 0
+    assert "destroy" in [c["name"] for c in tp.page.evaluate(CALLS)]
+    tp.assert_clean()

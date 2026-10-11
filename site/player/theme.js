@@ -27,10 +27,12 @@
   }
 
   function label() {
-    var next = current() === 'dark' ? 'light' : 'dark';
+    var dark = current() === 'dark';
+    var next = dark ? 'light' : 'dark';
     var buttons = document.querySelectorAll('[data-theme-toggle]');
     for (var i = 0; i < buttons.length; i += 1) {
-      buttons[i].setAttribute('aria-label', 'Switch to ' + next + ' theme');
+      buttons[i].setAttribute('aria-label', 'Dark theme');
+      buttons[i].setAttribute('aria-pressed', String(dark));
       buttons[i].setAttribute('title', 'Switch to ' + next + ' theme');
     }
   }

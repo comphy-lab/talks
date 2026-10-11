@@ -39,9 +39,7 @@
   --s-header-bg: rgba(40, 15, 45, 0.75);
   --s-header-shadow: rgba(0, 0, 0, 0.4);
   --s-nav-item-bg: rgba(30, 30, 30, 0.6);
-  /* comphy-lab.org: the tokens' dark prose-link colour wins over the
-     header's own --nav-item-color, so its nav links read #8fb8ff. */
-  --s-nav-item-color: #8fb8ff;
+  --s-nav-item-color: #fff;
   --s-nav-item-hover-bg: rgba(40, 40, 40, 0.8);
   --s-mobile-nav-bg: rgba(30, 30, 35, 0.95);
   --s-mobile-nav-shadow: rgba(0, 0, 0, 0.3);
@@ -225,7 +223,7 @@ body {
   text-underline-offset: 6px;
 }
 
-/* Close button inside the menu (shown below the breakpoint). talks: a <button>. */
+/* Native Close button inside the menu, shared with the main site. */
 .s-header__nav-close-btn {
   display: none;
   position: absolute;
@@ -238,7 +236,7 @@ body {
   background: var(--s-nav-item-bg);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  color: var(--fg-1);
+  color: var(--s-nav-item-color);
   font: inherit;
   font-size: 16px;
   cursor: pointer;
@@ -247,11 +245,11 @@ body {
 
 .s-header__nav-close-btn:hover {
   background: var(--s-nav-item-hover-bg);
-  color: var(--c-accent-teal);
+  color: var(--s-nav-item-color);
   transform: translateY(-2px);
 }
 
-/* Theme toggle. talks: a <button> (the main site's is an unfocusable <div>). */
+/* Native theme toggle shared with the main site. */
 .theme-toggle {
   position: relative;
   display: flex;

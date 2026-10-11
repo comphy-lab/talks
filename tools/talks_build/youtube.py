@@ -139,6 +139,7 @@ def fix_contrast(slide: Slide, compositor, exclude_objects: set[str], canvas_w: 
 
     changed: list[dict] = []
     done: set[str] = set()
+    scale = compositor.scale
     for state in slide.states:
         leaves = state.leaves()
         for leaf in leaves:
@@ -154,11 +155,11 @@ def fix_contrast(slide: Slide, compositor, exclude_objects: set[str], canvas_w: 
             below = compositor.composite(
                 leaves, include=lambda lf, o=leaf.order: lf.order < o and lf.object_id not in exclude_objects
             )
-            x0, y0 = snap(leaf.rect.x) + dx, snap(leaf.rect.y) + dy
+            x0, y0 = (snap(leaf.rect.x) + dx) * scale, (snap(leaf.rect.y) + dy) * scale
             bg = np.asarray(below.convert("RGB"))
             ys, xs = np.nonzero(ink)
             cx, cy = xs + x0, ys + y0
-            keep = (cx >= 0) & (cx < canvas_w) & (cy >= 0) & (cy < canvas_h)
+            keep = (cx >= 0) & (cx < canvas_w * scale) & (cy >= 0) & (cy < canvas_h * scale)
             if not keep.any():
                 continue
             ink_rgb = np.median(arr[ys[keep], xs[keep], :3], axis=0)
@@ -202,19 +203,20 @@ def poster_in_rect(compositor, leaves, exclude_objects: set[str], rect: tuple[in
         return None
     layer = compositor.composite(movie, background=None, include=lambda lf: True, top_sprites=False)
     w, h = layer.size
+    density = compositor.scale
     box = None
     for lf in movie:
         r = Rect(*lf.rect.snapped())
         box = r if box is None else box.union(r)
-    clipped = box.intersection(Rect(0, 0, w, h)) if box is not None else None
+    clipped = box.intersection(Rect(0, 0, compositor.width, compositor.height)) if box is not None else None
     if clipped is None or clipped.w < 2 or clipped.h < 2:
         return None
-    x1, y1, x2, y2 = int(clipped.x), int(clipped.y), int(clipped.x2), int(clipped.y2)
+    x1, y1, x2, y2 = (int(v) * density for v in (clipped.x, clipped.y, clipped.x2, clipped.y2))
     poster = layer.crop((x1, y1, x2, y2))
     rx, ry, rw, rh = rect
-    scale = min(rw / poster.width, rh / poster.height)
-    pw, ph = max(1, round(poster.width * scale)), max(1, round(poster.height * scale))
-    fitted = poster.resize((pw, ph), Image.Resampling.LANCZOS)
+    fit = min(rw / (poster.width / density), rh / (poster.height / density))
+    pw, ph = max(1, round(poster.width / density * fit)), max(1, round(poster.height / density * fit))
+    fitted = poster.resize((pw * density, ph * density), Image.Resampling.LANCZOS)
     out = Image.new("RGBA", (w, h), (0, 0, 0, 0))
-    out.paste(fitted, (rx + (rw - pw) // 2, ry + (rh - ph) // 2))
+    out.paste(fitted, ((rx + (rw - pw) // 2) * density, (ry + (rh - ph) // 2) * density))
     return out

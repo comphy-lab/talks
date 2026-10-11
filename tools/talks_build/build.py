@@ -44,6 +44,7 @@ OVERLAY_ALPHA_MIN = 8
 # canvas pixels on a phone (8 measured in Chromium at 412 x 915, 2.625 dppx);
 # sixteen leave a margin.
 OVERLAY_BLEED = 16
+RENDER_SCALES = (1, 2)
 
 
 class BuildError(RuntimeError):
@@ -132,7 +133,7 @@ class Builder:
             self.pages.forget()
 
         manifest = OrderedDict(
-            schema=1,
+            schema=2,
             slug=self.talk.slug,
             title=self.talk.title,
             subtitle=self.talk.subtitle,
@@ -178,6 +179,7 @@ class Builder:
             overlays=sum(1 for s in slides_out for st in s["states"] if st["overlay"]),
             media_files=len(self.store.written),
             media_bytes=sizes,
+            render_scales=list(RENDER_SCALES),
             seconds=round(time.time() - t0, 1),
             manifest=str(out.relative_to(self.root)),
         )
@@ -351,10 +353,21 @@ class Builder:
         force_composite = bool(excluded or applied)
         self._verify_final(slide, comp)
 
+        # Keep the 1x render exactly as before. The second compositor renders
+        # the original PDF pages at 144 dpi, using the same logical geometry.
+        # Patch layout is shared, but glyphs are drawn anew at that density.
+        comps = {1: comp}
+        for scale in RENDER_SCALES[1:]:
+            hi = Compositor(slide, self.pages, self.deck.width, self.deck.height, scale)
+            if excluded:
+                fix_contrast(slide, hi, excluded, self.deck.width, self.deck.height)
+            if applied:
+                patchmod.install(hi, applied)
+            comps[scale] = hi
+
         yt_spec = self.yt_spec.get(slide.id)
         jobs = []
         for state in slide.states:
-            image = self._state_image(state, comp, excluded, force_composite)
             # A replaced movie shown before the click that starts it (Keynote
             # shows its poster there): draw the poster into the embed box, or
             # mount the embed already, as talk.yaml says.
@@ -362,24 +375,33 @@ class Builder:
             if yt_spec is not None and not embed and self._shows_movie(state, excluded):
                 if yt_spec.before_start == "embed":
                     embed = True
-                else:
-                    poster = poster_in_rect(comp, state.leaves(), excluded, yt_rects[slide.id])
-                    if poster is not None:
-                        image = image.convert("RGBA")
-                        image.alpha_composite(poster)
-                        self.report.setdefault("youtube_before_start", []).append(
-                            {"slide": slide.n, "state": state.index + 1, "shown": "poster"}
-                        )
             boxes = [Rect(*m.rect.snapped()) for m in state.movies if m.object_id not in excluded]
             if embed:
                 boxes.append(Rect(*yt_rects[slide.id]))
-            overlay = self._overlay(state, comp, excluded, image, boxes)
-            jobs.append((state, embed, self.pool.submit(self.store.put_webp, image),
-                         self.pool.submit(self.store.put_webp, overlay, alpha=True) if overlay else None))  # fmt: skip
-            if slide.n in self.previews:
-                self._save_preview(slide, state, image, overlay, yt_rects.get(slide.id) if embed else None, excluded)
+            density_jobs = {}
+            for scale, compositor in comps.items():
+                image = self._state_image(state, compositor, excluded, force_composite)
+                if yt_spec is not None and not embed and self._shows_movie(state, excluded):
+                    poster = poster_in_rect(compositor, state.leaves(), excluded, yt_rects[slide.id])
+                    if poster is not None:
+                        image = image.convert("RGBA")
+                        image.alpha_composite(poster)
+                        if scale == 1:
+                            self.report.setdefault("youtube_before_start", []).append(
+                                {"slide": slide.n, "state": state.index + 1, "shown": "poster"}
+                            )
+                overlay = self._overlay(state, compositor, excluded, image, boxes)
+                density_jobs[scale] = (
+                    self.pool.submit(self.store.put_webp, image),
+                    self.pool.submit(self.store.put_webp, overlay, alpha=True) if overlay else None,
+                )
+                if slide.n in self.previews:
+                    self._save_preview(
+                        slide, state, image, overlay, yt_rects.get(slide.id) if embed else None, excluded, scale
+                    )
+            jobs.append((state, embed, density_jobs))
         states_out = []
-        for state, embed, img_f, ovl_f in jobs:
+        for state, embed, density_jobs in jobs:
             media = []
             if embed and not any(m.object_id in excluded for m in state.movies):
                 media.append(OrderedDict(kind="youtube", ref=self.yt_ref[slide.id], rect=list(yt_rects[slide.id])))
@@ -389,10 +411,14 @@ class Builder:
                 else:
                     ref = videos[self.file_digest[m.file]].ref
                     media.append(OrderedDict(kind="video", ref=ref, rect=list(m.rect.snapped())))
+            img_f, ovl_f = density_jobs[1]
+            hi_img_f, hi_ovl_f = density_jobs[2]
             states_out.append(
                 OrderedDict(
                     image=img_f.result(),
                     overlay=ovl_f.result() if ovl_f else None,
+                    image2x=hi_img_f.result(),
+                    overlay2x=hi_ovl_f.result() if hi_ovl_f else None,
                     transition=state.transition,
                     media=media,
                 )
@@ -409,24 +435,26 @@ class Builder:
             title = self.talk.titles[slide.id]
         return OrderedDict(id=slide.id, n=slide.n, title=title, text=clean_text(raw), states=states_out)
 
-    def _save_preview(self, slide, state, image, overlay, yt_rect, excluded) -> None:
+    def _save_preview(self, slide, state, image, overlay, yt_rect, excluded, scale=1) -> None:
         """PNG previews: image, overlay, and a layout view with media boxes."""
         from PIL import ImageDraw
 
         d = self.build_dir / "preview"
         d.mkdir(parents=True, exist_ok=True)
         stem = f"s{slide.n:03d}-{state.index + 1}"
+        if scale != 1:
+            stem += f"-{scale}x"
         image.convert("RGB").save(d / f"{stem}-image.png")
         if overlay is not None:
             overlay.save(d / f"{stem}-overlay.png")
         layout = image.convert("RGBA")
         draw = ImageDraw.Draw(layout)
         if yt_rect is not None:
-            x, y, w, h = yt_rect
+            x, y, w, h = (v * scale for v in yt_rect)
             draw.rectangle([x, y, x + w - 1, y + h - 1], fill=(255, 0, 0, 255))
         for m in state.movies:
             if m.object_id not in excluded:
-                x, y, w, h = m.rect.snapped()
+                x, y, w, h = (v * scale for v in m.rect.snapped())
                 draw.rectangle([x, y, x + w - 1, y + h - 1], fill=(0, 160, 255, 255))
         if overlay is not None:
             layout.alpha_composite(overlay)
@@ -489,7 +517,8 @@ class Builder:
             return None
         leaves = state.leaves()
         width, height = self.deck.width, self.deck.height
-        overlay = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+        scale = comp.scale
+        overlay = Image.new("RGBA", (width * scale, height * scale), (0, 0, 0, 0))
         canvas = Rect(0, 0, width, height)
         sprites = [s for lf in leaves if lf.visible for s in comp.on_top.get(lf.texture, [])]
         drawn: list[tuple[int, int, int, int]] = []
@@ -503,21 +532,22 @@ class Builder:
                 continue
             above = [lf for lf in leaves if lf.visible and lf.order > hi and lf.object_id not in excluded]
             hits = any(lf.rect.intersects(box) for lf in above) or any(
-                Rect(s.x, s.y, *s.image.size).intersects(box) for s in sprites
+                Rect(s.x, s.y, s.image.width / scale, s.image.height / scale).intersects(box) for s in sprites
             )
             if not hits:
                 continue
             layer = comp.composite(
                 leaves, background=None, include=lambda lf, h=hi: lf.order > h and lf.object_id not in excluded
             )
-            x1, y1, x2, y2 = int(box.x), int(box.y), int(box.x2), int(box.y2)
+            x1, y1, x2, y2 = (int(v) * scale for v in (box.x, box.y, box.x2, box.y2))
             overlay.paste(layer.crop((x1, y1, x2, y2)), (x1, y1))
             drawn.append((x1, y1, x2, y2))
         if not drawn:
             return None
         if int(np.asarray(overlay.getchannel("A")).max()) < OVERLAY_ALPHA_MIN:
             return None
-        return bleed_overlay(overlay, image, drawn, boxes, OVERLAY_BLEED)
+        rendered_boxes = [Rect(*(v * scale for v in (b.x, b.y, b.w, b.h))) for b in boxes]
+        return bleed_overlay(overlay, image, drawn, rendered_boxes, OVERLAY_BLEED * scale)
 
 
 def _dilate(mask: np.ndarray, r: int) -> np.ndarray:

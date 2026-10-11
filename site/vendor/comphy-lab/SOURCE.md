@@ -2,16 +2,15 @@
 
 The talks pages share comphy-lab.org's header and footer. These files are
 ported from the main-site repository
-[comphy-lab/comphy-lab.github.io](https://github.com/comphy-lab/comphy-lab.github.io)
-at commit `94df3fdf090b5b584ce65d7f6d5cdc2f811c2f6c` (the commit that added Talks to the
-header and moved its Menu breakpoint to 1119 px; Talks joined the footer in
-`d79dbace73c97897a904ea130142c698d679856d`).
+[comphy-lab/comphy-lab.github.io](https://github.com/comphy-lab/comphy-lab.github.io).
+
+Source commit: `91f8de4149faa5f18b67db9647bfa3352c9c93c3`.
 
 | File here | Ported from | How |
 |---|---|---|
 | `header.css` | `assets/css/styles.css` section 6 "Header & navigation" and its Menu drawer rules (`max-width: 1119px`; `768px` before comphy-lab.org added its Talks link); the legacy colour variables they read (`styles.css` `:root` and `[data-theme="dark"]`); the dark surface overrides in `assets/css/bridge.css` | Trimmed to the rules the header uses, variables resolved to values |
 | `footer-v2.css` | `assets/css/footer-v2.css`; the `.site-footer` layout and 768 px centring in `styles.css`; `.invert-on-light` in `bridge.css` | Nearly verbatim |
-| Header markup in `../../index.html` and `../../player/talk.template.html` | `_layouts/default.html` (`<header class="s-header">`) | Same items in the same order, with Talks after Project docs |
+| Header markup in `../../index.html` and `../../player/talk.template.html` | `_includes/header.html` (`<header class="s-header">`), included by the main-site layouts | Same accessible items in the same order, with Talks after Project docs |
 | Footer markup in the same two pages | `_includes/footer-v2.html` | Same columns and links |
 | `logos/CoMPhy-Lab-no-name.png` | `assets/logos/CoMPhy-Lab-no-name.png` (1557 x 1035) | Downscaled to 295 x 196 (three times the 65 px header height) |
 | `logos/LogoPof_transparent_white.png`, `logos/logoBasilisk_TransparentBackground.png` | `assets/logos/` | Downscaled to 216 px high (three times the 72 px partner strip) |
@@ -27,16 +26,20 @@ fonts and styles from this origin only):
   (`assets/css/academicons-1.7.0/fonts/academicons.svg` in the main-site
   repository; font licensed under the SIL OFL 1.1), drawn in its 2048-unit em
   box and flipped from font to SVG coordinates.
-- Theme toggle moon and sun: the inline SVGs of `_layouts/default.html`.
+- Theme toggle moon and sun: the inline SVGs of `_includes/header.html`.
+
+The theme, Menu and Close controls are native buttons, matching the main site.
+The theme button has the stable name "Dark theme" and `aria-pressed` follows
+the active theme. Header navigation links carry `s-header__nav-link` and the
+navigation landmark is "Main navigation". Normal and hover nav colours follow
+the main site's explicit header tokens: near-black in light mode, white in
+dark mode. Prose-link colours do not apply to these controls.
 
 ## Deliberate differences
 
-- The theme toggle, the Menu button and the Close button are `<button>`s (the
-  main site uses a `<div>` and `href="#0"` links). The Menu button carries
-  `aria-expanded` and `aria-controls`; `../../player/header.js` keeps Tab in
-  the open drawer, closes it on Escape, Close, a click outside or a link, and
-  returns focus to the Menu button. While it is open the talk player ignores
-  every key, so the arrows scroll the drawer, not the slides behind it.
+- `../../player/header.js` additionally closes the drawer when the player
+  makes the header inert in full screen. While it is open the talk player
+  ignores every key, so arrows scroll the drawer without changing slides.
 - The ⌘K command palette is left out. It needs the main site's search
   database and Fuse.js, and a palette taking keys on top of the talk player
   would compete with the player's shortcuts.
@@ -56,8 +59,29 @@ fonts and styles from this origin only):
   the talk page uses a 60 px header to leave room for the slides
   (`../../player/player.css`).
 - "Edit on GitHub" points at this repository, the source of these pages.
+- Footer column headings use `<h2>` for the talks page outline; their text,
+  accessible column names and links match the main site.
 - "Back to top" scrolls without changing the URL hash, which the talk player
   uses for deep links. The copyright year is set from the visitor's clock.
 
+## Drift check and updates
+
+From `tools/`, run `python -m talks_build.shell_drift`. It resolves the main
+site's GitHub `main` once and fetches the header include, footer and styles at
+that exact commit. Only a missing header include permits a fallback to the
+legacy default layout. Fetch or extraction failures fail the check.
+
+The checker compares ordered accessible navigation names and hrefs, footer
+column names and links (including brand, partners and legal links), and the
+Menu breakpoint against both talks templates. It keeps the documented Talks
+current state, command-palette omission and exact "Edit on GitHub" target
+difference. Colours and spacing still receive the manual port and browser
+checks. Use `--upstream-root <checkout>` for a local main-site source fixture.
+
+The Pages validation job blocks deployment on drift. The weekly check creates
+or updates one marked issue containing the resolved source commit and semantic
+differences; an unchanged report leaves the issue untouched, and a network
+failure never becomes a drift issue.
+
 To update: compare the files above at a newer main-site commit, port the
-changes, and change the commit here.
+changes, run the drift and browser checks, and update the source commit here.

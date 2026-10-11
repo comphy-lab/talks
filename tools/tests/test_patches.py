@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import shutil
 import subprocess
+import sys
 from pathlib import Path
 
 import pytest
@@ -41,16 +42,12 @@ def test_without_following_text_the_first_choice_is_left_aligned():
 
 @pytest.mark.export
 @pytest.mark.slow
-def test_real_build_patches_use_the_visible_colour(real_export, tmp_path):
-    """Slide 6's attribution is recoloured for legibility before it is patched.
-
-    The patch must draw in the recoloured ink (#222222), not the original
-    white that sat over the movie, and keep the gap before 'Video from'.
-    """
+def test_real_build_uses_native_corrections_and_visible_colour(real_export, tmp_path):
+    """The native citations are correct; removing YouTube's poster keeps the credit legible."""
     repo = Path(__file__).resolve().parents[2]
     out = subprocess.run(
         [
-            "python",
+            sys.executable,
             "-m",
             "talks_build",
             "build",
@@ -67,9 +64,13 @@ def test_real_build_patches_use_the_visible_colour(real_export, tmp_path):
     )
     assert out.returncode == 0, out.stderr[-2000:]
     report = json.loads((tmp_path / "build" / "singular-bursting-bubbles" / "report.json").read_text())
-    by_find = {p["find"]: p for p in report["patches"]}
-    yellow = by_find["Yellow Stone National Park:"]
-    assert yellow["colour"] == "#222222"
-    assert yellow["layout"].startswith("one line, end-aligned")
-    walls = by_find["Walls et al. (2015), PRE"]
-    assert walls["lines"] == ["Walls, Henaux & Bird (2015),", "Phys. Rev. E 92, 021002"]
+    assert not report.get("patches"), "native corrections must not depend on raster text patches"
+    manifest = json.loads((tmp_path / "site" / "singular-bursting-bubbles" / "manifest.json").read_text())
+    newtonian = " ".join(manifest["slides"][3]["text"].split())
+    park = " ".join(manifest["slides"][5]["text"].split())
+    assert "Ghabache et al. (2016), Sci. Rep." in newtonian
+    assert "Walls, Henaux & Bird (2015), Phys. Rev. E 92, 021002" in newtonian
+    assert "Gabache" not in newtonian and "Walls et al. (2015), PRE" not in newtonian
+    assert "Yellowstone National Park:" in park and "Yellow Stone" not in park
+    fixes = [f for f in report["contrast_fixes"] if f["slide"] == 6]
+    assert fixes and all(f["recoloured_to"] == "#222222" for f in fixes)

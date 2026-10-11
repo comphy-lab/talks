@@ -1,4 +1,4 @@
-# Talks site specification (v1)
+# Talks site specification (v2)
 
 This is the contract between the three parts of the repository:
 
@@ -80,6 +80,14 @@ writes:
 - `site/<slug>/index.html`: the talk page, generated from
   `site/player/talk.template.html`.
 
+Every state is rendered at both 1x (1920 x 1080) and 2x (3840 x 2160).
+The texture PDFs are rasterised at 72 and 144 dpi respectively; the higher
+density is a new vector render, not an enlargement of the 1x image. Geometry
+is kept in logical canvas pixels and snapped before multiplying when drawing.
+Text patches share their fitted font and logical layout between densities,
+with glyphs drawn at the target size. Videos and their posters retain their
+source resolution and are not enlarged for this second image density.
+
 `python -m talks_build upload --slug <slug>` uploads to R2 every file in
 `build/<slug>/media/` not already present, under
 `talks/<slug>/<file>`, using the `cf` CLI with the correct
@@ -93,11 +101,11 @@ if the listing fails or does not finish, nothing is uploaded.
 manifest against `tools/schema/manifest.schema.json` and the invariants in
 Section 3.3.
 
-## 3. Manifest (`schema: 1`)
+## 3. Manifest (`schema: 2`, with schema 1 compatibility)
 
 ```jsonc
 {
-  "schema": 1,
+  "schema": 2,
   "slug": "singular-bursting-bubbles",
   "title": "…", "subtitle": "…", "speaker": "…", "updated": "2026-10-10",
   "canvas": { "width": 1920, "height": 1080 },
@@ -121,6 +129,8 @@ Section 3.3.
         {
           "image":   "<hash>.webp",                   // full-canvas still, videos excluded
           "overlay": "<hash>.webp",                   // or null: transparent full-canvas layer drawn ABOVE media
+          "image2x": "<hash>.webp",                   // optional 3840 x 2160 vector render
+          "overlay2x": "<hash>.webp",                 // paired with image2x; null exactly when overlay is null
           "transition": "none",                       // "none" | "dissolve"
           "media": [                                  // everything visible in this state
             { "kind": "video",   "ref": "v01", "rect": [x, y, w, h] },
@@ -134,7 +144,11 @@ Section 3.3.
 }
 ```
 
-All rectangles are in canvas pixels (origin top-left). They may extend past the
+The player and validator still accept schema 1 manifests. Schema 2 adds the
+optional `image2x` / `overlay2x` pair; when absent, the original pair remains
+usable at any display density. The builder always emits both densities.
+
+All rectangles are in logical canvas pixels (origin top-left). They may extend past the
 canvas; the stage clips them. Media rectangles are whole pixels: the pipeline
 rounds each *edge* of the Keynote rectangle (`w = round(x + w) - round(x)`),
 not the size, so a video lines up with the poster frame baked into the still.
@@ -152,6 +166,10 @@ not the size, so a video lines up with the poster frame baked into the still.
   (opaque), never over another media rectangle: a browser that scales the
   stage blends the overlay's edge with what lies beyond it, and without the
   band the movie's edge pixels would show through as a hairline.
+- `image2x` and `overlay2x` show the same state at twice the pixel density.
+  Their layer positions, media cut-outs and bleed band have the same logical
+  dimensions as the original pair; the 16-pixel band is 32 image pixels at 2x.
+  Raster content inside a PDF stays limited by the source Keynote stored.
 - For a `youtube` placement, `image` must not contain the movie poster under
   the embed rectangle. YouTube forbids overlays on its player, so the
   slide's title and credit must lie outside `rect`. A state of that slide
@@ -180,7 +198,10 @@ not the size, so a video lines up with the poster frame baked into the still.
   5. Swap `image` and `overlay`.
 
   This one rule implements builds within a slide and videos playing across
-  slides.
+  slides. The sole layout exception is YouTube's minimum viewport size:
+  crossing its 200 x 200 CSS px threshold replaces the inline player with
+  the link-out or re-creates the player when enough space returns. A recreated
+  YouTube player restarts at `start`. Native video elements remain untouched.
 - **Video elements.** `muted`, `playsinline`, `loop`, `preload="auto"`,
   `disablepictureinpicture`, no `controls`. The `poster` is set to the video's
   poster. The `src` is `media_base + src`.
@@ -193,6 +214,8 @@ not the size, so a video lines up with the poster frame baked into the still.
   region with a "Watch on YouTube" link and the credit. A click inside the
   embed moves keyboard focus into YouTube's frame; the player returns it to
   the stage frame at once, so keys and presenter clickers keep working.
+  The 200 x 200 CSS px minimum is re-evaluated after resize or fullscreen
+  changes; below it, the link-out is shown without loading an inline player.
 - **Pause control.** A visible button pauses and resumes all media. This
   satisfies WCAG 2.2.2. Under `prefers-reduced-motion: reduce`, media starts
   paused and the button resumes it.
@@ -233,7 +256,8 @@ not the size, so a video lines up with the poster frame baked into the still.
 - **Theme.** The design system's `data-theme` on `<html>`, with
   `localStorage` key `theme` (shared with comphy-lab.org). Each page has
   exactly one theme control, the toggle in the site header (Section 5); the
-  player's control bar has none.
+  player's control bar has none. The native button has the stable accessible
+  name "Dark theme" and `aria-pressed` reflects whether dark mode is active.
 - **Security.**
   - A per-page `<meta http-equiv="Content-Security-Policy">` sets:
     - `default-src 'self'`
@@ -265,12 +289,16 @@ not the size, so a video lines up with the poster frame baked into the still.
 
 ### 3.3 Manifest invariants (checked by `validate`)
 
-- `canvas` is 1920 x 1080 for v1.
+- `canvas` is 1920 x 1080 logical pixels for schemas 1 and 2.
 - Every `ref` resolves to a `videos` or `youtube` entry.
 - Every slide has at least one state, and slide `n` values are `1..N` in order.
 - Every media file name matches `^[0-9a-f]{16}\.(webp|mp4)$`.
 - `media_base` is `https://media.comphy-lab.org/talks/<slug>/`.
 - No two placements in one state share a key.
+- Density assets require schema 2, are supplied as an `image2x` / `overlay2x`
+  pair, and agree with the original pair on whether an overlay exists.
+- With `--media-dir`, density-bearing states are checked against their actual
+  file dimensions: 1920 x 1080 for the original pair and 3840 x 2160 for 2x.
 
 ## 4. Video encoding
 
@@ -292,6 +320,14 @@ so that `/talks/` reads as part of the main site. Markup and CSS are ported
 from the main-site repository and vendored in `site/vendor/comphy-lab/`;
 `site/vendor/comphy-lab/SOURCE.md` records the source commit, what was
 taken, and every deliberate difference.
+
+The shared shell uses the main site's explicit navigation colours, including
+white labels and Close control in dark mode. A semantic check resolves one
+main-site commit and compares ordered accessible navigation links, footer
+columns and links, and the Menu breakpoint against both talks templates.
+Pages validation fails on drift or a fetch/parse failure. A weekly check
+maintains one marked drift issue, skips unchanged reports, and does not create
+an issue when the source cannot be fetched or parsed.
 
 - **Header.** Fixed at the top, 80 px high, as on comphy-lab.org (60 px on a
   phone held sideways, at most 520 px high, to leave room for the slides).

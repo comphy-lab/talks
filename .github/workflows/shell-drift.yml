@@ -1,0 +1,72 @@
+name: Check shared site shell
+
+on:
+  schedule:
+    - cron: "23 7 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+concurrency:
+  group: shared-shell-drift
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+
+      - name: Set up Python
+        uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065 # v5
+        with:
+          python-version: "3.12"
+
+      - name: Compare immutable main-site source
+        id: shell
+        continue-on-error: true
+        working-directory: tools
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python -m talks_build.shell_drift --json-output "$RUNNER_TEMP/shell-drift.json"
+
+      - name: Record verified drift without duplicate issues
+        uses: actions/github-script@f28e40c7f34bde8b3046d885e986cb6290c5673b # v7
+        env:
+          SHELL_DRIFT_REPORT: ${{ runner.temp }}/shell-drift.json
+        with:
+          script: |
+            const fs = require('node:fs');
+            const report = JSON.parse(fs.readFileSync(process.env.SHELL_DRIFT_REPORT, 'utf8'));
+            if (report.status === 'error') throw new Error(report.error || 'Shell check unavailable');
+            if (report.status === 'pass') {
+              core.info('Shared shell matches the main-site source.');
+              return;
+            }
+            if (report.status !== 'drift' || !/^[0-9a-f]{40}$/.test(report.upstream_commit) || !report.issue_body) {
+              throw new Error('Invalid shell drift report');
+            }
+            const marker = '<!-- comphy-shared-shell-drift -->';
+            const {owner, repo} = context.repo;
+            const issues = await github.paginate(github.rest.issues.listForRepo, {
+              owner, repo, state: 'all', per_page: 100
+            });
+            const matches = issues.filter(issue => !issue.pull_request && (issue.body || '').includes(marker));
+            if (matches.length > 1) throw new Error('Multiple shared-shell marker issues require reconciliation');
+            const issue = matches[0];
+            if (!issue) {
+              await github.rest.issues.create({
+                owner, repo, title: 'Shared site shell has drifted from comphy-lab.org', body: report.issue_body
+              });
+            } else if (issue.body !== report.issue_body || issue.state !== 'open') {
+              await github.rest.issues.update({
+                owner, repo, issue_number: issue.number, body: report.issue_body, state: 'open'
+              });
+            } else {
+              core.info('Existing drift issue already contains this exact report.');
+            }

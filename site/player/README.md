@@ -10,7 +10,7 @@ The static player behind `comphy-lab.org/talks/<slug>/`. It implements
 | `player.js` | ES module. Reads `./manifest.json` and plays the talk. |
 | `player.css` | Player and page layout (talk page and talks index), on top of `../vendor/ds/tokens.css` and the vendored comphy-lab.org header and footer styles. |
 | `theme.js` | Classic script in `<head>`: sets `data-theme` from `localStorage` key `theme` before first paint and wires `[data-theme-toggle]`, the one theme toggle, in the site header. |
-| `header.js` | Classic deferred script for both pages: the site header's Menu drawer (below 1024 px), the footer's "Back to top" and current year. The header and footer markup are static, ported from comphy-lab.org (`../vendor/comphy-lab/SOURCE.md`). |
+| `header.js` | Classic deferred script for both pages: the site header's Menu drawer (below 1120 px), the footer's "Back to top" and current year. The header and footer markup are static, ported from comphy-lab.org (`../vendor/comphy-lab/SOURCE.md`). |
 | `dev/manifest.json` | Mock talk for development. Its file names are placeholders; no media is committed. |
 
 ## Behaviour worth knowing

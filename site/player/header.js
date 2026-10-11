@@ -140,8 +140,30 @@
       }).observe(header, { attributes: true, attributeFilter: ['inert'] });
     }
 
+    // Chromium may blur a newly display:none control before firing resize.
+    // Remember only that disappearance, rather than every past header focus.
+    var disappearingControl = null;
+    header.addEventListener('focusout', function (event) {
+      if (!event.relatedTarget && (event.target === closeBtn || event.target === toggle)
+          && !event.target.getClientRects().length) {
+        disappearingControl = event.target;
+      }
+    });
+
     window.addEventListener('resize', function () {
-      if (isOpen() && !drawerMode()) close(false);
+      // Capture before checking the media-query style: Close or Menu may be
+      // hidden by that layout change. Visible nav controls retain their focus.
+      var focused = document.activeElement;
+      if (drawerMode()) return;
+      if (focused === document.body && disappearingControl) focused = disappearingControl;
+      disappearingControl = null;
+      close(false);
+      if (focused === closeBtn || focused === toggle) {
+        var first = nav.querySelector('a[href]');
+        if (first && first.getClientRects().length && !header.inert && !header.hasAttribute('inert')) {
+          first.focus({ preventScroll: true });
+        }
+      }
     });
   }
 

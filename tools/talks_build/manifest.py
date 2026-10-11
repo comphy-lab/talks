@@ -1,4 +1,4 @@
-"""Manifest schema 1: serialisation and validation (docs/SPEC.md section 3)."""
+"""Manifest schemas 1 and 2: serialisation and validation (docs/SPEC.md section 3)."""
 
 from __future__ import annotations
 
@@ -8,6 +8,7 @@ import re
 from pathlib import Path
 
 import jsonschema
+from PIL import Image
 
 MEDIA_NAME_RE = re.compile(r"^[0-9a-f]{16}\.(webp|mp4)$")
 CANVAS = (1920, 1080)
@@ -45,6 +46,10 @@ def media_files(manifest: dict) -> list[str]:
             names.append(st.get("image"))
             if st.get("overlay") is not None:
                 names.append(st.get("overlay"))
+            if st.get("image2x") is not None:
+                names.append(st["image2x"])
+            if st.get("overlay2x") is not None:
+                names.append(st["overlay2x"])
     out: list[str] = []
     for n in names:
         if n not in out:
@@ -64,7 +69,7 @@ def validate(manifest: dict, media_dir: Path | None = None) -> list[str]:
 
     canvas = manifest["canvas"]
     if (canvas["width"], canvas["height"]) != CANVAS:
-        errors.append(f"canvas must be {CANVAS[0]} x {CANVAS[1]} for v1")
+        errors.append(f"canvas must be {CANVAS[0]} x {CANVAS[1]} logical pixels")
     slug = manifest["slug"]
     want = f"https://media.comphy-lab.org/talks/{slug}/"
     if manifest["media_base"] != want:
@@ -83,6 +88,15 @@ def validate(manifest: dict, media_dir: Path | None = None) -> list[str]:
             errors.append(f"slide {i}: duplicate id {slide['id']}")
         seen_ids.add(slide["id"])
         for j, st in enumerate(slide["states"]):
+            density_fields = "image2x" in st or "overlay2x" in st
+            if density_fields:
+                where = f"slide {i} state {j}"
+                if manifest["schema"] != 2:
+                    errors.append(f"{where}: density assets require schema 2")
+                if "image2x" not in st or "overlay2x" not in st:
+                    errors.append(f"{where}: image2x and overlay2x must be supplied together")
+                elif (st["overlay"] is None) != (st["overlay2x"] is None):
+                    errors.append(f"{where}: overlay and overlay2x must agree on transparency-layer presence")
             keys: set[str] = set()
             for item in st["media"]:
                 ref = item["ref"]
@@ -105,6 +119,31 @@ def validate(manifest: dict, media_dir: Path | None = None) -> list[str]:
             errors.append(f"bad media file name: {name!r}")
         elif media_dir is not None and not (Path(media_dir) / name).is_file():
             errors.append(f"media file missing from {Path(media_dir).name}/: {name}")
+    if media_dir is not None:
+        errors.extend(_validate_density_sizes(manifest, Path(media_dir)))
+    return errors
+
+
+def _validate_density_sizes(manifest: dict, media_dir: Path) -> list[str]:
+    """Verify actual still dimensions when density assets are available locally."""
+    errors = []
+    checked: set[tuple[str, int]] = set()
+    for slide in manifest["slides"]:
+        for state in slide["states"]:
+            if "image2x" not in state:
+                continue
+            for field, scale in (("image", 1), ("overlay", 1), ("image2x", 2), ("overlay2x", 2)):
+                name = state.get(field)
+                if name is None or (name, scale) in checked or not (media_dir / name).is_file():
+                    continue
+                checked.add((name, scale))
+                want = (CANVAS[0] * scale, CANVAS[1] * scale)
+                try:
+                    with Image.open(media_dir / name) as im:
+                        if im.size != want:
+                            errors.append(f"{field} {name}: expected {want[0]} x {want[1]}, got {im.width} x {im.height}")
+                except OSError as exc:
+                    errors.append(f"{field} {name}: cannot read image: {exc}")
     return errors
 
 

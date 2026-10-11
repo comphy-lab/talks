@@ -6,7 +6,7 @@ title: Bursting bubbles
 subtitle: Singular Worthington jets and the drops they make
 speaker: Vatsal Sanjay
 venue_note: First given at the University of Illinois Urbana-Champaign, October 2026.
-updated: "2026-10-10"
+updated: "2026-10-11"
 media_base: https://media.comphy-lab.org/talks/singular-bursting-bubbles/
 
 video:
@@ -28,24 +28,8 @@ youtube:
     rect: [224, 185, 1472, 828]   # largest 16:9 box clear of the title and attribution (computed by the build)
     before_start: poster          # first click state shows the poster, as in Keynote; the video starts on the next click
 
-# Corrections drawn onto slide images until the .key itself is fixed.
-# Text is taken from publisher metadata (Crossref), never typed from memory.
-patches:
-  - slide: 6BDE34AF-C6F3-4830-829F-9C89C9310573   # slide 4, Newtonian medium
-    find: "Gabache et al. (2016), Sc. Rep."
-    replace: "Ghabache et al. (2016), Sci. Rep."
-    doi: 10.1038/srep25148      # Ghabache, Liger-Belair, Antkowiak & Séon, Sci. Rep. 6, 25148 (2016)
-  - slide: 6BDE34AF-C6F3-4830-829F-9C89C9310573
-    find: "Walls et al. (2015), PRE"
-    # Clipped by a white mask in Keynote: show the full reference, unclipped.
-    replace: "Walls, Henaux & Bird (2015), Phys. Rev. E 92, 021002"
-    doi: 10.1103/PhysRevE.92.021002
-  - slide: B47A6023-3D84-4F1B-9E00-F5153B91555B   # slide 6: the park's name is one word
-    find: "Yellow Stone National Park:"
-    replace: "Yellowstone National Park:"
-  # Unchanged and correct on the slide: Ghabache et al. (2014), PoF
-  # = Ghabache, Antkowiak, Josserand & Séon, Phys. Fluids 26, 121701 (2014), doi:10.1063/1.4902820
-
 changelog:
+  - date: "2026-10-11"
+    note: Corrected native citations and Yellowstone spelling; added high-density slide images.
   - date: "2026-10-10"
     note: First web version of the UIUC talk.

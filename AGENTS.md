@@ -17,7 +17,8 @@ before changing any of them.
   the YouTube IFrame API loaded on demand. Keep the per-page CSP in
   `site/player/talk.template.html` in step with `docs/SPEC.md`.
 - Follow the CoMPhy design system: vendored `site/vendor/ds/` tokens and fonts,
-  with no font CDNs. Teal is the only interactive accent. Dark mode uses
+  with no font CDNs. Teal is the player interactive accent; the shared site
+  header and footer follow comphy-lab.org's explicit shell colours. Dark mode uses
   `data-theme` with `localStorage` key `theme`.
 - A talk is published only when Vatsal says so. No unpublished results without
   his explicit approval.
