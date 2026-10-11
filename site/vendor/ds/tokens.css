@@ -112,7 +112,8 @@
 }
 
 /* =============================================================
-   Dark theme — swap surfaces + ink, keep brand hues intact.
+   Dark theme — swap surfaces + ink. Brand hues stay intact except
+   the four hero-gradient stops, which are lifted for type contrast.
    ============================================================= */
 :root[data-theme="dark"] {
   --c-paper:          #12100d;
@@ -133,6 +134,14 @@
   --c-accent-teal:    #6ac2bd;   /* brighter for legibility on dark */
   --c-accent-teal-fg: #0f1c1b;
   --c-accent-teal-hover: #88d2ce;
+
+  /* Hero gradient as type: lift every stop so clipped display titles
+     stay ≥6.8:1 on --c-paper (#12100d). Light theme values are unchanged.
+     Downstream: copy these four lines into the dark-theme block. */
+  --hero-grad-1: #ff8a8a;
+  --hero-grad-2: #d99adc;
+  --hero-grad-3: #8aa0ff;
+  --hero-grad-4: #9b8cff;
 
   --shadow-sm:   0 1px 2px rgba(0,0,0,0.4);
   --shadow-md:   0 4px 10px rgba(0,0,0,0.45);
@@ -205,12 +214,16 @@ h3 { font-size: var(--t-h3); }
   font-size: var(--t-hero);
   line-height: 1.02;
   letter-spacing: -0.015em;
-  background: linear-gradient(90deg, var(--hero-grad-1) 0%, var(--hero-grad-2) 45%, var(--hero-grad-3) 55%, var(--hero-grad-4) 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
+  color: var(--hero-grad-2); /* solid fallback; clip+fill applied only when supported */
   margin: 0;
+}
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hero-title {
+    background: linear-gradient(90deg, var(--hero-grad-1) 0%, var(--hero-grad-2) 45%, var(--hero-grad-3) 55%, var(--hero-grad-4) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
 }
 
 .eyebrow {
