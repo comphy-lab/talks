@@ -12,6 +12,8 @@ cd tools
 uv run python -m talks_build build --export "<Keynote HTML export folder>" \
     --talk ../talks-src/<slug>/talk.yaml [--out-root <repo root>] [--pdf <flat PDF>] [--prune]
 uv run python -m talks_build validate ../site/<slug>/manifest.json [--media-dir ../build/<slug>/media]
+uv run python -m talks_build refresh-assets                      # after runtime JS/CSS edits; no deck export
+uv run python -m talks_build refresh-assets --check               # CI freshness gate
 uv run python -m talks_build upload --slug <slug> --dry-run      # prints the plan, no remote calls
 uv run python -m talks_build upload --slug <slug>                # lists every R2 page first, never overwrites
 uv run pytest                                                    # unit and fixture tests
@@ -22,6 +24,11 @@ External tools: `ffmpeg`/`ffprobe`, poppler (`pdftocairo`, `pdftotext`,
 `pdftohtml`, `pdffonts`), `cwebp`, and for `upload` the `cf` CLI. Text patches also need the
 slide's font installed locally (TeX Live's CMU fonts are found with
 `kpsewhich`, others with `fc-match`).
+
+Owned JS/CSS filenames stay stable; HTML references carry a query fingerprint
+of each file's bytes. A runtime change gets a new URL for returning browsers.
+The build refreshes these references automatically; `refresh-assets` does the
+same after a runtime-only edit. CI rejects stale references before deployment.
 
 `--pdf` defaults to the flat PDF export saved next to the HTML export with the
 same name; it supplies slide titles and screen-reader text. `--preview 2,4`

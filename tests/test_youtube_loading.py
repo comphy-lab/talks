@@ -55,7 +55,9 @@ def _production_origin(tp, talk, pytestconfig):
     tp.page.context.unroute_all()
     tp.page.route(base, lambda route: route.fulfill(body=html, content_type="text/html"))
     tp.page.route(
-        "https://comphy-lab.org/talks/player/player.js",
+        lambda url: urllib.parse.urlsplit(url).scheme == "https"
+        and urllib.parse.urlsplit(url).netloc == "comphy-lab.org"
+        and urllib.parse.urlsplit(url).path == "/talks/player/player.js",
         lambda route: route.fulfill(body=player, content_type="text/javascript"),
     )
     return base

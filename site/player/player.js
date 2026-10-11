@@ -341,7 +341,7 @@ function preloadAround(index) {
 /** Select a matching still/overlay pair without changing logical geometry. */
 function stateImages(state) {
   const width = ui.stage.getBoundingClientRect().width;
-  const dense = (window.devicePixelRatio || 1) * width > 1.25 * canvasW;
+  const dense = (window.devicePixelRatio || 1) * width > canvasW;
   const complete = mediaUrl(state.image2x) &&
     (state.overlay ? mediaUrl(state.overlay2x) : state.overlay2x === null);
   return dense && complete ? [state.image2x, state.overlay2x] : [state.image, state.overlay];

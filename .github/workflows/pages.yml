@@ -40,6 +40,10 @@ jobs:
         working-directory: tools
         run: python -m pytest -q -m "not slow and not export"
 
+      - name: Check runtime asset fingerprints
+        working-directory: tools
+        run: python -m talks_build refresh-assets --check
+
       - name: Check shared site shell against main
         working-directory: tools
         env:

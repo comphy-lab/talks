@@ -186,6 +186,12 @@ not the size, so a video lines up with the poster frame baked into the still.
 - **Stage.** The player shows a 16:9 stage, scaled uniformly to fit the
   viewport. The z-order is `image`, then media, then `overlay`, then UI. Media
   outside the canvas is clipped.
+- **Image density.** Use the matching `image2x` / `overlay2x` pair whenever
+  `devicePixelRatio × rendered stage width` exceeds the logical canvas width,
+  so the original pair is never upscaled when a 2x pair exists. Use 1x when
+  it fits, or when the state has no complete 2x pair. Re-evaluate after resize,
+  display-density changes and entering or leaving fullscreen; preload the
+  density selected for the stage.
 - **Placement key.** Each media item has the key `kind + ref + rect rounded to
   1 px`.
 - **Changing state** (any navigation, including jumps):

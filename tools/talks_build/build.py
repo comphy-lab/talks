@@ -100,6 +100,10 @@ class Builder:
     # ------------------------------------------------------------------
     def run(self) -> dict:
         t0 = time.time()
+        if self.site_dir.exists():
+            # Refuse invalid owned assets before encoding or replacing any
+            # published files. The later refresh writes the current hashes.
+            sitemod.refresh_assets(self.site_dir, check=True)
         deck = load_deck(self.export_dir)
         if (deck.width, deck.height) != (1920, 1080):
             raise BuildError(f"canvas is {deck.width} x {deck.height}; v1 requires 1920 x 1080")
@@ -156,6 +160,7 @@ class Builder:
         if page is None:
             self.warn("site/player/talk.template.html not found; index.html not written")
         sitemod.update_index(self.site_dir, self.talk)
+        sitemod.refresh_assets(self.site_dir)
 
         # Only content-addressed files this pipeline names are ever pruned.
         stale = [p for p in self.store.stale() if MEDIA_NAME_RE.match(p.name)]
@@ -185,7 +190,6 @@ class Builder:
         )
         report_path = self.build_dir / "report.json"
         report_path.write_text(json.dumps(self.report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
-        self.pool.shutdown()
         return self.report
 
     # ------------------------------------------------------------------
@@ -621,9 +625,12 @@ def build(
     log=print,
 ) -> dict:
     b = Builder(export_dir, talk_path, out_root, pdf, jobs, log)
-    b.previews = set(previews or ())
-    b.prune = prune
-    return b.run()
+    try:
+        b.previews = set(previews or ())
+        b.prune = prune
+        return b.run()
+    finally:
+        b.pool.shutdown()
 
 
 __all__ = ["build", "bleed_overlay", "BuildError", "infer_root"]

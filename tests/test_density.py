@@ -62,10 +62,10 @@ def test_density_selection_only_fetches_the_needed_assets(open_talk, talk, dpr):
     tp.page.on("request", lambda r: requests.add(urllib.parse.urlsplit(r.url).path.rsplit("/", 1)[-1]))
     tp.goto(talk.hash_for(step.n, step.k))
     _wait_pair(tp, step.state, dpr)
-    # At this viewport the windowed stage crosses the documented threshold
-    # at 2x; DPR 1 keeps the original images even while preloading neighbours.
+    # DPR 2 would upscale 1x images here; DPR 1 fits the original images,
+    # including while preloading neighbours.
     pixels = tp.stage_rect()[2] * dpr
-    assert (pixels > 1.25 * 1920) is (dpr == 2)
+    assert (pixels > 1920) is (dpr == 2)
     tp.page.wait_for_timeout(250)
     high = {s.state.get(field) for s in talk.steps for field in ("image2x", "overlay2x")} - {None}
     assert bool(requests & high) is (dpr == 2), requests & high
@@ -74,9 +74,10 @@ def test_density_selection_only_fetches_the_needed_assets(open_talk, talk, dpr):
 
 def test_density_switches_on_resize_and_fullscreen_without_recreating_video(open_talk, talk):
     step = _step_with_overlay(talk)
-    tp = open_talk(viewport={"width": 1440, "height": 900}, device_scale_factor=2)
+    tp = open_talk(viewport={"width": 1280, "height": 800}, device_scale_factor=2)
     tp.goto(talk.hash_for(step.n, step.k))
     _wait_pair(tp, step.state, 1)
+    assert tp.stage_rect()[2] * 2 <= 1920, "the original images must fit this smaller retina viewport"
     tp.wait_videos_playing(min_time=0.2)
     video = tp.page.query_selector("video")
     src = video.get_attribute("src")
@@ -89,7 +90,7 @@ def test_density_switches_on_resize_and_fullscreen_without_recreating_video(open
     tp.page.set_viewport_size({"width": 1600, "height": 1100})
     _wait_pair(tp, step.state, 2)
     same_video()
-    tp.page.set_viewport_size({"width": 1440, "height": 900})
+    tp.page.set_viewport_size({"width": 1280, "height": 800})
     _wait_pair(tp, step.state, 1)
     same_video()
     tp.press("f")
@@ -99,6 +100,34 @@ def test_density_switches_on_resize_and_fullscreen_without_recreating_video(open
     _wait_pair(tp, step.state, 1)
     same_video()
     assert video.evaluate("(el) => !el.paused && el.currentTime > 0")
+    tp.assert_clean()
+
+
+def test_retina_1440_window_and_fullscreen_use_two_x_without_recreating_videos(open_talk, talk):
+    step = _step_with_overlay(talk)
+    tp = open_talk(viewport={"width": 1440, "height": 900}, device_scale_factor=2)
+    tp.goto(talk.hash_for(step.n, step.k))
+    _wait_pair(tp, step.state, 2)
+    assert tp.stage_rect()[2] * 2 > 1920, "the issue's windowed stage must exceed the 1x image width"
+    tp.wait_videos_playing(min_time=0.2)
+    videos = tp.page.query_selector_all("#layer-media > video")
+    sources = [video.get_attribute("src") for video in videos]
+
+    def same_videos():
+        for video, source in zip(videos, sources, strict=True):
+            assert video.evaluate(
+                "(el) => el.isConnected && [...document.querySelectorAll('#layer-media > video')].includes(el)"
+            )
+            assert video.get_attribute("src") == source
+        assert tp.state()["slide"] == step.n and tp.state()["stateIndex"] == step.k
+
+    tp.press("f")
+    _wait_pair(tp, step.state, 2)
+    same_videos()
+    tp.press("f")
+    _wait_pair(tp, step.state, 2)
+    same_videos()
+    tp.wait_videos_playing(min_time=0.2)
     tp.assert_clean()
 
 
@@ -120,7 +149,7 @@ def test_schema_one_talk_still_works_on_a_high_density_display(open_talk, talk):
 def test_density_refresh_preserves_announcement_until_real_navigation(open_talk, talk):
     slide = next(s for s in talk.manifest["slides"] if len(s["states"]) > 1)
     step = talk.step(slide["n"], 0)
-    tp = open_talk(viewport={"width": 1440, "height": 900}, device_scale_factor=2)
+    tp = open_talk(viewport={"width": 1280, "height": 800}, device_scale_factor=2)
     tp.goto(talk.hash_for(step.n, step.k))
     _wait_pair(tp, step.state, 1)
     tp.page.wait_for_timeout(100)
@@ -140,7 +169,7 @@ def test_density_refresh_preserves_announcement_until_real_navigation(open_talk,
     tp.page.set_viewport_size({"width": 1600, "height": 1100})
     _wait_pair(tp, step.state, 2)
     unchanged()
-    tp.page.set_viewport_size({"width": 1440, "height": 900})
+    tp.page.set_viewport_size({"width": 1280, "height": 800})
     _wait_pair(tp, step.state, 1)
     unchanged()
     tp.press("f")

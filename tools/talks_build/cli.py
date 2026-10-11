@@ -1,4 +1,4 @@
-"""Command line: ``python -m talks_build {build,validate,upload}``."""
+"""Command line: ``python -m talks_build {build,validate,upload,refresh-assets}``."""
 
 from __future__ import annotations
 
@@ -50,6 +50,9 @@ def _parser() -> argparse.ArgumentParser:
         action="store_true",
         help="with --dry-run, also list existing R2 keys (read-only); a real upload always does",
     )
+    assets = sub.add_parser("refresh-assets", help="refresh content fingerprints of owned HTML JS/CSS URLs")
+    assets.add_argument("--site", type=Path, default=None, help="site root (default: repository site/)")
+    assets.add_argument("--check", action="store_true", help="fail on stale URLs without changing files")
     return p
 
 
@@ -59,6 +62,22 @@ def _repo_root_default() -> Path:
 
 def main(argv: list[str] | None = None) -> int:
     args = _parser().parse_args(argv)
+    if args.command == "refresh-assets":
+        from .site import refresh_assets
+
+        root = args.site.resolve() if args.site else _repo_root_default() / "site"
+        try:
+            changed = refresh_assets(root, check=args.check)
+        except (OSError, ValueError) as exc:
+            print(f"asset fingerprints failed: {exc}", file=sys.stderr)
+            return 1
+        if args.check and changed:
+            print("stale runtime asset URLs; run python -m talks_build refresh-assets:", file=sys.stderr)
+            for path in changed:
+                print("  " + str(path.relative_to(root)), file=sys.stderr)
+            return 1
+        print(f"asset fingerprints {'checked' if args.check else 'refreshed'}: {len(changed)} HTML files")
+        return 0
     if args.command == "build":
         previews = {int(x) for x in args.preview.split(",") if x.strip()}
         try:
