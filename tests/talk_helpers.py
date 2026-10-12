@@ -299,33 +299,50 @@ class TalkPage:
         """Absolute URL the player should request for a media file (the ?media= override)."""
         return f"{self.base}/media/{self.talk.slug}/{name}"
 
+    def density_pair(self, step: Step) -> tuple[str, str | None, int]:
+        """SPEC 3.2 "Image density": the still, overlay and scale the stage needs for `step` now.
+
+        The 2x pair when devicePixelRatio x rendered stage width exceeds the
+        canvas width and the state has a complete 2x pair; otherwise the 1x pair.
+        """
+        st = step.state
+        complete = bool(st.get("image2x")) and (
+            bool(st.get("overlay2x")) if st["overlay"] else st.get("overlay2x") is None
+        )
+        dpr = self.page.evaluate("() => window.devicePixelRatio || 1")
+        if complete and dpr * self.stage_rect()[2] > CANVAS_W:
+            return st["image2x"], st["overlay2x"], 2
+        return st["image"], st["overlay"], 1
+
     def wait_stills(self, step: Step, timeout: float = 10.0) -> dict:
-        """Wait until the still (and overlay) of `step` are the only, decoded, visible images."""
-        want_image = self.media_url(step.state["image"])
-        want_overlay = self.media_url(step.state["overlay"]) if step.state["overlay"] else None
+        """Wait until the still (and overlay) of `step`, at the density the stage needs, are the only,
+        decoded, visible images."""
+        want: dict = {}
 
         def ok() -> dict | None:
+            image, overlay, scale = self.density_pair(step)
+            want.update(image=self.media_url(image), overlay=self.media_url(overlay) if overlay else None, scale=scale)
             s = self.stills()
             im, ov = s["image"], s["overlay"]
             good_image = (
                 im["count"] == 1
-                and im["src"] == want_image
+                and im["src"] == want["image"]
                 and im["complete"]
-                and im["w"] == CANVAS_W
-                and im["h"] == CANVAS_H
+                and im["w"] == CANVAS_W * scale
+                and im["h"] == CANVAS_H * scale
                 and not im["broken"]
                 and im["visible"]
                 and im["opacity"] == 1
             )
-            if want_overlay is None:
+            if want["overlay"] is None:
                 good_overlay = ov["count"] == 0
             else:
                 good_overlay = (
                     ov["count"] == 1
-                    and ov["src"] == want_overlay
+                    and ov["src"] == want["overlay"]
                     and ov["complete"]
-                    and ov["w"] == CANVAS_W
-                    and ov["h"] == CANVAS_H
+                    and ov["w"] == CANVAS_W * scale
+                    and ov["h"] == CANVAS_H * scale
                     and not ov["broken"]
                     and ov["visible"]
                     and ov["opacity"] == 1
@@ -338,7 +355,7 @@ class TalkPage:
             if s:
                 return s
             if time.monotonic() > deadline:
-                raise Timeout(f"{step.label}: stills not shown: {self.stills()} (want {want_image}, {want_overlay})")
+                raise Timeout(f"{step.label}: stills not shown: {self.stills()} (want {want})")
             self.page.wait_for_timeout(50)
 
     def wait_videos_playing(self, min_time: float = 0.05, timeout: float = 10.0) -> list[dict]:

@@ -377,17 +377,21 @@ def test_overlay_has_no_seams_when_scaled(open_talk, talk: Talk, engine: str, ov
     if overlay_label == "none":
         pytest.skip("no overlay states in this talk")
     step = talk.by_label(overlay_label)
-    alpha = talk.rgba(step.state["overlay"])[..., 3]
-    seen = np.zeros(alpha.shape, dtype=bool)  # canvas pixels where a video is meant to show
-    for key in step.video_keys:
-        x0, y0, x1, y1 = visible_rect([int(p) for p in key.split(":")[2].split(",")])
-        seen[y0:y1, x0:x1] |= alpha[y0:y1, x0:x1] < 255
     report = []
     for name, options in SCALED_VIEWS:
         tp = open_talk(**options)
         tp.goto(talk.hash_for(step.n, step.k))
         tp.wait_state(step.n, step.k)
         tp.wait_stills(step)
+        # The overlay on screen, at the density the stage selected; a canvas pixel
+        # lets a video show if any of its image pixels does.
+        _, overlay, density = tp.density_pair(step)
+        alpha = talk.rgba(overlay)[..., 3]
+        alpha = alpha.reshape(1080, density, 1920, density).min(axis=(1, 3))
+        seen = np.zeros(alpha.shape, dtype=bool)  # canvas pixels where a video is meant to show
+        for key in step.video_keys:
+            x0, y0, x1, y1 = visible_rect([int(p) for p in key.split(":")[2].split(",")])
+            seen[y0:y1, x0:x1] |= alpha[y0:y1, x0:x1] < 255
         tp.wait_videos_playing(min_time=0.1)
         tp.page.evaluate(VIDEOS_STYLE_JS, "black")
         tp.page.wait_for_timeout(300)
@@ -413,7 +417,7 @@ def test_overlay_has_no_seams_when_scaled(open_talk, talk: Talk, engine: str, ov
         assert (diff[shown >= 1] > SEAM_TOLERANCE).mean() > 0.5, f"{step.label} at {name}: black videos not drawn"
         ys, xs = np.nonzero(bad)
         where = sorted({(int(x / scale), int(y / scale)) for x, y in zip(xs[:2000], ys[:2000], strict=True)})[:8]
-        report.append(f"{name}: {int(bad.sum())} seam pixels (max diff {int(diff[~allowed].max())})")
+        report.append(f"{name} ({density}x stills): {int(bad.sum())} seam pixels (max diff {int(diff[~allowed].max())})")
         assert not bad.any(), (
             f"{step.label} at {name} ({engine}): {int(bad.sum())} screen pixels show the video through the "
             f"overlay, near canvas {where}"

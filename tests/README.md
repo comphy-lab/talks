@@ -82,6 +82,11 @@ uv run python serve.py --slug singular-bursting-bubbles     # prints the URL to 
   requires the two captures to agree away from where a video is meant to
   show. Video frames are read back through a canvas (the media is
   same-origin under the test server).
+- `TalkPage.wait_stills` waits for the still and overlay at the density the
+  stage needs by SPEC 3.2 (`density_pair`): the 2x pair when
+  `devicePixelRatio` x stage width exceeds 1920, as on the seam test's
+  Retina stage, and 1x otherwise. The seam test reads the alpha of the
+  overlay actually shown.
 - The YouTube stand-in reports ready only when its embed page posts a
   message, as the real API does, so blocking the embed host
   (`open_talk(youtube="partial")`) leaves the player unready.
