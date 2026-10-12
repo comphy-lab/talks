@@ -63,8 +63,8 @@ const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1']);
 const DOWNLOAD_FILE_RE = /^[0-9a-f]{16}\/[A-Za-z0-9][A-Za-z0-9._-]*\.(pdf|pptx|key)$/;
 const DOWNLOAD_FORMATS = new Map([
   ['pdf', { label: 'PDF', note: 'One page per slide; movies as still frames' }],
-  ['pptx', { label: 'PowerPoint', note: 'One slide per click, with the movies' }],
-  ['key', { label: 'Keynote', note: 'One slide per click, with the movies' }],
+  ['pptx', { label: 'PowerPoint', note: 'Every click as here; movies play through' }],
+  ['key', { label: 'Keynote', note: 'Every click as here; movies play through' }],
 ]);
 // Narrowest the panel gets when there is room to the left of the button.
 const DOWNLOADS_MIN_PX = 240;

@@ -129,15 +129,26 @@ the export that build read: the build records both digests in
   slide on the website. The text maps are repaired as for slide text
   (Section 3.1), so the PDF's text can be searched and copied. Title, author
   and subject are set from the manifest.
-- `pptx`: one slide per click state, 13.333 x 7.5 in (16:9; one canvas pixel
-  is 6350 EMU). Each slide is the state's lossless 2x still at full size, each
-  video at its manifest rectangle, and the state's overlay above them, so
-  nothing is re-typeset or re-laid out. Videos start with the slide, muted, and
-  loop. A YouTube placement becomes the poster frame Keynote shows, cropped
-  from a state of the same slide without the embed, linked to the video on
-  YouTube at its start time; the video itself is not included. A `dissolve`
-  state gets a fade transition. A video that continues across states restarts
-  on each slide.
+- `pptx`: every click state, 13.333 x 7.5 in (16:9; one canvas pixel is
+  6350 EMU). Each state is its lossless 2x still at full size, each video at
+  its manifest rectangle, and its overlay above them, so nothing is
+  re-typeset or re-laid out. Videos are muted and loop. PowerPoint and
+  Keynote restart a movie on every slide, so consecutive states that keep a
+  video placement (the player's key, Section 3.2), within a slide or across
+  slides, share one slide: each later state is a click build that shows its
+  still beneath the videos and shows or hides the placements and overlays
+  that change. A video that stays is one shape throughout and plays on, as on
+  the web; one a click brings starts with that click. Keynote imports such a
+  video's entrance and start as one Movie Start build, which shows its first
+  frame from the start of the slide, so until that click it is covered by
+  the showing state's still, cropped to its box. The build refuses a shared
+  slide on which two overlapping placements would stack in another order
+  than the player's, or a cover would hide other media. Every other state is
+  a slide of its own, its videos starting with it. A YouTube placement
+  becomes the poster frame Keynote shows, cropped from a state of the same
+  slide without the embed, linked to the video on YouTube at its start time;
+  the video itself is not included. A `dissolve` state gets a fade
+  transition, or a fade-in of its still when it is a click build.
 - `key`: the `pptx` file opened in Keynote (macOS only), with every movie set
   to loop and muted, and saved as a Keynote document. The build fails unless
   Keynote reports the expected numbers of slides and movies.
@@ -283,7 +294,7 @@ not the size, so a video lines up with the poster frame baked into the still.
   `aria-controls`) discloses a panel with one plain link per file (the PDF
   opens in a new tab, since browsers show rather than save it), in
   manifest order: PDF ("One page per slide; movies as still frames"),
-  PowerPoint or Keynote (both "One slide per click, with the movies"), each
+  PowerPoint or Keynote (both "Every click as here; movies play through"), each
   with its size in decimal megabytes (whole MB; one decimal place below
   1 MB). The URL is `media_base + file`, under the test hook's override like
   other media. An entry with an unknown format, a file name that is not

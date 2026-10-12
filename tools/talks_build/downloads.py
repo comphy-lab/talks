@@ -7,10 +7,12 @@
 - :func:`handout_pdf` turns it into the PDF download: text maps repaired
   (:mod:`talks_build.tounicode`), document metadata set, and every movie area
   linked to that slide on the website.
-- :func:`build_pptx` writes one PowerPoint slide per click state from the
+- :func:`build_pptx` writes the click states as PowerPoint slides from the
   build's lossless 2x stills (``build --stills``), with each video placed at
   its manifest rectangle, playing automatically and looping, and the overlay
-  above it. Nothing is re-typeset, so every slide matches the web player.
+  above it. States that keep a video on screen share one slide as click
+  builds, so the video plays on through them as on the web. Nothing is
+  re-typeset, so every click matches the web player.
 - :func:`build_key` opens that PowerPoint file in Keynote (macOS), checks it
   and saves it as a Keynote document.
 
@@ -155,24 +157,80 @@ def _emu(v: float) -> int:
     return int(round(v * EMU_PER_PX))
 
 
-def _timing_xml(videos: list[tuple[int, int]]) -> str:
-    """Slide timing: every video starts with the slide, muted, and loops until the slide ends.
+def _play(ids, spid: int, ms: int, node_type: str) -> str:
+    node, beh = next(ids), next(ids)
+    return (
+        f'<p:par><p:cTn id="{node}" presetID="1" presetClass="mediacall" presetSubtype="0" fill="hold" '
+        f'nodeType="{node_type}"><p:stCondLst><p:cond delay="0"/></p:stCondLst><p:childTnLst>'
+        f'<p:cmd type="call" cmd="playFrom(0.0)"><p:cBhvr><p:cTn id="{beh}" dur="{ms}" fill="hold"/>'
+        f'<p:tgtEl><p:spTgt spid="{spid}"/></p:tgtEl></p:cBhvr></p:cmd></p:childTnLst></p:cTn></p:par>'
+    )
 
-    ``videos`` holds ``(shape id, duration in ms)``. This is the structure
-    PowerPoint writes for "Start: Automatically" and "Loop until Stopped".
-    """
-    ids = iter(range(1, 10_000))
-    root, main, group, inner = next(ids), next(ids), next(ids), next(ids)
-    calls = []
-    for i, (spid, ms) in enumerate(videos):
-        node, beh = next(ids), next(ids)
-        kind = "afterEffect" if i == 0 else "withEffect"
-        calls.append(
-            f'<p:par><p:cTn id="{node}" presetID="1" presetClass="mediacall" presetSubtype="0" fill="hold" '
-            f'nodeType="{kind}"><p:stCondLst><p:cond delay="0"/></p:stCondLst><p:childTnLst>'
-            f'<p:cmd type="call" cmd="playFrom(0.0)"><p:cBhvr><p:cTn id="{beh}" dur="{ms}" fill="hold"/>'
-            f'<p:tgtEl><p:spTgt spid="{spid}"/></p:tgtEl></p:cBhvr></p:cmd></p:childTnLst></p:cTn></p:par>'
+
+def _visibility(ids, spid: int, show: bool, node_type: str, fade: bool = False) -> str:
+    """Appear (or, with ``fade``, Fade) entrance, or Disappear exit, as PowerPoint writes them."""
+    node, beh = next(ids), next(ids)
+    body = (
+        f'<p:set><p:cBhvr><p:cTn id="{beh}" dur="1" fill="hold"><p:stCondLst><p:cond delay="0"/></p:stCondLst>'
+        f'</p:cTn><p:tgtEl><p:spTgt spid="{spid}"/></p:tgtEl><p:attrNameLst><p:attrName>style.visibility'
+        f'</p:attrName></p:attrNameLst></p:cBhvr><p:to><p:strVal val="{"visible" if show else "hidden"}"/></p:to>'
+        f"</p:set>"
+    )
+    if fade:
+        body += (
+            f'<p:animEffect transition="in" filter="fade"><p:cBhvr><p:cTn id="{next(ids)}" dur="500"/>'
+            f'<p:tgtEl><p:spTgt spid="{spid}"/></p:tgtEl></p:cBhvr></p:animEffect>'
         )
+    return (
+        f'<p:par><p:cTn id="{node}" presetID="{10 if fade else 1}" presetClass="{"entr" if show else "exit"}" '
+        f'presetSubtype="0" fill="hold" nodeType="{node_type}"><p:stCondLst><p:cond delay="0"/></p:stCondLst>'
+        f"<p:childTnLst>{body}</p:childTnLst></p:cTn></p:par>"
+    )
+
+
+def _group(outer: int, inner: int, start: str, parts: str) -> str:
+    return (
+        f'<p:par><p:cTn id="{outer}" fill="hold"><p:stCondLst>{start}</p:stCondLst><p:childTnLst>'
+        f'<p:par><p:cTn id="{inner}" fill="hold"><p:stCondLst><p:cond delay="0"/></p:stCondLst><p:childTnLst>'
+        f"{parts}</p:childTnLst></p:cTn></p:par></p:childTnLst></p:cTn></p:par>"
+    )
+
+
+def _timing_xml(videos: list[tuple[int, int]], clicks: list[list[tuple]] = ()) -> str:
+    """Slide timing: muted, looping videos and the slide's click builds.
+
+    ``videos`` holds ``(shape id, duration in ms)`` of every video on the
+    slide. ``clicks`` holds, for each click, the effects it runs together:
+    ``("in", spid, fade)`` shows a shape, ``("out", spid)`` hides it and
+    ``("play", spid, ms)`` starts a video from its beginning. A video no click
+    starts plays from the start of the slide. Videos loop until the slide
+    ends, so one that stays on screen keeps playing through the clicks. This
+    is the structure PowerPoint writes for "Start: Automatically", "Loop until
+    Stopped" and Appear, Fade and Disappear animations.
+    """
+    ids = iter(range(1, 100_000))
+    root, main = next(ids), next(ids)
+    clicked = {e[1] for effects in clicks for e in effects if e[0] == "play"}
+    auto = [(spid, ms) for spid, ms in videos if spid not in clicked]
+    seq = []
+    if auto:
+        outer, inner = next(ids), next(ids)
+        parts = "".join(
+            _play(ids, spid, ms, "afterEffect" if i == 0 else "withEffect") for i, (spid, ms) in enumerate(auto)
+        )
+        start = f'<p:cond delay="indefinite"/><p:cond evt="onBegin" delay="0"><p:tn val="{main}"/></p:cond>'
+        seq.append(_group(outer, inner, start, parts))
+    for effects in clicks:
+        outer, inner = next(ids), next(ids)
+        parts = []
+        for i, effect in enumerate(effects):
+            node_type = "clickEffect" if i == 0 else "withEffect"
+            if effect[0] == "play":
+                parts.append(_play(ids, effect[1], effect[2], node_type))
+            else:
+                show = effect[0] == "in"
+                parts.append(_visibility(ids, effect[1], show, node_type, show and effect[2]))
+        seq.append(_group(outer, inner, '<p:cond delay="indefinite"/>', "".join(parts)))
     media = "".join(
         f'<p:video><p:cMediaNode vol="0" mute="1"><p:cTn id="{next(ids)}" repeatCount="indefinite" fill="hold" '
         f'display="0"><p:stCondLst><p:cond delay="indefinite"/></p:stCondLst></p:cTn>'
@@ -183,18 +241,14 @@ def _timing_xml(videos: list[tuple[int, int]]) -> str:
         f'<p:timing xmlns:p="{_P}"><p:tnLst><p:par>'
         f'<p:cTn id="{root}" dur="indefinite" restart="never" nodeType="tmRoot"><p:childTnLst>'
         f'<p:seq concurrent="1" nextAc="seek"><p:cTn id="{main}" dur="indefinite" nodeType="mainSeq"><p:childTnLst>'
-        f'<p:par><p:cTn id="{group}" fill="hold"><p:stCondLst><p:cond delay="indefinite"/>'
-        f'<p:cond evt="onBegin" delay="0"><p:tn val="{main}"/></p:cond></p:stCondLst><p:childTnLst>'
-        f'<p:par><p:cTn id="{inner}" fill="hold"><p:stCondLst><p:cond delay="0"/></p:stCondLst><p:childTnLst>'
-        f'{"".join(calls)}</p:childTnLst></p:cTn></p:par></p:childTnLst></p:cTn></p:par>'
-        f"</p:childTnLst></p:cTn>"
+        f'{"".join(seq)}</p:childTnLst></p:cTn>'
         f'<p:prevCondLst><p:cond evt="onPrev" delay="0"><p:tgtEl><p:sldTgt/></p:tgtEl></p:cond></p:prevCondLst>'
         f'<p:nextCondLst><p:cond evt="onNext" delay="0"><p:tgtEl><p:sldTgt/></p:tgtEl></p:cond></p:nextCondLst>'
         f"</p:seq>{media}</p:childTnLst></p:cTn></p:par></p:tnLst></p:timing>"
     )
 
 
-def _set_timing_and_transition(slide, videos: list[tuple[int, int]], dissolve: bool) -> None:
+def _set_timing_and_transition(slide, videos: list[tuple[int, int]], dissolve: bool, clicks=()) -> None:
     from pptx.oxml import parse_xml
 
     sld = slide._element
@@ -206,8 +260,8 @@ def _set_timing_and_transition(slide, videos: list[tuple[int, int]], dissolve: b
     new = []
     if dissolve:
         new.append(parse_xml(f'<p:transition xmlns:p="{_P}" spd="fast"><p:fade/></p:transition>'))
-    if videos:
-        new.append(parse_xml(_timing_xml(videos)))
+    if videos or clicks:
+        new.append(parse_xml(_timing_xml(videos, clicks)))
     for el in new:
         if ext is not None:
             ext.addprevious(el)
@@ -256,8 +310,94 @@ def _youtube_poster(slide: dict, ref: str, rect, stills_dir: Path, tmp: Path) ->
     return None
 
 
+def _placement_key(item: dict) -> tuple:
+    """The player's key for a media placement: kind, ref and rectangle rounded to 1 px."""
+    return (item["kind"], item["ref"], tuple(round(v) for v in item["rect"]))
+
+
+def _runs(manifest: dict) -> list[list[tuple[dict, int, dict]]]:
+    """The click states as ``(slide, k, state)``, grouped into runs that share a video.
+
+    PowerPoint and Keynote restart a movie on every slide, while the web player
+    keeps a video playing for as long as consecutive states keep its placement.
+    Such states therefore share one slide, the later ones as click builds.
+    """
+    runs: list[list[tuple[dict, int, dict]]] = []
+    previous: set = set()
+    for slide in manifest["slides"]:
+        for k, state in enumerate(slide["states"]):
+            videos = {_placement_key(m) for m in state["media"] if m["kind"] == "video"}
+            if runs and videos & previous:
+                runs[-1].append((slide, k, state))
+            else:
+                runs.append([(slide, k, state)])
+            previous = videos
+    return runs
+
+
+def _overlap(a, b) -> bool:
+    return a[0] < b[0] + b[2] and b[0] < a[0] + a[2] and a[1] < b[1] + b[3] and b[1] < a[1] + a[3]
+
+
+def _spans(run: list[tuple[dict, int, dict]]) -> list[list]:
+    """Each media placement of a run as ``[item, first, last]`` (states of the run), bottom first.
+
+    A placement is one shape for as long as consecutive states keep it. Shapes
+    stack in order of appearance; the run is refused if that would put two
+    overlapping placements of a state in a different order from the player's.
+    """
+    spans: list[list] = []
+    open_: dict[tuple, int] = {}
+    for j, (slide, _, state) in enumerate(run):
+        keys = [_placement_key(m) for m in state["media"]]
+        for key in [key for key in open_ if key not in keys]:
+            del open_[key]
+        for item, key in zip(state["media"], keys, strict=True):
+            if key in open_:
+                spans[open_[key]][2] = j
+            else:
+                open_[key] = len(spans)
+                spans.append([item, j, j])
+        rects = [m["rect"] for m in state["media"]]
+        for a in range(len(keys)):
+            for b in range(a + 1, len(keys)):
+                if open_[keys[a]] > open_[keys[b]] and _overlap(rects[a], rects[b]):
+                    raise DownloadError(f"slide {slide['n']}: overlapping media would stack in another order")
+    return spans
+
+
+def _cover(s, run: list[tuple[dict, int, dict]], j: int, item: dict, stills_dir: Path, tmp: Path):
+    """State ``j``'s still cropped to ``item``'s box (within the canvas), placed over that box."""
+    from PIL import Image
+
+    slide, _, state = run[j]
+    x, y, w, h = item["rect"]
+    x0, y0 = max(0, x), max(0, y)
+    x1, y1 = min(SLIDE_W / EMU_PER_PX, x + w), min(SLIDE_H / EMU_PER_PX, y + h)
+    box = (x0, y0, x1 - x0, y1 - y0)
+    if any(_overlap(other["rect"], box) for other in state["media"]):
+        raise DownloadError(f"slide {slide['n']}: covering a video until its click would hide other media")
+    src = _still(stills_dir, state.get("image2x") or state["image"])
+    out = tmp / f"cover-{src.stem}-{item['ref']}.png"
+    with Image.open(src) as im:
+        f = im.width / (SLIDE_W / EMU_PER_PX)
+        im.crop(tuple(round(v * f) for v in (x0, y0, x1, y1))).save(out, format="PNG")
+    pic = s.shapes.add_picture(str(_srgb_png(out, tmp)), _emu(x0), _emu(y0), _emu(box[2]), _emu(box[3]))
+    pic.name = "Covers the video until its click"
+    return pic
+
+
 def build_pptx(manifest: dict, media_dir: Path, stills_dir: Path, out: Path, page_url: str) -> dict:
-    """One slide per click state, from the build's lossless stills, with videos placed and looping."""
+    """The click states as slides and click builds, from the build's lossless stills, with videos looping.
+
+    Each run of states that keeps a video on screen (:func:`_runs`) is one
+    slide: its first state's still, every media placement of the run as one
+    shape (:func:`_spans`), and the overlays on top. Each later state is a
+    click that shows its still beneath the videos, shows the placements and
+    overlay it adds and hides those it drops. A video that stays on screen is
+    the same shape throughout, so it keeps playing as on the web; one a click
+    brings is covered until then (:func:`_cover`).
+    """
     from PIL import Image
     from pptx import Presentation
 
@@ -270,7 +410,7 @@ def build_pptx(manifest: dict, media_dir: Path, stills_dir: Path, out: Path, pag
     props.subject = manifest.get("subtitle") or ""
     props.author = manifest["speaker"]
     props.comments = f"Web version: {page_url}"
-    counts = {"slides": 0, "videos": 0, "youtube_links": 0, "overlays": 0}
+    counts = {"slides": 0, "states": 0, "builds": 0, "videos": 0, "youtube_links": 0, "overlays": 0, "covers": 0}
     with tempfile.TemporaryDirectory(prefix="talks-pptx-") as tmpdir:
         tmp = Path(tmpdir)
         posters: dict[str, Path] = {}
@@ -279,46 +419,79 @@ def build_pptx(manifest: dict, media_dir: Path, stills_dir: Path, out: Path, pag
             with Image.open(media_dir / v["poster"]) as im:
                 im.convert("RGB").save(png, format="PNG")
             posters[ref] = _srgb_png(png, tmp)
-        for slide in manifest["slides"]:
-            for k, state in enumerate(slide["states"]):
-                s = prs.slides.add_slide(blank)
+        for run in _runs(manifest):
+            s = prs.slides.add_slide(blank)
+            last = len(run) - 1
+            # clicks[j - 1]: the effects of the click that shows state j of the run.
+            clicks: list[list[tuple]] = [[] for _ in range(last)]
+            for j, (slide, k, state) in enumerate(run):
                 still = _srgb_png(_still(stills_dir, state.get("image2x") or state["image"]), tmp)
                 pic = s.shapes.add_picture(str(still), 0, 0, SLIDE_W, SLIDE_H)
                 pic.name = f"Slide {slide['n']}" + (f", step {k + 1}" if len(slide["states"]) > 1 else "")
                 pic._element.nvPicPr.cNvPr.set("descr", slide.get("text") or slide["title"])
-                timed = []
-                for item in state["media"]:
-                    x, y, w, h = item["rect"]
-                    if item["kind"] == "video":
-                        v = manifest["videos"][item["ref"]]
-                        movie = s.shapes.add_movie(
-                            str(media_dir / v["src"]), _emu(x), _emu(y), _emu(w), _emu(h),
-                            poster_frame_image=str(posters[item["ref"]]), mime_type="video/mp4",
-                        )  # fmt: skip
-                        timed.append((movie.shape_id, max(1, int(round(v["duration"] * 1000)))))
-                        counts["videos"] += 1
+                if j:
+                    clicks[j - 1].append(("in", pic.shape_id, state.get("transition") == "dissolve"))
+            timed, late = [], []
+            for item, first, end in _spans(run):
+                slide = run[first][0]
+                x, y, w, h = item["rect"]
+                if item["kind"] == "video":
+                    v = manifest["videos"][item["ref"]]
+                    shape = s.shapes.add_movie(
+                        str(media_dir / v["src"]), _emu(x), _emu(y), _emu(w), _emu(h),
+                        poster_frame_image=str(posters[item["ref"]]), mime_type="video/mp4",
+                    )  # fmt: skip
+                    ms = max(1, int(round(v["duration"] * 1000)))
+                    timed.append((shape.shape_id, ms))
+                    counts["videos"] += 1
+                else:
+                    y_entry = manifest["youtube"][item["ref"]]
+                    url = f"https://www.youtube.com/watch?v={y_entry['id']}&t={int(y_entry['start'])}s"
+                    poster = _youtube_poster(slide, item["ref"], item["rect"], stills_dir, tmp)
+                    if poster is not None:
+                        poster = _srgb_png(poster, tmp)
+                        shape = s.shapes.add_picture(str(poster), _emu(x), _emu(y), _emu(w), _emu(h))
                     else:
-                        y_entry = manifest["youtube"][item["ref"]]
-                        url = f"https://www.youtube.com/watch?v={y_entry['id']}&t={int(y_entry['start'])}s"
-                        poster = _youtube_poster(slide, item["ref"], item["rect"], stills_dir, tmp)
-                        if poster is not None:
-                            poster = _srgb_png(poster, tmp)
-                            shape = s.shapes.add_picture(str(poster), _emu(x), _emu(y), _emu(w), _emu(h))
-                        else:
-                            from pptx.enum.shapes import MSO_SHAPE
+                        from pptx.enum.shapes import MSO_SHAPE
 
-                            shape = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, _emu(x), _emu(y), _emu(w), _emu(h))
-                            shape.fill.background()
-                            shape.line.fill.background()
-                        shape.name = f"YouTube: {y_entry['title']}"
-                        shape.click_action.hyperlink.address = url
-                        counts["youtube_links"] += 1
+                        shape = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, _emu(x), _emu(y), _emu(w), _emu(h))
+                        shape.fill.background()
+                        shape.line.fill.background()
+                    shape.name = f"YouTube: {y_entry['title']}"
+                    shape.click_action.hyperlink.address = url
+                    counts["youtube_links"] += 1
+                if first:
+                    clicks[first - 1].append(("in", shape.shape_id, False))
+                    if item["kind"] == "video":
+                        clicks[first - 1].append(("play", shape.shape_id, ms))
+                        late.append((item, first))
+                if end < last:
+                    clicks[end].append(("out", shape.shape_id))
+            # Keynote imports a video's entrance and play as one Movie Start build,
+            # which shows the movie's first frame from the start of the slide. Each
+            # earlier state therefore covers it with that state's own still, cropped
+            # to the video's box, until the click that starts it.
+            for item, first in late:
+                for j in range(first):
+                    shape = _cover(s, run, j, item, stills_dir, tmp)
+                    if j:
+                        clicks[j - 1].append(("in", shape.shape_id, False))
+                    clicks[j].append(("out", shape.shape_id))
+                    counts["covers"] += 1
+            for j, (_, _, state) in enumerate(run):
                 if state.get("overlay"):
                     overlay = _srgb_png(_still(stills_dir, state.get("overlay2x") or state["overlay"]), tmp)
-                    s.shapes.add_picture(str(overlay), 0, 0, SLIDE_W, SLIDE_H).name = "Labels above the videos"
+                    shape = s.shapes.add_picture(str(overlay), 0, 0, SLIDE_W, SLIDE_H)
+                    shape.name = "Labels above the videos"
+                    if j:
+                        clicks[j - 1].append(("in", shape.shape_id, False))
+                    if j < last:
+                        clicks[j].append(("out", shape.shape_id))
                     counts["overlays"] += 1
-                _set_timing_and_transition(s, timed, state.get("transition") == "dissolve")
-                counts["slides"] += 1
+            _set_timing_and_transition(s, timed, run[0][2].get("transition") == "dissolve", clicks)
+            counts["slides"] += 1
+            counts["states"] += len(run)
+            counts["builds"] += last
         out = Path(out)
         out.parent.mkdir(parents=True, exist_ok=True)
         prs.save(str(out))

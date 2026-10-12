@@ -25,8 +25,8 @@ DOWNLOADS = [
 ]
 EXPECTED = [
     ("pdf", "PDF", "51 MB", "One page per slide; movies as still frames"),
-    ("pptx", "PowerPoint", "105 MB", "One slide per click, with the movies"),
-    ("key", "Keynote", "110 MB", "One slide per click, with the movies"),
+    ("pptx", "PowerPoint", "105 MB", "Every click as here; movies play through"),
+    ("key", "Keynote", "110 MB", "Every click as here; movies play through"),
 ]
 
 # Every entry here must be left out.
