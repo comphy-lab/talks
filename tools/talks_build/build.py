@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import time
 from collections import OrderedDict
@@ -15,7 +16,7 @@ from PIL import Image
 from . import patches as patchmod
 from . import site as sitemod
 from .geometry import Rect, scaled_video_size
-from .keynote import Deck, MovieUse, Slide, State, leaves_of, load_deck, movie_leaf_orders
+from .keynote import Deck, MovieUse, Slide, State, export_digest, leaves_of, load_deck, movie_leaf_orders
 from .manifest import MEDIA_NAME_RE, dumps, validate
 from .media import MediaStore
 from .raster import Compositor, PageCache, image_diff
@@ -88,6 +89,11 @@ class Builder:
         self.pool = ThreadPoolExecutor(max_workers=self.jobs)
         self.previews: set[int] = set()
         self.prune = False
+        # With stills on, the highest-density image and overlay of every state
+        # are also kept losslessly as build/<slug>/stills/<webp stem>.png, for
+        # the PowerPoint and Keynote downloads.
+        self.stills = False
+        self.stills_dir = self.build_dir / "stills"
 
     def _sibling_pdf(self) -> Path | None:
         candidate = self.export_dir.with_name(self.export_dir.name + ".pdf")
@@ -155,7 +161,12 @@ class Builder:
             raise BuildError("manifest invalid:\n  " + "\n  ".join(problems))
         out = self.site_dir / self.talk.slug / "manifest.json"
         out.parent.mkdir(parents=True, exist_ok=True)
-        out.write_text(dumps(manifest), encoding="utf-8")
+        text = dumps(manifest)
+        # Provenance for `downloads`, which must use this manifest and this export.
+        digest = export_digest(self.export_dir)
+        out.write_text(text, encoding="utf-8")
+        self.report["manifest_sha256"] = hashlib.sha256(text.encode("utf-8")).hexdigest()
+        self.report["export_digest"] = digest
         page = sitemod.write_page(self.site_dir, self.talk)
         if page is None:
             self.warn("site/player/talk.template.html not found; index.html not written")
@@ -395,9 +406,10 @@ class Builder:
                                 {"slide": slide.n, "state": state.index + 1, "shown": "poster"}
                             )
                 overlay = self._overlay(state, compositor, excluded, image, boxes)
+                put = self._put_still if self.stills and scale == RENDER_SCALES[-1] else self.store.put_webp
                 density_jobs[scale] = (
-                    self.pool.submit(self.store.put_webp, image),
-                    self.pool.submit(self.store.put_webp, overlay, alpha=True) if overlay else None,
+                    self.pool.submit(put, image),
+                    self.pool.submit(put, overlay, alpha=True) if overlay else None,
                 )
                 if slide.n in self.previews:
                     self._save_preview(
@@ -438,6 +450,17 @@ class Builder:
         if slide.id in self.talk.titles:
             title = self.talk.titles[slide.id]
         return OrderedDict(id=slide.id, n=slide.n, title=title, text=clean_text(raw), states=states_out)
+
+    def _put_still(self, img: Image.Image, alpha: bool = False) -> str:
+        """Store the webp as usual and keep the lossless pixels next to it, named after it."""
+        name = self.store.put_webp(img, alpha=alpha)
+        self.stills_dir.mkdir(parents=True, exist_ok=True)
+        path = self.stills_dir / (name.rsplit(".", 1)[0] + ".png")
+        if not path.exists():
+            tmp = path.with_name(f".{path.name}.{id(img)}.part")
+            img.convert("RGBA" if alpha else "RGB").save(tmp, format="PNG", compress_level=6)
+            tmp.replace(path)
+        return name
 
     def _save_preview(self, slide, state, image, overlay, yt_rect, excluded, scale=1) -> None:
         """PNG previews: image, overlay, and a layout view with media boxes."""
@@ -622,12 +645,14 @@ def build(
     jobs: int = 4,
     previews: set[int] | None = None,
     prune: bool = False,
+    stills: bool = False,
     log=print,
 ) -> dict:
     b = Builder(export_dir, talk_path, out_root, pdf, jobs, log)
     try:
         b.previews = set(previews or ())
         b.prune = prune
+        b.stills = stills
         return b.run()
     finally:
         b.pool.shutdown()

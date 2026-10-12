@@ -67,6 +67,8 @@ for the authoritative example. Its fields:
   the `.key` file itself is fixed.
 - `titles`: optional map from slide UUID to a human-written title, for a
   slide whose title derived from its text (Section 3) is wrong.
+- `downloads`: optional list of the downloadable copies the talk page offers,
+  in display order: any of `pdf`, `pptx`, `key` (Section 2.1).
 - `changelog[]`: `{date, note}`.
 
 ## 2. Pipeline outputs
@@ -88,11 +90,23 @@ Text patches share their fitted font and logical layout between densities,
 with glyphs drawn at the target size. Videos and their posters retain their
 source resolution and are not enlarged for this second image density.
 
+With `--stills`, the build also keeps the 2x image and overlay of every
+state losslessly, as `build/<slug>/stills/<webp name stem>.png`, for the
+PowerPoint and Keynote downloads.
+
+The flat PDF the build reads for slide text (`--pdf`, by default `<export>.pdf`
+next to the export folder) is written by
+`python -m talks_build derive-pdf --export <dir>`: one page per slide, the
+slide's final flattened texture from the export's atlas, cropped to the
+1920 x 1080 canvas and kept vector. It is derived from the export, not
+Keynote's own PDF export.
+
 `python -m talks_build upload --slug <slug>` uploads to R2 every file in
-`build/<slug>/media/` not already present, under
-`talks/<slug>/<file>`, using the `cf` CLI with the correct
-`Content-Type`. Because files are content-addressed, an existing key is never
-overwritten. The slug must be a valid talk slug and equal the manifest's
+`build/<slug>/media/` not already present that the manifest references, under
+`talks/<slug>/<file>` (a download under `talks/<slug>/<sha256-16>/<name>`),
+using the `cf` CLI with the correct `Content-Type`. Because files are
+content-addressed, an existing key is never overwritten. A file over the CLI's
+single-request limit of 300 MB is refused. The slug must be a valid talk slug and equal the manifest's
 `slug`. The existing keys are listed page by page with `--start-after` (the
 `cf` CLI does not pass on the API's cursor) until a page brings no new key;
 if the listing fails or does not finish, nothing is uploaded.
@@ -100,6 +114,40 @@ if the listing fails or does not finish, nothing is uploaded.
 `python -m talks_build validate site/<slug>/manifest.json` checks the
 manifest against `tools/schema/manifest.schema.json` and the invariants in
 Section 3.3.
+
+### 2.1 Downloads
+
+`python -m talks_build downloads --talk talks-src/<slug>/talk.yaml --export <dir>`
+runs after a `build --stills` and makes the formats listed in the talk's
+`downloads` (`--formats` may choose a subset of them). It refuses unless the
+site manifest is the one the last build wrote and, for the PDF, `--export` is
+the export that build read: the build records both digests in
+`build/<slug>/report.json`. The downloads therefore show what the site shows.
+
+- `pdf`: the derived PDF (above), one page per slide in its final state.
+  Movies appear as the frame Keynote shows; each movie area links to that
+  slide on the website. The text maps are repaired as for slide text
+  (Section 3.1), so the PDF's text can be searched and copied. Title, author
+  and subject are set from the manifest.
+- `pptx`: one slide per click state, 13.333 x 7.5 in (16:9; one canvas pixel
+  is 6350 EMU). Each slide is the state's lossless 2x still at full size, each
+  video at its manifest rectangle, and the state's overlay above them, so
+  nothing is re-typeset or re-laid out. Videos start with the slide, muted, and
+  loop. A YouTube placement becomes the poster frame Keynote shows, cropped
+  from a state of the same slide without the embed, linked to the video on
+  YouTube at its start time; the video itself is not included. A `dissolve`
+  state gets a fade transition. A video that continues across states restarts
+  on each slide.
+- `key`: the `pptx` file opened in Keynote (macOS only), with every movie set
+  to loop and muted, and saved as a Keynote document. The build fails unless
+  Keynote reports the expected numbers of slides and movies.
+
+Each file is named `<speaker surname>-<slug>-<updated>.<ext>` and stored as
+`build/<slug>/media/<sha256-16 of the file>/<name>`, so its key is
+content-addressed while a browser saves it under its own name (a cross-origin
+`download` attribute is ignored, and the `cf` CLI cannot set
+`Content-Disposition`). The command then writes the manifest's `downloads`.
+A later `build` drops them; run `downloads` again after it.
 
 ## 3. Manifest (`schema: 2`, with schema 1 compatibility)
 
@@ -140,13 +188,18 @@ Section 3.3.
       ]
     }
   ],
-  "changelog": [ { "date": "2026-10-10", "note": "…" } ]
+  "changelog": [ { "date": "2026-10-10", "note": "…" } ],
+  "downloads": [                                      // optional (Section 2.1)
+    { "format": "pdf", "file": "<hash>/<name>.pdf", "bytes": 52428800 }
+  ]
 }
 ```
 
 The player and validator still accept schema 1 manifests. Schema 2 adds the
 optional `image2x` / `overlay2x` pair; when absent, the original pair remains
 usable at any display density. The builder always emits both densities.
+`downloads` is optional in both schemas; the URL of a download is
+`media_base + file`.
 
 All rectangles are in logical canvas pixels (origin top-left). They may extend past the
 canvas; the stage clips them. Media rectangles are whole pixels: the pipeline
@@ -225,6 +278,23 @@ not the size, so a video lines up with the poster frame baked into the still.
 - **Pause control.** A visible button pauses and resumes all media. This
   satisfies WCAG 2.2.2. Under `prefers-reduced-motion: reduce`, media starts
   paused and the button resumes it.
+- **Downloads.** When the manifest lists `downloads`, a download button
+  before the pause button ("Download this talk", with `aria-expanded` and
+  `aria-controls`) discloses a panel with one plain link per file (the PDF
+  opens in a new tab, since browsers show rather than save it), in
+  manifest order: PDF ("One page per slide; movies as still frames"),
+  PowerPoint or Keynote (both "One slide per click, with the movies"), each
+  with its size in decimal megabytes (whole MB; one decimal place below
+  1 MB). The URL is `media_base + file`, under the test hook's override like
+  other media. An entry with an unknown format, a file name that is not
+  `<sha16>/<name>.<format>`, a repeated format or a size that is not a
+  positive integer is left out; with no valid entry the button stays hidden.
+  The panel opens above the control bar, right-aligned to the button and
+  inside the viewport, without moving the stage. Escape (focus returns to
+  the button), a second press of the button, a click outside the panel and
+  following a link close it; a click on the stage that closes it does not
+  change slide. Entering full screen closes it. While it is open the player
+  takes Escape and every other key works as usual.
 - **Navigation.**
   - Next: Right, Down, Space, PageDown, Enter, a click on the stage's right
     half, a swipe left.
@@ -305,6 +375,10 @@ not the size, so a video lines up with the poster frame baked into the still.
   pair, and agree with the original pair on whether an overlay exists.
 - With `--media-dir`, density-bearing states are checked against their actual
   file dimensions: 1920 x 1080 for the original pair and 3840 x 2160 for 2x.
+- A download's `file` is `<sha256-16>/<name>.<format>` with a matching
+  extension, each format appears at most once, and no file exceeds 300 MB.
+  With `--media-dir`, each file exists with the stated `bytes` and its
+  directory is the hash of its content.
 
 ## 4. Video encoding
 

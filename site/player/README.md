@@ -47,6 +47,11 @@ The static player behind `comphy-lab.org/talks/<slug>/`. It implements
   Escape). While the drawer is open the player ignores every key, so the
   arrows scroll the drawer rather than change the slide hidden behind it; it
   only keeps cancelling Backspace (WebKit's History Back).
+- **Downloads.** The download button appears only when the manifest lists at
+  least one valid `downloads` entry. Its panel holds plain links to
+  `media_base + file`; Escape, a second press, a click outside (on the stage
+  it does not also change slide), following a link and entering full screen
+  close it.
 - **Announcements.** The live region names a new slide ("Slide n of N, step 1
   of K: title") and then each later step of it ("Step k of K").
 

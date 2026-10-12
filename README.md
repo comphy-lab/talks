@@ -35,10 +35,15 @@ docs/SPEC.md          manifest schema and player behaviour
 
    ```bash
    cd tools
-   uv run python -m talks_build build --export "<path to export>" --talk ../talks-src/<slug>/talk.yaml
+   uv run python -m talks_build derive-pdf --export "<path to export>"
+   uv run python -m talks_build build --export "<path to export>" --talk ../talks-src/<slug>/talk.yaml --stills
+   uv run python -m talks_build downloads --export "<path to export>" --talk ../talks-src/<slug>/talk.yaml
    uv run python -m talks_build validate ../site/<slug>/manifest.json
    uv run python -m talks_build upload --slug <slug>    # needs the cf CLI, logged in
    ```
+
+   `downloads` makes the PDF, PowerPoint and Keynote copies listed in
+   `talk.yaml` (the Keynote copy needs macOS with Keynote).
 
 4. Run the browser tests (`tests/README.md`), then commit `site/<slug>/` and
    push. GitHub Actions validates the manifests and deploys `site/`.

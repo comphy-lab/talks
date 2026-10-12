@@ -26,6 +26,7 @@ events in between (verified against the flattened texture by the build).
 from __future__ import annotations
 
 import copy
+import hashlib
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -296,6 +297,21 @@ def apply_builds(tree: Layer, effects: list[Effect]) -> Layer:
 def _is_flattened(tree: Layer, width: int, height: int) -> bool:
     visible = [leaf for leaf in leaves_of(tree) if leaf.visible]
     return len(visible) == 1 and round(visible[0].rect.w) == width and round(visible[0].rect.h) == height
+
+
+def export_digest(export_dir: Path) -> str:
+    """SHA-256 of what a build reads for slide pictures: header, slide JSON and texture atlases."""
+    export_dir = Path(export_dir)
+    header = export_dir / "assets" / "header.json"
+    h = hashlib.sha256(header.read_bytes())
+    for sid in json.loads(header.read_text(encoding="utf-8"))["slideList"]:
+        sdir = export_dir / "assets" / sid
+        for path in (sdir / f"{sid}.json", sdir / "assets" / f"{sid}.pdf"):
+            h.update(f"\0{sid}/{path.name}\0".encode())
+            with open(path, "rb") as f:
+                for chunk in iter(lambda: f.read(1 << 20), b""):
+                    h.update(chunk)
+    return h.hexdigest()
 
 
 def load_deck(export_dir: Path) -> Deck:

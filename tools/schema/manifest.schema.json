@@ -132,6 +132,20 @@
           "note": { "type": "string" }
         }
       }
+    },
+    "downloads": {
+      "description": "Optional downloadable copies of the talk (docs/SPEC.md section 2.1). URL: media_base + file.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["format", "file", "bytes"],
+        "properties": {
+          "format": { "enum": ["pdf", "pptx", "key"] },
+          "file": { "type": "string", "pattern": "^[0-9a-f]{16}/[A-Za-z0-9][A-Za-z0-9._-]*\\.(pdf|pptx|key)$" },
+          "bytes": { "type": "integer", "minimum": 1 }
+        }
+      }
     }
   },
   "$defs": {

@@ -1,6 +1,7 @@
 """Upload content-addressed media to R2 with the ``cf`` CLI, never overwriting.
 
-Keys are ``talks/<slug>/<file>`` in bucket ``comphy-media``. The existing
+Keys are ``talks/<slug>/<file>`` in bucket ``comphy-media``; a download is
+``talks/<slug>/<sha16>/<name>``, its directory the hash of its content. The existing
 keys are listed first, every page of them; a file whose key exists is
 skipped. If the listing fails or does not finish, nothing is uploaded.
 
@@ -23,6 +24,9 @@ from .proc import run
 
 BUCKET = "comphy-media"
 NAME_RE = re.compile(r"^[0-9a-f]{16}\.(webp|mp4)$")
+HASH_DIR_RE = re.compile(r"^[0-9a-f]{16}$")
+DOWNLOAD_RE = re.compile(r"^[0-9a-f]{16}/[A-Za-z0-9][A-Za-z0-9._-]*\.(pdf|pptx|key)$")
+MAX_PUT_BYTES = 300_000_000  # cf r2 objects put sends one request
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 PER_PAGE = 1000  # R2's largest page
 MAX_PAGES = 10000
@@ -82,6 +86,18 @@ def remote_keys(slug: str, runner: Runner = _default_runner, bucket: str = BUCKE
     raise RuntimeError("R2 listing did not terminate; refusing to upload")
 
 
+def _candidates(media_dir: Path):
+    """``(path, name)`` for media files and ``<sha16>/<name>`` downloads in the store."""
+    for path in sorted(Path(media_dir).iterdir()):
+        if path.is_file() and NAME_RE.match(path.name):
+            yield path, path.name
+        elif path.is_dir() and HASH_DIR_RE.match(path.name):
+            for f in sorted(path.iterdir()):
+                rel = f"{path.name}/{f.name}"
+                if f.is_file() and DOWNLOAD_RE.match(rel):
+                    yield f, rel
+
+
 def plan(media_dir: Path, slug: str, existing: set[str], only: set[str] | None = None) -> list[tuple[Path, str, str]]:
     """Files to upload as ``(path, key, content_type)``, skipping existing keys.
 
@@ -90,14 +106,14 @@ def plan(media_dir: Path, slug: str, existing: set[str], only: set[str] | None =
     """
     check_slug(slug)
     todo = []
-    for path in sorted(Path(media_dir).iterdir()):
-        if not path.is_file() or not NAME_RE.match(path.name):
+    for path, name in _candidates(media_dir):
+        if only is not None and name not in only:
             continue
-        if only is not None and path.name not in only:
-            continue
-        key = f"talks/{slug}/{path.name}"
+        key = f"talks/{slug}/{name}"
         if key in existing:
             continue
+        if path.stat().st_size > MAX_PUT_BYTES:
+            raise ValueError(f"{name} is larger than the {MAX_PUT_BYTES} byte single-request upload limit")
         todo.append((path, key, CONTENT_TYPES[path.suffix[1:]]))
     return todo
 
@@ -136,7 +152,7 @@ def upload(
         missing = sorted(n for n in only if not (media_dir / n).is_file())
         if missing:
             raise FileNotFoundError(f"{len(missing)} manifest media files are not in {media_dir.name}/")
-        extra = [p.name for p in media_dir.iterdir() if p.is_file() and NAME_RE.match(p.name) and p.name not in only]
+        extra = [name for _, name in _candidates(media_dir) if name not in only]
         if extra:
             log(f"skipping {len(extra)} files not referenced by the manifest")
     todo = plan(media_dir, slug, existing, only)
@@ -149,7 +165,7 @@ def upload(
             log(
                 "would run: "
                 + " ".join(args[:5])
-                + f" --bucket-name {BUCKET} --file {path.name} --content-type {ctype}"
+                + f" --bucket-name {BUCKET} --file {path.relative_to(media_dir)} --content-type {ctype}"
             )
         else:
             runner(args)

@@ -36,6 +36,14 @@
  *   On localhost or 127.0.0.1 only, `?media=<same-origin relative path>`
  *   replaces `media_base`. The override is ignored on every other host.
  *
+ * Downloads
+ *   The manifest's optional `downloads` lists copies of the talk (`pdf`,
+ *   `pptx`, `key`) at media_base + `<sha16>/<name>.<format>`. The download
+ *   button stays hidden unless at least one entry is valid; it discloses a
+ *   panel of plain links. Escape, a second press, a click outside (which
+ *   then does not change slide) and following a link close the panel, as
+ *   does entering full screen.
+ *
  * YouTube embeds
  *   A click inside the embed moves keyboard focus into YouTube's
  *   cross-origin frame, where the talk's keys (and a presenter's clicker)
@@ -50,6 +58,16 @@ const YT_ID_RE = /^[A-Za-z0-9_-]{11}$/;
 const HASH_RE = /^#?([0-9a-f]{8})(?:\.(\d{1,4}))?$/i;
 const LOCAL_HOSTS = new Set(['localhost', '127.0.0.1']);
 
+// Downloads: `<sha16>/<name>.<format>`, the pipeline's pattern; the extension
+// must equal the entry's format.
+const DOWNLOAD_FILE_RE = /^[0-9a-f]{16}\/[A-Za-z0-9][A-Za-z0-9._-]*\.(pdf|pptx|key)$/;
+const DOWNLOAD_FORMATS = new Map([
+  ['pdf', { label: 'PDF', note: 'One page per slide; movies as still frames' }],
+  ['pptx', { label: 'PowerPoint', note: 'One slide per click, with the movies' }],
+  ['key', { label: 'Keynote', note: 'One slide per click, with the movies' }],
+]);
+// Narrowest the panel gets when there is room to the left of the button.
+const DOWNLOADS_MIN_PX = 240;
 
 const YT_API_SRC = 'https://www.youtube.com/iframe_api';
 const YT_HOST = 'https://www.youtube-nocookie.com';
@@ -85,6 +103,12 @@ const ui = {
   next: byId('btn-next'),
   pause: byId('btn-pause'),
   fullscreen: byId('btn-fullscreen'),
+  controls: document.querySelector('.controls'),
+  tools: document.querySelector('.controls__tools'),
+  download: byId('btn-download'),
+  downloads: byId('downloads'),
+  downloadsList: byId('downloads-list'),
+  downloadsNote: byId('downloads-note'),
   pauseFs: byId('btn-pause-fs'),
   exitFs: byId('btn-exit-fs'),
   counterNum: byId('counter-num'),
@@ -833,6 +857,133 @@ function updateChrome(index, si, announce) {
   writeHash(hashFor(index));
 }
 
+/* ------------------------------------------------------------ downloads */
+
+const wholeNumber = new Intl.NumberFormat('en-GB', { maximumFractionDigits: 0 });
+
+/** Decimal megabytes: whole MB, or one decimal place below 1 MB. */
+function formatSize(bytes) {
+  const mb = bytes / 1e6;
+  const tenths = Math.round(mb * 10) / 10;
+  // Decide on the rounded value: 999,999 bytes is "1 MB", not "1.0 MB".
+  if (tenths >= 1) return `${wholeNumber.format(Math.round(mb))} MB`;
+  return `${Math.max(0.1, tenths).toFixed(1)} MB`;
+}
+
+/** The manifest's valid downloads, in order; any other entry is left out. */
+function downloadItems(list) {
+  if (!Array.isArray(list)) return [];
+  const seen = new Set();
+  const items = [];
+  for (const entry of list) {
+    if (!entry || typeof entry !== 'object') continue;
+    const { format, file, bytes } = entry;
+    const kind = DOWNLOAD_FORMATS.get(format);
+    const match = typeof file === 'string' ? DOWNLOAD_FILE_RE.exec(file) : null;
+    if (!kind || !match || match[1] !== format || seen.has(format)) continue;
+    if (!Number.isSafeInteger(bytes) || bytes <= 0) continue;
+    let href;
+    try {
+      href = new URL(file, mediaBase).href;
+    } catch (err) {
+      continue;
+    }
+    seen.add(format);
+    items.push({ format, href, label: kind.label, note: kind.note, size: formatSize(bytes) });
+  }
+  return items;
+}
+
+function downloadsOpen() {
+  return Boolean(ui.downloads && !ui.downloads.hidden);
+}
+
+/**
+ * Show the download button, and fill its panel, only when the manifest lists
+ * a valid download. Each row is one link named by its format; the size and
+ * description are its accessible description.
+ */
+function fillDownloads(manifest) {
+  if (!ui.download || !ui.downloads || !ui.downloadsList) return;
+  const items = downloadItems(manifest.downloads);
+  if (!items.length) return;
+  ui.downloadsList.replaceChildren(
+    ...items.map((item) => {
+      const li = el('li', 'downloads__item');
+      const link = el('a', 'downloads__link', item.label);
+      link.href = item.href;
+      link.rel = 'noopener';
+      // A browser shows a PDF rather than saving it: keep the talk open behind it.
+      if (item.format === 'pdf') link.target = '_blank';
+      link.dataset.format = item.format;
+      const size = el('span', 'downloads__size', item.size);
+      size.id = `download-${item.format}-size`;
+      const note = el('span', 'downloads__note', item.note);
+      note.id = `download-${item.format}-note`;
+      link.setAttribute('aria-describedby', `${size.id} ${note.id}`);
+      li.append(link, size, note);
+      return li;
+    }),
+  );
+  ui.download.hidden = false;
+  if (ui.downloadsNote) {
+    const labels = items.map((item) => item.label);
+    const list = typeof Intl.ListFormat === 'function'
+      ? new Intl.ListFormat('en-GB', { type: 'disjunction' }).format(labels)
+      : labels.join(' or ');
+    ui.downloadsNote.textContent = ` The download button offers the slides as a ${list} file.`;
+    ui.downloadsNote.hidden = false;
+  }
+}
+
+/**
+ * Right-align the open panel with the button, above the toolbar. Where there
+ * is too little room to the button's left (a narrow phone), the panel narrows
+ * to that room, and below DOWNLOADS_MIN_PX it moves right just far enough to
+ * stay inside the control column, which lies inside the viewport.
+ */
+function placeDownloads() {
+  if (!downloadsOpen() || !ui.controls || !ui.tools) return;
+  const panel = ui.downloads;
+  const column = ui.controls.getBoundingClientRect();
+  const tools = ui.tools.getBoundingClientRect();
+  const button = ui.download.getBoundingClientRect();
+  const room = button.right - column.left;
+  panel.style.maxWidth = `${Math.floor(Math.min(column.width, Math.max(room, DOWNLOADS_MIN_PX)))}px`;
+  const width = panel.getBoundingClientRect().width;
+  const right = clamp(tools.right - button.right, tools.right - column.right, tools.right - column.left - width);
+  panel.style.right = `${right}px`;
+}
+
+function openDownloads() {
+  if (!ui.downloads || ui.download.hidden || downloadsOpen()) return;
+  ui.downloads.hidden = false;
+  ui.download.setAttribute('aria-expanded', 'true');
+  placeDownloads();
+}
+
+/** Close the panel; focus goes to the button if asked, or if it was inside. */
+function closeDownloads(returnFocus) {
+  if (!downloadsOpen()) return;
+  const hadFocus = ui.downloads.contains(document.activeElement);
+  ui.downloads.hidden = true;
+  ui.download.setAttribute('aria-expanded', 'false');
+  if (returnFocus || hadFocus) ui.download.focus({ preventScroll: true });
+}
+
+/* A click outside the open panel closes it. On the stage, where a click
+   changes slide, it only closes the panel. */
+function onClickOutsideDownloads(event) {
+  if (!downloadsOpen()) return;
+  const target = event.target instanceof Element ? event.target : null;
+  if (target && (ui.downloads.contains(target) || ui.download.contains(target))) return;
+  closeDownloads(false);
+  if (target && ui.frame.contains(target) && !target.closest('a, button')) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+}
+
 /* ------------------------------------------------------------- controls */
 
 function setPaused(value) {
@@ -876,7 +1027,10 @@ function rememberFocus() {
 }
 
 function setPseudoFullscreen(on) {
-  if (on) rememberFocus();
+  if (on) {
+    closeDownloads(false);
+    rememberFocus();
+  }
   root.classList.toggle('is-pseudo-fullscreen', on);
   // Keep keyboard focus on a control that stays visible before the rest goes inert.
   if (on && fsReturnFocus && ui.exitFs) ui.exitFs.focus({ preventScroll: true });
@@ -886,6 +1040,8 @@ function setPseudoFullscreen(on) {
 function updateFullscreenButton() {
   const on = Boolean(fullscreenElement()) || root.classList.contains('is-pseudo-fullscreen');
   const was = ui.fullscreen.dataset.active === 'true';
+  // The toolbar is out of sight in full screen.
+  if (on) closeDownloads(false);
   setChromeInert(on);
   if (was && !on) {
     const active = document.activeElement;
@@ -914,6 +1070,9 @@ function toggleFullscreen() {
     return;
   }
   const request = ui.frame.requestFullscreen || ui.frame.webkitRequestFullscreen;
+  // Close the panel first: focus inside it moves to the button, which is
+  // then the control focus returns to on leaving full screen.
+  closeDownloads(false);
   rememberFocus();
   if (!request) {
     // iPhone Safari has no element full screen: fill the viewport instead.
@@ -945,6 +1104,12 @@ function onKeyDown(event) {
   if (event.defaultPrevented || event.altKey || event.ctrlKey || event.metaKey) return;
   if (siteMenuOpen()) {
     if (event.key === 'Backspace') event.preventDefault();
+    return;
+  }
+  // The open download panel takes Escape; every other key works as usual.
+  if (downloadsOpen() && (event.key === 'Escape' || event.key === 'Esc')) {
+    closeDownloads(true);
+    event.preventDefault();
     return;
   }
   const origin = event.target instanceof Element ? event.target : null;
@@ -1009,6 +1174,20 @@ function bindControls() {
   // Full-screen controls (shown where there may be no keyboard).
   if (ui.pauseFs) ui.pauseFs.addEventListener('click', () => setPaused(!paused));
   if (ui.exitFs) ui.exitFs.addEventListener('click', toggleFullscreen);
+  if (ui.download && ui.downloads) {
+    ui.download.addEventListener('click', () => {
+      if (downloadsOpen()) closeDownloads(false);
+      else openDownloads();
+    });
+    // Following a link closes the panel; the navigation or download goes ahead.
+    ui.downloads.addEventListener('click', (event) => {
+      if (event.target instanceof Element && event.target.closest('a[href]')) closeDownloads(true);
+    });
+    // Capture phase: runs before the stage's own click handler.
+    document.addEventListener('click', onClickOutsideDownloads, true);
+    window.addEventListener('resize', placeDownloads);
+    if (window.ResizeObserver && ui.controls) new ResizeObserver(placeDownloads).observe(ui.controls);
+  }
   document.addEventListener('fullscreenchange', updateFullscreenButton);
   document.addEventListener('webkitfullscreenchange', updateFullscreenButton);
 
@@ -1144,6 +1323,7 @@ function init(manifest) {
   });
 
   fillHeader(manifest);
+  fillDownloads(manifest);
   const first = stepFromHash(window.location.hash);
   go(first >= 0 ? first : 0);
 }

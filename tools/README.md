@@ -9,8 +9,11 @@ explains how the pipeline meets it.
 
 ```bash
 cd tools
+uv run python -m talks_build derive-pdf --export "<Keynote HTML export folder>"   # writes <export>.pdf
 uv run python -m talks_build build --export "<Keynote HTML export folder>" \
-    --talk ../talks-src/<slug>/talk.yaml [--out-root <repo root>] [--pdf <flat PDF>] [--prune]
+    --talk ../talks-src/<slug>/talk.yaml [--out-root <repo root>] [--pdf <flat PDF>] [--prune] [--stills]
+uv run python -m talks_build downloads --talk ../talks-src/<slug>/talk.yaml \
+    --export "<Keynote HTML export folder>" [--formats pdf,pptx,key]       # after build --stills
 uv run python -m talks_build validate ../site/<slug>/manifest.json [--media-dir ../build/<slug>/media]
 uv run python -m talks_build refresh-assets                      # after runtime JS/CSS edits; no deck export
 uv run python -m talks_build refresh-assets --check               # CI freshness gate
@@ -30,8 +33,12 @@ of each file's bytes. A runtime change gets a new URL for returning browsers.
 The build refreshes these references automatically; `refresh-assets` does the
 same after a runtime-only edit. CI rejects stale references before deployment.
 
-`--pdf` defaults to the flat PDF export saved next to the HTML export with the
-same name; it supplies slide titles and screen-reader text. `--preview 2,4`
+`--pdf` defaults to the flat PDF saved next to the HTML export with the same
+name, as `derive-pdf` writes it; it supplies slide titles and screen-reader
+text. `--stills` keeps each state's 2x image and overlay losslessly in
+`build/<slug>/stills/`; `downloads` builds the PDF, PowerPoint and Keynote
+copies from them (the Keynote copy needs macOS with Keynote; SPEC section 2.1)
+and adds them to the manifest. `--preview 2,4`
 also writes PNG previews (image, overlay, and a layout view with the media
 boxes) to `build/<slug>/preview/`. Every build writes `build/<slug>/report.json`
 with the encodes, patches, the YouTube rectangle, and a check of each replayed

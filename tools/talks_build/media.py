@@ -12,7 +12,13 @@ from PIL import Image
 
 from .proc import run
 
-CONTENT_TYPES = {"webp": "image/webp", "mp4": "video/mp4"}
+CONTENT_TYPES = {
+    "webp": "image/webp",
+    "mp4": "video/mp4",
+    "pdf": "application/pdf",
+    "pptx": "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+    "key": "application/vnd.apple.keynote",
+}
 WEBP_QUALITY = 85
 
 

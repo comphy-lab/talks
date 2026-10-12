@@ -6,7 +6,7 @@ title: Bursting bubbles
 subtitle: Singular Worthington jets and the drops they make
 speaker: Vatsal Sanjay
 venue_note: First given at the University of Illinois Urbana-Champaign, October 2026.
-updated: "2026-10-11"
+updated: "2026-10-12"
 media_base: https://media.comphy-lab.org/talks/singular-bursting-bubbles/
 
 video:
@@ -28,7 +28,12 @@ youtube:
     rect: [224, 185, 1472, 828]   # largest 16:9 box clear of the title and attribution (computed by the build)
     before_start: poster          # first click state shows the poster, as in Keynote; the video starts on the next click
 
+# Downloadable copies offered on the talk page (docs/SPEC.md section 2.1).
+downloads: [pdf, pptx, key]
+
 changelog:
+  - date: "2026-10-12"
+    note: Set V. Sanjay in bold in the slide citations; added PDF, PowerPoint and Keynote downloads.
   - date: "2026-10-11"
     note: Corrected native citations and Yellowstone spelling; added high-density slide images.
   - date: "2026-10-10"

@@ -20,10 +20,10 @@
   <link rel="stylesheet" href="../vendor/ds/tokens.css?v=8840d1e2d2fcb3cc">
   <link rel="stylesheet" href="../vendor/comphy-lab/header.css?v=6b2f70da694aa56d">
   <link rel="stylesheet" href="../vendor/comphy-lab/footer-v2.css?v=37c0b057d1a1842e">
-  <link rel="stylesheet" href="../player/player.css?v=1134ae026273f543">
+  <link rel="stylesheet" href="../player/player.css?v=ec85eb049abb6ff4">
   <script data-cfasync="false" src="../player/theme.js?v=9433bc1b9e1724e7"></script>
   <script data-cfasync="false" src="../player/header.js?v=f00a0daaa2a0ac52" defer></script>
-  <script type="module" data-cfasync="false" src="../player/player.js?v=f5c0803caf7eb4d5"></script>
+  <script type="module" data-cfasync="false" src="../player/player.js?v=25ed2eef1938af93"></script>
 </head>
 <body id="top" class="talk-page">
   <a class="skip-link" href="#viewer">Skip to the slides</a>
@@ -102,6 +102,13 @@
             </div>
             <p class="counter__title" id="counter-title"></p>
             <div class="controls__tools">
+              <button class="ctl" type="button" id="btn-download" aria-label="Download this talk" title="Download" aria-expanded="false" aria-controls="downloads" hidden>
+                <svg class="ctl__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v10M7.5 9.5L12 14l4.5-4.5M4 15v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              </button>
+              <div class="downloads" id="downloads" hidden>
+                <p class="downloads__title" id="downloads-title">Download this talk</p>
+                <ul class="downloads__list" id="downloads-list" aria-labelledby="downloads-title"></ul>
+              </div>
               <button class="ctl" type="button" id="btn-pause" aria-label="Pause videos" title="Pause videos (P or K)">
                 <svg class="ctl__icon ctl__icon--pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 6v12M15 6v12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></svg>
                 <svg class="ctl__icon ctl__icon--play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>
@@ -123,7 +130,7 @@
       <div class="panel about__panel">
         <span class="eyebrow">About this talk</span>
         <h2 id="about-title">How to use this page</h2>
-        <p class="lede">Each click of the original talk is one step here. Videos play muted and loop; the pause button, or P, stops them.</p>
+        <p class="lede">Each click of the original talk is one step here. Videos play muted and loop; the pause button, or P, stops them.<span id="downloads-note" hidden></span></p>
         <div class="about__grid">
           <div class="card">
             <h3>Keyboard</h3>

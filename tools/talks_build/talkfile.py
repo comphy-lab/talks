@@ -15,6 +15,7 @@ from .youtube import BEFORE_START, YouTubeSpec
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 UUID_RE = re.compile(r"^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$")
 YOUTUBE_ID_RE = re.compile(r"^[A-Za-z0-9_-]{11}$")
+DOWNLOAD_FORMATS = ("pdf", "pptx", "key")
 
 
 class TalkError(ValueError):
@@ -39,6 +40,8 @@ class Talk:
     changelog: list[dict] = field(default_factory=list)
     # Slide UUID -> title, where the title derived from the slide's text is wrong.
     titles: dict[str, str] = field(default_factory=dict)
+    # Downloadable copies offered on the talk page, in this order.
+    downloads: list[str] = field(default_factory=list)
 
 
 def _date(value, what: str) -> str:
@@ -133,6 +136,12 @@ def load_talk(path: Path) -> Talk:
     changelog = []
     for i, c in enumerate(data.get("changelog") or []):
         changelog.append({"date": _date(c.get("date"), f"changelog[{i}]"), "note": str(c.get("note") or "").strip()})
+    downloads = data.get("downloads") or []
+    if not isinstance(downloads, list) or not all(isinstance(d, str) for d in downloads):
+        raise TalkError("talk.yaml: downloads must be a list of formats")
+    bad = [d for d in downloads if d not in DOWNLOAD_FORMATS]
+    if bad or len(set(downloads)) != len(downloads):
+        raise TalkError(f"talk.yaml: downloads must be distinct values from {', '.join(DOWNLOAD_FORMATS)}")
     max_scale = float(video.get("max_scale", 2.0))
     if not 0 < max_scale <= 8:
         raise TalkError("talk.yaml: video.max_scale out of range")
@@ -152,4 +161,5 @@ def load_talk(path: Path) -> Talk:
         patches=patches,
         changelog=changelog,
         titles=titles,
+        downloads=list(downloads),
     )

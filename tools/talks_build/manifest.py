@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
 import re
@@ -11,6 +12,8 @@ import jsonschema
 from PIL import Image
 
 MEDIA_NAME_RE = re.compile(r"^[0-9a-f]{16}\.(webp|mp4)$")
+DOWNLOAD_FILE_RE = re.compile(r"^([0-9a-f]{16})/[A-Za-z0-9][A-Za-z0-9._-]*\.(pdf|pptx|key)$")
+DOWNLOAD_MAX_BYTES = 300_000_000  # the cf CLI's single-request upload limit
 CANVAS = (1920, 1080)
 
 
@@ -55,6 +58,45 @@ def media_files(manifest: dict) -> list[str]:
         if n not in out:
             out.append(n)
     return out
+
+
+def download_files(manifest: dict) -> list[str]:
+    """Media-relative paths (``<sha16>/<name>``) of the manifest's downloads."""
+    return [d.get("file") for d in manifest.get("downloads", []) if isinstance(d, dict)]
+
+
+def _sha16(path: Path) -> str:
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for chunk in iter(lambda: f.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()[:16]
+
+
+def _validate_downloads(manifest: dict, media_dir: Path | None) -> list[str]:
+    errors = []
+    seen: set[str] = set()
+    for i, d in enumerate(manifest.get("downloads", [])):
+        where = f"downloads[{i}]"
+        m = DOWNLOAD_FILE_RE.match(d["file"])
+        if not m or m.group(2) != d["format"]:
+            errors.append(f"{where}: file {d['file']!r} does not match format {d['format']!r}")
+            continue
+        if d["format"] in seen:
+            errors.append(f"{where}: second {d['format']} download")
+        seen.add(d["format"])
+        if d["bytes"] > DOWNLOAD_MAX_BYTES:
+            errors.append(f"{where}: {d['bytes']} bytes exceeds the {DOWNLOAD_MAX_BYTES} byte upload limit")
+        if media_dir is None:
+            continue
+        path = Path(media_dir) / d["file"]
+        if not path.is_file():
+            errors.append(f"{where}: missing from {Path(media_dir).name}/: {d['file']}")
+        elif path.stat().st_size != d["bytes"]:
+            errors.append(f"{where}: {d['file']} is {path.stat().st_size} bytes, manifest says {d['bytes']}")
+        elif _sha16(path) != m.group(1):
+            errors.append(f"{where}: content hash of {d['file']} does not match its directory")
+    return errors
 
 
 def validate(manifest: dict, media_dir: Path | None = None) -> list[str]:
@@ -121,6 +163,7 @@ def validate(manifest: dict, media_dir: Path | None = None) -> list[str]:
             errors.append(f"media file missing from {Path(media_dir).name}/: {name}")
     if media_dir is not None:
         errors.extend(_validate_density_sizes(manifest, Path(media_dir)))
+    errors.extend(_validate_downloads(manifest, Path(media_dir) if media_dir is not None else None))
     return errors
 
 
