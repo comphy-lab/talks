@@ -33,6 +33,8 @@ downloads: [pdf, pptx, key]
 
 changelog:
   - date: "2026-10-12"
+    note: Collapse slides ("Shape is not enough to differentiate") now fit the virtual origin for each exponent on each side of inception and show the jet and cavity bottom.
+  - date: "2026-10-12"
     note: Set V. Sanjay in bold in the slide citations; added PDF, PowerPoint and Keynote downloads.
   - date: "2026-10-11"
     note: Corrected native citations and Yellowstone spelling; added high-density slide images.

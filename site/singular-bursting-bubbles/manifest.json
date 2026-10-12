@@ -108,16 +108,16 @@
       "credit": null
     },
     "v13": {
-      "src": "b5151ff1be36a511.mp4",
-      "poster": "35845b4fb3667842.webp",
+      "src": "d9f92b01578f1e7e.mp4",
+      "poster": "841e7934245c7d9b.webp",
       "width": 3280,
       "height": 1260,
       "duration": 7.5,
       "credit": null
     },
     "v14": {
-      "src": "4061e3866112b05e.mp4",
-      "poster": "d80c6d8691939289.webp",
+      "src": "155d113446b9e95e.mp4",
+      "poster": "d75d9e7badc2e6f5.webp",
       "width": 3280,
       "height": 1260,
       "duration": 10.4,
@@ -1973,12 +1973,12 @@
       "id": "319B292D-E8F8-403F-8C7C-0E0FE5838630",
       "n": 97,
       "title": "Shape is not enough to differentiate",
-      "text": "Shape is not enough to differentiate α = 2/3 α = 0.629 2 (z−zj)/|τ̄| α 0.3 before inception z−zj 0.2 1 0.1 0 0 −0.4 0 rp 0.4 −3 0 α rp/|τ̄ | Oh = 0.03, one τ0 for both α J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) −3 3 |τ̄ | 0 α rp/|τ̄ | 10−3 10−2 3",
+      "text": "Shape is not enough to differentiate α = 2/3 α = 0.629 2 (z−zj)/|τ̄| α 0.3 before inception z−zj 0.2 1 0.1 0 0 −0.4 0 rp 0.4 −3 0 α rp/|τ̄ | Oh = 0.03, τ0 fitted for each α J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) −3 3 |τ̄ | 0 α rp/|τ̄ | 10−3 10−2 3",
       "states": [
         {
-          "image": "388d1b9b6e8fae07.webp",
+          "image": "9dc3a12588bf542e.webp",
           "overlay": null,
-          "image2x": "ea518b13f90b649b.webp",
+          "image2x": "a77ba92fb3995100.webp",
           "overlay2x": null,
           "transition": "none",
           "media": [
@@ -2000,12 +2000,12 @@
       "id": "687F5517-C872-46DD-A5D0-38A8674DD2B5",
       "n": 98,
       "title": "Shape is not enough to differentiate",
-      "text": "Shape is not enough to differentiate α = 2/3 8 α = 0.629 0 0 z−zj 0.2 (z−zj)/|τ̄| α 0.4 after inception 4 −0.2 0 rp 0.2 −5 0 α rp/|τ̄ | Oh = 0.03, τ0 fitted for each α J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) −5 5 |τ̄ | 0 α rp/|τ̄ | 10−3 10−2 5",
+      "text": "Shape is not enough to differentiate α = 2/3 8 α = 0.629 0 0 z−zj 0.2 (z−zj)/|τ̄| α 0.4 after inception 4 −0.2 0 rp 0.2 −3 0 α rp/|τ̄ | Oh = 0.03, τ0 fitted for each α J. M. Gordillo, J. Rodríguez-Rodríguez & V. Sanjay, arXiv:2607.08972 (2026) −3 3 |τ̄ | 0 α rp/|τ̄ | 10−3 10−2 3",
       "states": [
         {
-          "image": "a6ee630750d4a254.webp",
+          "image": "045739384fd8a224.webp",
           "overlay": null,
-          "image2x": "83093b288b43d162.webp",
+          "image2x": "69ca3701141d6c4d.webp",
           "overlay2x": null,
           "transition": "none",
           "media": [
@@ -2349,6 +2349,10 @@
   "changelog": [
     {
       "date": "2026-10-12",
+      "note": "Collapse slides (\"Shape is not enough to differentiate\") now fit the virtual origin for each exponent on each side of inception and show the jet and cavity bottom."
+    },
+    {
+      "date": "2026-10-12",
       "note": "Set V. Sanjay in bold in the slide citations; added PDF, PowerPoint and Keynote downloads."
     },
     {
@@ -2363,18 +2367,18 @@
   "downloads": [
     {
       "format": "pdf",
-      "file": "cb7e161f4f3780fd/Sanjay-singular-bursting-bubbles-2026-10-12.pdf",
-      "bytes": 50013790
+      "file": "1b957948e4518005/Sanjay-singular-bursting-bubbles-2026-10-12.pdf",
+      "bytes": 49756239
     },
     {
       "format": "pptx",
-      "file": "ca6e62827fb6aa53/Sanjay-singular-bursting-bubbles-2026-10-12.pptx",
-      "bytes": 60281483
+      "file": "7ba0934d449c939a/Sanjay-singular-bursting-bubbles-2026-10-12.pptx",
+      "bytes": 58699669
     },
     {
       "format": "key",
-      "file": "9c9e68367e785da9/Sanjay-singular-bursting-bubbles-2026-10-12.key",
-      "bytes": 67905517
+      "file": "fff4e1874f1e37b9/Sanjay-singular-bursting-bubbles-2026-10-12.key",
+      "bytes": 66282227
     }
   ]
 }
