@@ -416,7 +416,7 @@ The shared shell uses the main site's explicit navigation colours, including
 white labels and Close control in dark mode. A semantic check resolves one
 main-site commit and compares ordered accessible navigation links, footer
 columns and links, and the Menu breakpoint against both talks templates.
-Pages validation fails on drift or a fetch/parse failure. A weekly check
+Pages validation fails on drift or a fetch/parse failure. A twice-monthly check on the 1st and 15th at 07:23 UTC
 maintains one marked drift issue, skips unchanged reports, and does not create
 an issue when the source cannot be fetched or parsed.
 
