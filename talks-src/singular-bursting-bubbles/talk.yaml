@@ -29,7 +29,16 @@ youtube:
     before_start: poster          # first click state shows the poster, as in Keynote; the video starts on the next click
 
 # Downloadable copies offered on the talk page (docs/SPEC.md section 2.1).
-downloads: [pdf, pptx, key]
+downloads:
+  - format: pdf
+    url: https://www.dropbox.com/scl/fi/ucl5r5llayvo3ncleb4xr/Sanjay-singular-bursting-bubbles-2026-10-12.pdf?rlkey=b4ertg07e8rb9sil3kv94f3fp&dl=1
+    bytes: 49756239
+  - format: pptx
+    url: https://www.dropbox.com/scl/fi/xqezogy12f8kduwqa1hcc/Sanjay-singular-bursting-bubbles-2026-10-12.pptx?rlkey=usyjwjjl8zghmt768uddvisab&dl=1
+    bytes: 58699669
+  - format: key
+    url: https://www.dropbox.com/scl/fi/dv6yxiosptxfewky55z85/Sanjay-singular-bursting-bubbles-2026-10-12.key?rlkey=bl8yd9knbjkzv4yq76brn37fa&dl=1
+    bytes: 66282227
 
 changelog:
   - date: "2026-10-12"
