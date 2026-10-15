@@ -37,13 +37,21 @@ docs/SPEC.md          manifest schema and player behaviour
    cd tools
    uv run python -m talks_build derive-pdf --export "<path to export>"
    uv run python -m talks_build build --export "<path to export>" --talk ../talks-src/<slug>/talk.yaml --stills
-   uv run python -m talks_build downloads --export "<path to export>" --talk ../talks-src/<slug>/talk.yaml
+   uv run python -m talks_build downloads --talk ../talks-src/<slug>/talk.yaml  # register Dropbox entries from talk.yaml
    uv run python -m talks_build validate ../site/<slug>/manifest.json
    uv run python -m talks_build upload --slug <slug>    # needs the cf CLI, logged in
    ```
 
-   `downloads` makes the PDF, PowerPoint and Keynote copies listed in
-   `talk.yaml` (the Keynote copy needs macOS with Keynote).
+   Store the downloadable PDF, PowerPoint and Keynote copies in Dropbox.
+   List them in `talk.yaml` as `{format, url, bytes}` entries, with public
+   file links using `dl=1`. `downloads` registers those links in the manifest.
+   Updating links on an existing talk needs only `downloads` and `validate`;
+   it needs neither a Keynote export nor macOS.
+
+   To generate local copies first, use format names in `talk.yaml` and run
+   `downloads --export "<path to export>"` after `build --stills`. Generating
+   the Keynote copy needs macOS with Keynote. Add the generated files to
+   Dropbox and register their links before publishing; R2 holds slide media.
 
 4. Run the browser tests (`tests/README.md`), then commit `site/<slug>/` and
    push. GitHub Actions validates the manifests and deploys `site/`.

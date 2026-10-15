@@ -46,7 +46,7 @@ def _parser() -> argparse.ArgumentParser:
     d.add_argument("--export", required=True, type=Path, help="Keynote HTML export folder")
     d.add_argument("--out", type=Path, default=None, help="output PDF (default: <export>.pdf, the build's flat PDF)")
 
-    dl = sub.add_parser("downloads", help="build the PDF/PowerPoint/Keynote downloads and list them in the manifest")
+    dl = sub.add_parser("downloads", help="register Dropbox download links, or build local copies when no links are configured")
     dl.add_argument("--talk", required=True, type=Path, help="talks-src/<slug>/talk.yaml")
     dl.add_argument("--export", type=Path, default=None, help="Keynote HTML export folder (for the PDF)")
     dl.add_argument("--formats", default=None, help="a subset of talk.yaml downloads to make (default: all of them)")
@@ -174,7 +174,10 @@ def main(argv: list[str] | None = None) -> int:
             print(f"refusing to upload: the manifest's slug is {manifest.get('slug')!r}, not {args.slug!r}",
                   file=sys.stderr)  # fmt: skip
             return 1
-        wanted = set(media_files(manifest)) | set(download_files(manifest))
+        if download_files(manifest):
+            print("refusing to upload: register Dropbox download links in talk.yaml first", file=sys.stderr)
+            return 1
+        wanted = set(media_files(manifest))
         try:
             upload(media_dir, args.slug, dry_run=args.dry_run, check_remote=(not args.dry_run) or args.check_remote,
                    only=wanted)  # fmt: skip

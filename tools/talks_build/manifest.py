@@ -7,6 +7,7 @@ import json
 import math
 import re
 from pathlib import Path
+from urllib.parse import parse_qs, urlsplit
 
 import jsonschema
 from PIL import Image
@@ -14,7 +15,23 @@ from PIL import Image
 MEDIA_NAME_RE = re.compile(r"^[0-9a-f]{16}\.(webp|mp4)$")
 DOWNLOAD_FILE_RE = re.compile(r"^([0-9a-f]{16})/[A-Za-z0-9][A-Za-z0-9._-]*\.(pdf|pptx|key)$")
 DOWNLOAD_MAX_BYTES = 300_000_000  # the cf CLI's single-request upload limit
+DOWNLOAD_URL_PATH_RE = re.compile(r"^/(?:s|scl/fi)/[A-Za-z0-9_-]+/[^/?#]+\.(pdf|pptx|key)$")
 CANVAS = (1920, 1080)
+
+
+def dropbox_download_format(url: str) -> str | None:
+    """The format of a Dropbox file link with downloads enabled, or None."""
+    if not isinstance(url, str) or any(c.isspace() for c in url):
+        return None
+    try:
+        parsed = urlsplit(url)
+    except ValueError:
+        return None
+    match = DOWNLOAD_URL_PATH_RE.fullmatch(parsed.path)
+    if (parsed.scheme != "https" or parsed.netloc != "www.dropbox.com" or parsed.fragment
+            or not match or parse_qs(parsed.query, keep_blank_values=True).get("dl") != ["1"]):
+        return None
+    return match.group(1)
 
 
 def schema_path() -> Path:
@@ -62,7 +79,7 @@ def media_files(manifest: dict) -> list[str]:
 
 def download_files(manifest: dict) -> list[str]:
     """Media-relative paths (``<sha16>/<name>``) of the manifest's downloads."""
-    return [d.get("file") for d in manifest.get("downloads", []) if isinstance(d, dict)]
+    return [d["file"] for d in manifest.get("downloads", []) if isinstance(d, dict) and "file" in d]
 
 
 def _sha16(path: Path) -> str:
@@ -78,13 +95,17 @@ def _validate_downloads(manifest: dict, media_dir: Path | None) -> list[str]:
     seen: set[str] = set()
     for i, d in enumerate(manifest.get("downloads", [])):
         where = f"downloads[{i}]"
+        if d["format"] in seen:
+            errors.append(f"{where}: second {d['format']} download")
+        seen.add(d["format"])
+        if "url" in d:
+            if dropbox_download_format(d["url"]) != d["format"]:
+                errors.append(f"{where}: url must be a Dropbox download link matching format {d['format']!r}")
+            continue
         m = DOWNLOAD_FILE_RE.match(d["file"])
         if not m or m.group(2) != d["format"]:
             errors.append(f"{where}: file {d['file']!r} does not match format {d['format']!r}")
             continue
-        if d["format"] in seen:
-            errors.append(f"{where}: second {d['format']} download")
-        seen.add(d["format"])
         if d["bytes"] > DOWNLOAD_MAX_BYTES:
             errors.append(f"{where}: {d['bytes']} bytes exceeds the {DOWNLOAD_MAX_BYTES} byte upload limit")
         if media_dir is None:

@@ -38,7 +38,7 @@
  *
  * Downloads
  *   The manifest's optional `downloads` lists copies of the talk (`pdf`,
- *   `pptx`, `key`) at media_base + `<sha16>/<name>.<format>`. The download
+ *   `pptx`, `key`) at a Dropbox URL (or a legacy media_base + file). The download
  *   button stays hidden unless at least one entry is valid; it discloses a
  *   panel of plain links. Escape, a second press, a click outside (which
  *   then does not change slide) and following a link close the panel, as
@@ -877,14 +877,25 @@ function downloadItems(list) {
   const items = [];
   for (const entry of list) {
     if (!entry || typeof entry !== 'object') continue;
-    const { format, file, bytes } = entry;
+    const { format, file, url, bytes } = entry;
     const kind = DOWNLOAD_FORMATS.get(format);
     const match = typeof file === 'string' ? DOWNLOAD_FILE_RE.exec(file) : null;
-    if (!kind || !match || match[1] !== format || seen.has(format)) continue;
+    if (!kind || seen.has(format)) continue;
     if (!Number.isSafeInteger(bytes) || bytes <= 0) continue;
     let href;
     try {
-      href = new URL(file, mediaBase).href;
+      if (typeof url === 'string' && file === undefined) {
+        const link = new URL(url);
+        const path = /^\/(?:s|scl\/fi)\/[A-Za-z0-9_-]+\/[^/?#]+\.(pdf|pptx|key)$/.exec(link.pathname);
+        if (/\s/.test(url) || link.protocol !== 'https:' || link.host !== 'www.dropbox.com'
+            || link.username || link.password || link.hash || !path || path[1] !== format
+            || link.searchParams.getAll('dl').join(',') !== '1') continue;
+        href = link.href;
+      } else if (url === undefined && match && match[1] === format) {
+        href = new URL(file, mediaBase).href;
+      } else {
+        continue;
+      }
     } catch (err) {
       continue;
     }

@@ -156,6 +156,8 @@ class Builder:
             slides=slides_out,
             changelog=self.talk.changelog,
         )
+        if self.talk.download_links:
+            manifest["downloads"] = self.talk.download_links
         problems = validate(manifest, self.store.dir)
         if problems:
             raise BuildError("manifest invalid:\n  " + "\n  ".join(problems))
@@ -165,7 +167,8 @@ class Builder:
         # Provenance for `downloads`, which must use this manifest and this export.
         digest = export_digest(self.export_dir)
         out.write_text(text, encoding="utf-8")
-        self.report["manifest_sha256"] = hashlib.sha256(text.encode("utf-8")).hexdigest()
+        built = {k: v for k, v in manifest.items() if k != "downloads"}
+        self.report["manifest_sha256"] = hashlib.sha256(dumps(built).encode("utf-8")).hexdigest()
         self.report["export_digest"] = digest
         page = sitemod.write_page(self.site_dir, self.talk)
         if page is None:

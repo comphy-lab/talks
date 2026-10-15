@@ -292,6 +292,26 @@ def test_links_use_the_manifest_media_base(open_talk, talk: Talk):
     tp.assert_clean()
 
 
+def test_dropbox_downloads_ignore_media_base(open_talk):
+    entries = [
+        {"format": d["format"], "bytes": d["bytes"],
+         "url": f"https://www.dropbox.com/scl/fi/example/talk.{d['format']}?rlkey=example&dl=1"}
+        for d in DOWNLOADS
+    ]
+    bad = [
+        {**entries[0], "url": entries[0]["url"].replace("www.dropbox.com", "www.dropbox.com.evil.example")},
+        {**entries[0], "url": entries[0]["url"].replace("dl=1", "dl=0")},
+        {**entries[0], "url": entries[0]["url"] + "&dl="},
+        {**entries[0], "file": DOWNLOADS[0]["file"]},
+    ]
+    tp = open_with(open_talk, [*bad, *entries])
+    tp.page.click("#btn-download")
+    links = tp.page.evaluate(LINKS_JS)
+    assert [a["href"] for a in links] == [d["url"] for d in entries]
+    assert [(a["format"], a["size"]) for a in links] == [(f, size) for f, _, size, _ in EXPECTED]
+    tp.assert_clean()
+
+
 def test_malformed_entries_are_left_out(open_talk):
     mixed = [
         *MALFORMED[:8],

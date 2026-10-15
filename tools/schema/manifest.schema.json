@@ -134,16 +134,18 @@
       }
     },
     "downloads": {
-      "description": "Optional downloadable copies of the talk (docs/SPEC.md section 2.1). URL: media_base + file.",
+      "description": "Optional downloadable copies. Dropbox URL, or media_base + file for legacy manifests.",
       "type": "array",
       "items": {
         "type": "object",
         "additionalProperties": false,
-        "required": ["format", "file", "bytes"],
+        "required": ["format", "bytes"],
+        "oneOf": [{ "required": ["file"] }, { "required": ["url"] }],
         "properties": {
           "format": { "enum": ["pdf", "pptx", "key"] },
           "file": { "type": "string", "pattern": "^[0-9a-f]{16}/[A-Za-z0-9][A-Za-z0-9._-]*\\.(pdf|pptx|key)$" },
-          "bytes": { "type": "integer", "minimum": 1 }
+          "url": { "type": "string", "pattern": "^https://www\\.dropbox\\.com/(s|scl/fi)/" },
+          "bytes": { "type": "integer", "minimum": 1, "maximum": 9007199254740991 }
         }
       }
     }

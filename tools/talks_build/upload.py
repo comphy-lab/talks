@@ -1,7 +1,7 @@
 """Upload content-addressed media to R2 with the ``cf`` CLI, never overwriting.
 
-Keys are ``talks/<slug>/<file>`` in bucket ``comphy-media``; a download is
-``talks/<slug>/<sha16>/<name>``, its directory the hash of its content. The existing
+Keys are ``talks/<slug>/<file>`` in bucket ``comphy-media``. Only slide images
+and videos are uploaded; downloadable decks belong in Dropbox. The existing
 keys are listed first, every page of them; a file whose key exists is
 skipped. If the listing fails or does not finish, nothing is uploaded.
 
@@ -24,8 +24,6 @@ from .proc import run
 
 BUCKET = "comphy-media"
 NAME_RE = re.compile(r"^[0-9a-f]{16}\.(webp|mp4)$")
-HASH_DIR_RE = re.compile(r"^[0-9a-f]{16}$")
-DOWNLOAD_RE = re.compile(r"^[0-9a-f]{16}/[A-Za-z0-9][A-Za-z0-9._-]*\.(pdf|pptx|key)$")
 MAX_PUT_BYTES = 300_000_000  # cf r2 objects put sends one request
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 PER_PAGE = 1000  # R2's largest page
@@ -87,15 +85,10 @@ def remote_keys(slug: str, runner: Runner = _default_runner, bucket: str = BUCKE
 
 
 def _candidates(media_dir: Path):
-    """``(path, name)`` for media files and ``<sha16>/<name>`` downloads in the store."""
+    """``(path, name)`` for slide images and videos only."""
     for path in sorted(Path(media_dir).iterdir()):
         if path.is_file() and NAME_RE.match(path.name):
             yield path, path.name
-        elif path.is_dir() and HASH_DIR_RE.match(path.name):
-            for f in sorted(path.iterdir()):
-                rel = f"{path.name}/{f.name}"
-                if f.is_file() and DOWNLOAD_RE.match(rel):
-                    yield f, rel
 
 
 def plan(media_dir: Path, slug: str, existing: set[str], only: set[str] | None = None) -> list[tuple[Path, str, str]]:

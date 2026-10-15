@@ -10,6 +10,7 @@ from pathlib import Path
 import yaml
 
 from .patches import PatchSpec
+from .manifest import dropbox_download_format
 from .youtube import BEFORE_START, YouTubeSpec
 
 SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
@@ -42,6 +43,7 @@ class Talk:
     titles: dict[str, str] = field(default_factory=dict)
     # Downloadable copies offered on the talk page, in this order.
     downloads: list[str] = field(default_factory=list)
+    download_links: list[dict] = field(default_factory=list)
 
 
 def _date(value, what: str) -> str:
@@ -136,9 +138,22 @@ def load_talk(path: Path) -> Talk:
     changelog = []
     for i, c in enumerate(data.get("changelog") or []):
         changelog.append({"date": _date(c.get("date"), f"changelog[{i}]"), "note": str(c.get("note") or "").strip()})
-    downloads = data.get("downloads") or []
-    if not isinstance(downloads, list) or not all(isinstance(d, str) for d in downloads):
-        raise TalkError("talk.yaml: downloads must be a list of formats")
+    raw_downloads = data.get("downloads") or []
+    if not isinstance(raw_downloads, list):
+        raise TalkError("talk.yaml: downloads must be a list of formats or Dropbox download entries")
+    download_links = []
+    if raw_downloads and all(isinstance(d, dict) for d in raw_downloads):
+        for d in raw_downloads:
+            if (set(d) != {"format", "url", "bytes"} or d["format"] not in DOWNLOAD_FORMATS
+                    or dropbox_download_format(d["url"]) != d["format"]
+                    or type(d["bytes"]) is not int or not 0 < d["bytes"] <= 2**53 - 1):
+                raise TalkError("talk.yaml: downloads need a matching Dropbox dl=1 URL and positive integer bytes")
+            download_links.append(dict(d))
+        downloads = [d["format"] for d in download_links]
+    elif all(isinstance(d, str) for d in raw_downloads):
+        downloads = raw_downloads
+    else:
+        raise TalkError("talk.yaml: downloads must be all formats or all Dropbox download entries")
     bad = [d for d in downloads if d not in DOWNLOAD_FORMATS]
     if bad or len(set(downloads)) != len(downloads):
         raise TalkError(f"talk.yaml: downloads must be distinct values from {', '.join(DOWNLOAD_FORMATS)}")
@@ -162,4 +177,5 @@ def load_talk(path: Path) -> Talk:
         changelog=changelog,
         titles=titles,
         downloads=list(downloads),
+        download_links=download_links,
     )

@@ -67,8 +67,10 @@ for the authoritative example. Its fields:
   the `.key` file itself is fixed.
 - `titles`: optional map from slide UUID to a human-written title, for a
   slide whose title derived from its text (Section 3) is wrong.
-- `downloads`: optional list of the downloadable copies the talk page offers,
-  in display order: any of `pdf`, `pptx`, `key` (Section 2.1).
+- `downloads`: optional list of `{format, url, bytes}` entries, in display
+  order. Each URL is a public Dropbox file link with `dl=1`, matching its
+  `pdf`, `pptx` or `key` format (Section 2.1). A list of format names is
+  retained for generating local copies of older talks.
 - `changelog[]`: `{date, note}`.
 
 ## 2. Pipeline outputs
@@ -103,8 +105,10 @@ Keynote's own PDF export.
 
 `python -m talks_build upload --slug <slug>` uploads to R2 every file in
 `build/<slug>/media/` not already present that the manifest references, under
-`talks/<slug>/<file>` (a download under `talks/<slug>/<sha256-16>/<name>`),
-using the `cf` CLI with the correct `Content-Type`. Because files are
+`talks/<slug>/<file>`, using the `cf` CLI with the correct `Content-Type`.
+Only slide images and videos are uploaded; downloadable PDF, PowerPoint and
+Keynote files belong in Dropbox. Upload refuses a manifest that still lists
+legacy R2 download paths. Because files are
 content-addressed, an existing key is never overwritten. A file over the CLI's
 single-request limit of 300 MB is refused. The slug must be a valid talk slug and equal the manifest's
 `slug`. The existing keys are listed page by page with `--start-after` (the
@@ -116,6 +120,18 @@ manifest against `tools/schema/manifest.schema.json` and the invariants in
 Section 3.3.
 
 ### 2.1 Downloads
+
+Store the downloadable copies in Dropbox and create public, view-only file
+links with downloads enabled. Verify each file's size and content before
+adding its `{format, url, bytes}` entry to `talk.yaml`; use `dl=1` in the URL.
+`python -m talks_build downloads --talk talks-src/<slug>/talk.yaml` registers
+those entries in the existing manifest, without rebuilding slides or files.
+The manifest must match the talk's slug, speaker and update date. A subsequent
+`build` includes the configured links automatically. The player opens the
+links directly; Dropbox is not added to the media or script CSP.
+
+For a talk configured with format names rather than links, the local generator
+is still available:
 
 `python -m talks_build downloads --talk talks-src/<slug>/talk.yaml --export <dir>`
 runs after a `build --stills` and makes the formats listed in the talk's
@@ -157,8 +173,10 @@ Each file is named `<speaker surname>-<slug>-<updated>.<ext>` and stored as
 `build/<slug>/media/<sha256-16 of the file>/<name>`, so its key is
 content-addressed while a browser saves it under its own name (a cross-origin
 `download` attribute is ignored, and the `cf` CLI cannot set
-`Content-Disposition`). The command then writes the manifest's `downloads`.
-A later `build` drops them; run `downloads` again after it.
+`Content-Disposition`). These local files are not uploaded to R2. Replace the
+format names in `talk.yaml` with verified Dropbox entries and run `downloads`
+to register the links before publishing. A later `build` drops legacy file
+entries and retains configured Dropbox entries.
 
 ## 3. Manifest (`schema: 2`, with schema 1 compatibility)
 
@@ -201,7 +219,7 @@ A later `build` drops them; run `downloads` again after it.
   ],
   "changelog": [ { "date": "2026-10-10", "note": "…" } ],
   "downloads": [                                      // optional (Section 2.1)
-    { "format": "pdf", "file": "<hash>/<name>.pdf", "bytes": 52428800 }
+    { "format": "pdf", "url": "https://www.dropbox.com/scl/fi/<id>/<name>.pdf?rlkey=<key>&dl=1", "bytes": 52428800 }
   ]
 }
 ```
@@ -209,8 +227,9 @@ A later `build` drops them; run `downloads` again after it.
 The player and validator still accept schema 1 manifests. Schema 2 adds the
 optional `image2x` / `overlay2x` pair; when absent, the original pair remains
 usable at any display density. The builder always emits both densities.
-`downloads` is optional in both schemas; the URL of a download is
-`media_base + file`.
+`downloads` is optional in both schemas. An entry has exactly one of `url`
+(a Dropbox file link) or `file` (a legacy media-relative path). The player
+continues to accept `media_base + file` for older manifests.
 
 All rectangles are in logical canvas pixels (origin top-left). They may extend past the
 canvas; the stage clips them. Media rectangles are whole pixels: the pipeline
@@ -296,8 +315,10 @@ not the size, so a video lines up with the poster frame baked into the still.
   manifest order: PDF ("One page per slide; movies as still frames"),
   PowerPoint or Keynote (both "Every click as here; movies play through"), each
   with its size in decimal megabytes (whole MB; one decimal place below
-  1 MB). The URL is `media_base + file`, under the test hook's override like
-  other media. An entry with an unknown format, a file name that is not
+  1 MB). A Dropbox `url` is used directly, including under the test hook's
+  media override. A legacy URL is `media_base + file`, under that override
+  like other media. An entry with an unknown format, an invalid Dropbox
+  link, both URL forms, a legacy file name that is not
   `<sha16>/<name>.<format>`, a repeated format or a size that is not a
   positive integer is left out; with no valid entry the button stays hidden.
   The panel opens above the control bar, right-aligned to the button and
@@ -386,7 +407,12 @@ not the size, so a video lines up with the poster frame baked into the still.
   pair, and agree with the original pair on whether an overlay exists.
 - With `--media-dir`, density-bearing states are checked against their actual
   file dimensions: 1920 x 1080 for the original pair and 3840 x 2160 for 2x.
-- A download's `file` is `<sha256-16>/<name>.<format>` with a matching
+- A download's `url` is an HTTPS file link on `www.dropbox.com`, under `/s/`
+  or `/scl/fi/`, with a matching format extension, `dl=1`, no fragment or
+  credentials, and no repeated `dl` value. Its byte count is a positive safe
+  integer. Dropbox entries do not require local media files or inherit the
+  R2 single-request size limit.
+- A legacy download's `file` is `<sha256-16>/<name>.<format>` with a matching
   extension, each format appears at most once, and no file exceeds 300 MB.
   With `--media-dir`, each file exists with the stated `bytes` and its
   directory is the hash of its content.

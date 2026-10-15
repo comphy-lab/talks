@@ -586,7 +586,7 @@ end timeout
 def make_downloads(
     talk, root: Path, export_dir: Path | None, formats: list[str] | None = None, log=print
 ) -> list[dict]:
-    """Build the talk's downloads, store them content-addressed and list them in its manifest."""
+    """Register Dropbox links, or build local copies when no links are configured."""
     from .manifest import dumps, validate
 
     root = Path(root)
@@ -596,6 +596,18 @@ def make_downloads(
         raise DownloadError(f"talk.yaml downloads does not list: {', '.join(unlisted)}")
     manifest_path = root / "site" / talk.slug / "manifest.json"
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if talk.download_links:
+        if formats != talk.downloads:
+            raise DownloadError("register all configured Dropbox downloads together; omit --formats")
+        if any(manifest.get(k) != getattr(talk, k) for k in ("slug", "speaker", "updated")):
+            raise DownloadError("the site manifest does not match talk.yaml; run the build first")
+        linked = copy.deepcopy(manifest)
+        linked["downloads"] = talk.download_links
+        problems = validate(linked)
+        if problems:
+            raise DownloadError("manifest invalid:\n  " + "\n  ".join(problems))
+        manifest_path.write_text(dumps(linked), encoding="utf-8")
+        return linked["downloads"]
     build_dir = root / "build" / talk.slug
     # The downloads must show exactly what the site shows: the manifest the last
     # build wrote (the stills are named by its image hashes) and, for the PDF,

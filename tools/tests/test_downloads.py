@@ -58,6 +58,38 @@ def test_talk_downloads_rejects_bad_values(tmp_path, value):
         load_talk(_talk(tmp_path, f"downloads: {value}\n"))
 
 
+DROPBOX_URL = "https://www.dropbox.com/scl/fi/example/Lovelace-demo-talk-2026-10-12.pdf?rlkey=example&dl=1"
+
+
+def test_talk_accepts_dropbox_download_entries(tmp_path):
+    entries = [{"format": "pdf", "url": DROPBOX_URL, "bytes": 400_000_000}]
+    talk = load_talk(_talk(tmp_path, "downloads: " + json.dumps(entries)))
+    assert talk.downloads == ["pdf"] and talk.download_links == entries
+    m = good()
+    m["downloads"] = entries
+    assert validate(m) == []
+    assert download_files(m) == []
+
+
+@pytest.mark.parametrize("url", [
+    DROPBOX_URL.replace("https:", "http:"),
+    DROPBOX_URL.replace("www.dropbox.com", "www.dropbox.com.evil.example"),
+    DROPBOX_URL.replace("www.dropbox.com", "someone@www.dropbox.com"),
+    DROPBOX_URL.replace(".pdf?", ".pptx?"),
+    DROPBOX_URL.replace("dl=1", "dl=0"),
+    DROPBOX_URL + "&dl=",
+    DROPBOX_URL + "#fragment",
+    "https://[",
+])
+def test_invalid_dropbox_download_rejected(tmp_path, url):
+    entries = [{"format": "pdf", "url": url, "bytes": 123}]
+    with pytest.raises(TalkError, match="downloads"):
+        load_talk(_talk(tmp_path, "downloads: " + json.dumps(entries)))
+    m = good()
+    m["downloads"] = entries
+    assert validate(m)
+
+
 def test_file_name_uses_surname_slug_and_date():
     assert file_name("Vatsal Sanjay", "singular-bursting-bubbles", "2026-10-12", "pptx") == (
         "Sanjay-singular-bursting-bubbles-2026-10-12.pptx"
@@ -128,28 +160,25 @@ def test_media_dir_checks_presence_size_and_hash(tmp_path):
 # ------------------------------------------------------------------- upload
 
 
-def test_upload_puts_download_under_hash_directory(tmp_path):
+def test_upload_never_puts_downloads_in_r2(tmp_path):
     m, media = _with_downloads(tmp_path)
     rel = m["downloads"][0]["file"]
     cf = FakeCF()
     done = upload.upload(media, "demo-talk", dry_run=False, runner=cf, only={rel}, log=lambda *_: None)
-    assert done == [f"talks/demo-talk/{rel}"]
-    put = [c for c in cf.calls if c[:4] == ["cf", "r2", "objects", "put"]][0]
-    assert put[4] == f"talks/demo-talk/{rel}"
-    assert put[put.index("--content-type") + 1] == "application/pdf"
-    # An existing key is never re-sent.
-    cf = FakeCF(keys=[f"talks/demo-talk/{rel}"])
-    assert upload.upload(media, "demo-talk", dry_run=False, runner=cf, only={rel}, log=lambda *_: None) == []
+    assert done == []
+    assert not any(c[:4] == ["cf", "r2", "objects", "put"] for c in cf.calls)
 
 
 def test_upload_ignores_unreferenced_and_refuses_oversize(tmp_path, monkeypatch):
     m, media = _with_downloads(tmp_path)
     rel = m["downloads"][0]["file"]
     (media / rel).parent.joinpath("stray.pptx").write_bytes(b"x")
-    assert [k for _, k, _ in upload.plan(media, "demo-talk", set(), only={rel})] == [f"talks/demo-talk/{rel}"]
+    assert upload.plan(media, "demo-talk", set(), only={rel}) == []
+    # The upload size guard still applies to the slide media that R2 does hold.
+    (media / "0123456789abcdef.mp4").write_bytes(b"video bytes")
     monkeypatch.setattr(upload, "MAX_PUT_BYTES", 4)
     with pytest.raises(ValueError, match="upload limit"):
-        upload.plan(media, "demo-talk", set(), only={rel})
+        upload.plan(media, "demo-talk", set(), only={"0123456789abcdef.mp4"})
 
 
 # --------------------------------------------------------------------- PDF
@@ -463,6 +492,24 @@ def _built_repo(tmp_path, downloads="[pptx]"):
     report = {"manifest_sha256": hashlib.sha256(text.encode()).hexdigest(), "export_digest": "e" * 64}
     (root / "build" / "demo-talk" / "report.json").write_text(json.dumps(report), encoding="utf-8")
     return root, load_talk(_talk(tmp_path, f"downloads: {downloads}\n"))
+
+
+def test_register_dropbox_links_preserves_slides_without_build_or_export(tmp_path):
+    from talks_build.downloads import DownloadError, make_downloads
+
+    entries = [{"format": "pdf", "url": DROPBOX_URL, "bytes": 123}]
+    root, talk = _built_repo(tmp_path, json.dumps(entries))
+    path = root / "site" / talk.slug / "manifest.json"
+    before = json.loads(path.read_text())
+    talk.speaker = before["speaker"]
+    (root / "build" / talk.slug / "report.json").unlink()
+    assert make_downloads(talk, root, None) == entries
+    after = json.loads(path.read_text())
+    assert {k: v for k, v in after.items() if k != "downloads"} == before
+    assert not (root / "build" / talk.slug / "downloads").exists()
+    talk.updated = "2026-10-13"
+    with pytest.raises(DownloadError, match="does not match talk.yaml"):
+        make_downloads(talk, root, None)
 
 
 def test_make_downloads_refuses_oversize_before_storing(tmp_path, monkeypatch):
