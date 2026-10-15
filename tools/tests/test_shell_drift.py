@@ -44,6 +44,19 @@ def test_documented_differences_and_whitespace_match():
     assert expected.navigation[0] == ("Team", "/team/")
 
 
+def test_styled_footer_titles_match_semantic_headings():
+    footer = FOOTER.replace("<h4>", '<p class="c-footer__heading">').replace("</h4>", "</p>")
+    expected = shell.extract(HEADER, footer, CSS)
+    html = talks_html()
+    assert shell.differences(expected, shell.extract(html, html, CSS, talks=True), "index.html") == []
+
+
+def test_styled_footer_title_does_not_hide_a_second_title():
+    footer = FOOTER.replace("<h4>Explore</h4>", '<p class="c-footer__heading">Explore</p><h4>Other</h4>')
+    with pytest.raises(shell.ShellError, match="one heading"):
+        shell.extract(HEADER, footer, CSS)
+
+
 def test_inline_markup_does_not_invent_spaces_inside_accessible_names():
     expected = shell.extract(HEADER, FOOTER, CSS)
     html = talks_html().replace("<span>Team</span>", "<span>Te</span>am")

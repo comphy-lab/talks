@@ -161,7 +161,8 @@ def extract(header_html: str, footer_html: str, css: str, *, talks: bool = False
     footer = one(Document(footer_html).root, "c-footer")
     columns = []
     for column in (node for node in footer.walk() if node.has_class("c-footer__col")):
-        headings = [node for node in column.walk() if re.fullmatch(r"h[1-6]", node.tag)]
+        headings = [node for node in column.walk()
+                    if node.has_class("c-footer__heading") or re.fullmatch(r"h[1-6]", node.tag)]
         if len(headings) != 1 or not column.attrs.get("aria-label"):
             raise ShellError("footer column needs one heading and an accessible label")
         columns.append((headings[0].text(), column.attrs["aria-label"]))
