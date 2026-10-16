@@ -8,7 +8,8 @@
   /* ---------- Brand hues (from production site) ---------- */
   --c-brand-purple:   #68236d;     /* H1, logo mark, hero grad stop 4 */
   --c-brand-blue:     #0056b3;     /* H2, links (legacy) */
-  --c-accent-coral:   #cf4900;     /* <strong>, DOI highlight */
+  --c-accent-coral:      #cf4900; /* fills, swatches, chip ground */
+  --c-accent-coral-text: #c04400; /* text on paper. Same hue as the fill; darkened for WCAG AA. */
   --c-accent-violet:  #4c6ef5;     /* tags, hero grad stop 3 */
   --c-accent-red:     #ff6b6b;     /* hero grad stop 1 */
 
@@ -135,6 +136,9 @@
   --c-accent-teal-fg: #0f1c1b;
   --c-accent-teal-hover: #88d2ce;
 
+  /* Pale-surface text colour. Dark mode keeps the fill (#cf4900). */
+  --c-accent-coral-text: var(--c-accent-coral);
+
   /* Hero gradient as type: lift every stop so clipped display titles
      stay ≥6.8:1 on --c-paper (#12100d). Light theme values are unchanged.
      Downstream: copy these four lines into the dark-theme block. */
@@ -193,7 +197,7 @@ a:hover { color: var(--c-accent-teal); border-bottom-color: var(--c-accent-teal)
    classed components and page-level `nav a` / caption rules still win. */
 :root[data-theme="dark"] a:where(:not([class])) { color: #8fb8ff; border-bottom-color: rgba(143,184,255,0.3); }
 
-strong { color: var(--c-accent-coral); font-weight: var(--t-weight-semi); }
+strong { color: var(--c-accent-coral-text); font-weight: var(--t-weight-semi); }
 
 code { font-family: var(--t-mono); font-size: 0.92em; background: color-mix(in srgb, var(--c-brand-purple) 7%, transparent); padding: 0.08em 0.35em; border-radius: 4px; color: var(--fg-strong); }
 :root[data-theme="dark"] code { background: color-mix(in srgb, var(--c-brand-purple) 22%, transparent); color: #f1dcf4; }
@@ -332,7 +336,10 @@ h3 { font-size: var(--t-h3); }
 }
 .chip--brand { background: color-mix(in srgb, var(--c-brand-purple) 10%, transparent); color: var(--c-brand-purple); border-color: color-mix(in srgb, var(--c-brand-purple) 22%, transparent); }
 .chip--blue  { background: color-mix(in srgb, var(--c-brand-blue) 10%, transparent); color: var(--c-brand-blue); border-color: color-mix(in srgb, var(--c-brand-blue) 22%, transparent); }
-.chip--coral { background: color-mix(in srgb, var(--c-accent-coral) 10%, transparent); color: var(--c-accent-coral); border-color: color-mix(in srgb, var(--c-accent-coral) 22%, transparent); }
+/* Label is darker than --c-accent-coral-text. The 10% fill tint
+   renders as #efddd0 on paper and #f7e7db on the light panel, where
+   #c04400 is short of 4.5:1. #b03c00 is the same hue and clears both. */
+.chip--coral { background: color-mix(in srgb, var(--c-accent-coral) 10%, transparent); color: #b03c00; border-color: color-mix(in srgb, var(--c-accent-coral) 22%, transparent); }
 :root[data-theme="dark"] .chip--brand { color: #d99adc; }
 :root[data-theme="dark"] .chip--blue  { color: #8fb8ff; }
 :root[data-theme="dark"] .chip--coral { color: #ff9966; }
