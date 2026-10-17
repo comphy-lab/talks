@@ -136,8 +136,10 @@
   --c-accent-teal-fg: #0f1c1b;
   --c-accent-teal-hover: #88d2ce;
 
-  /* Pale-surface text colour. Dark mode keeps the fill (#cf4900). */
-  --c-accent-coral-text: var(--c-accent-coral);
+  /* Coral text on dark surfaces: the fill's hue (about 21°), lifted until
+     emphasis clears WCAG AA with margin: ≥6.0:1 on every surface above.
+     The fill (#cf4900) measured only 3.84–4.17:1 here. The fill is unchanged. */
+  --c-accent-coral-text: #ff6714;
 
   /* Hero gradient as type: lift every stop so clipped display titles
      stay ≥6.8:1 on --c-paper (#12100d). Light theme values are unchanged.
