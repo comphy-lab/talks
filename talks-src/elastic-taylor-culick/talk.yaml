@@ -15,6 +15,15 @@ video:
   spans: auto           # same source at the same rect on consecutive states/slides = one placement
   max_scale: 2.0        # encode at most 2x the largest on-slide box
 
+# Downloadable copies offered on the talk page (docs/SPEC.md section 2.1).
+# The Keynote file is the native deck (not the PowerPoint round trip), shared by Vatsal.
+downloads:
+  - format: key
+    url: https://www.dropbox.com/scl/fi/sfp4qfvwxbk5g1ccs3p9e/Sanjay-elastic-taylor-culick-2026-11-06.key?rlkey=89688lw72sidbm9w8vmceq6sx&dl=1
+    bytes: 41486231
+
 changelog:
   - date: "2026-11-06"
     note: First web version of the Elastic Taylor–Culick talk.
+  - date: "2026-11-06"
+    note: Added the Keynote download.
