@@ -1,0 +1,1714 @@
+{
+  "schema": 2,
+  "slug": "elastic-taylor-culick",
+  "title": "Elastic Taylor–Culick retractions",
+  "subtitle": "How elasticity arrests a retracting sheet",
+  "speaker": "Vatsal Sanjay",
+  "updated": "2026-11-06",
+  "canvas": {
+    "width": 1920,
+    "height": 1080
+  },
+  "media_base": "https://media.comphy-lab.org/talks/elastic-taylor-culick/",
+  "videos": {
+    "v01": {
+      "src": "a59c71a9fb64be59.mp4",
+      "poster": "2dec4556d38c33cb.webp",
+      "width": 460,
+      "height": 360,
+      "duration": 39.067,
+      "credit": null
+    },
+    "v02": {
+      "src": "e4d316ed8bfcdb01.mp4",
+      "poster": "eeeabf2cefad31a8.webp",
+      "width": 376,
+      "height": 360,
+      "duration": 6.467,
+      "credit": null
+    },
+    "v03": {
+      "src": "3db7642f7bb54efe.mp4",
+      "poster": "5b03d9ac24303e61.webp",
+      "width": 420,
+      "height": 420,
+      "duration": 1.92,
+      "credit": null
+    },
+    "v04": {
+      "src": "a860d5eeb8c08608.mp4",
+      "poster": "02e8b97684a02322.webp",
+      "width": 3340,
+      "height": 1350,
+      "duration": 15.067,
+      "credit": null
+    },
+    "v05": {
+      "src": "a6aa4d42019fa2e2.mp4",
+      "poster": "cb28d74e7362d1c8.webp",
+      "width": 540,
+      "height": 960,
+      "duration": 3.971,
+      "credit": null
+    },
+    "v06": {
+      "src": "a27a15089f1dcffe.mp4",
+      "poster": "0a37c09dce5c3581.webp",
+      "width": 540,
+      "height": 960,
+      "duration": 0.767,
+      "credit": null
+    },
+    "v07": {
+      "src": "116b0f3b4ad7af37.mp4",
+      "poster": "35411af1da9b2ef8.webp",
+      "width": 1920,
+      "height": 880,
+      "duration": 13.333,
+      "credit": null
+    },
+    "v08": {
+      "src": "a1f48ae02b27f2ce.mp4",
+      "poster": "710fe206382041ae.webp",
+      "width": 1920,
+      "height": 880,
+      "duration": 13.333,
+      "credit": null
+    },
+    "v09": {
+      "src": "ce894b9ff916398a.mp4",
+      "poster": "5abb0baaa2224a07.webp",
+      "width": 1920,
+      "height": 880,
+      "duration": 13.333,
+      "credit": null
+    },
+    "v10": {
+      "src": "99c0411846b12e22.mp4",
+      "poster": "71ca1f0294027345.webp",
+      "width": 1920,
+      "height": 880,
+      "duration": 16.667,
+      "credit": null
+    },
+    "v11": {
+      "src": "993110389b1e62fd.mp4",
+      "poster": "84baac072ab4a544.webp",
+      "width": 1920,
+      "height": 880,
+      "duration": 4.667,
+      "credit": null
+    },
+    "v12": {
+      "src": "7b78afc8bc7342f5.mp4",
+      "poster": "e17aac3cc0fbe29a.webp",
+      "width": 1920,
+      "height": 880,
+      "duration": 16.667,
+      "credit": null
+    },
+    "v13": {
+      "src": "dc39cd32973f0747.mp4",
+      "poster": "14fdf51d88c1c962.webp",
+      "width": 1920,
+      "height": 880,
+      "duration": 13.333,
+      "credit": null
+    },
+    "v14": {
+      "src": "e66b56f46e0c7a4d.mp4",
+      "poster": "abf3e9657968851f.webp",
+      "width": 1920,
+      "height": 400,
+      "duration": 10.0,
+      "credit": null
+    },
+    "v15": {
+      "src": "cea9e668f4130693.mp4",
+      "poster": "1044051ea033a7dc.webp",
+      "width": 1920,
+      "height": 400,
+      "duration": 13.367,
+      "credit": null
+    },
+    "v16": {
+      "src": "76ce4e4182c5df74.mp4",
+      "poster": "de214df034e1b380.webp",
+      "width": 1920,
+      "height": 880,
+      "duration": 4.0,
+      "credit": null
+    }
+  },
+  "youtube": {},
+  "slides": [
+    {
+      "id": "A11B23C4-404B-4AC4-98CB-13188B352B53",
+      "n": 1,
+      "title": "Elastic Taylor–Culick retractions",
+      "text": "Elastic Taylor–Culick retractions Vatsal Sanjay CoMPhy Lab, Durham University CoMPhy Lab ! contact",
+      "states": [
+        {
+          "image": "cf6fbb74ecd27f7d.webp",
+          "overlay": null,
+          "image2x": "469c67f43e01cb05.webp",
+          "overlay2x": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "4ABACC0A-74CE-43EF-BE0B-DAFA0DE95F81",
+      "n": 2,
+      "title": "Wrinkling of viscous and elastic sheets",
+      "text": "Wrinkling of viscous and elastic sheets Viscous bubble Elastic sheet A. Oratis, J. Bush, H. Stone & J. Bird, Science, 369:6504, 685-688 (2020) D. Vella, A. Ajdari, A. Vaziri & A. Boudaoud, Phys. Rev. Lett., 107:17, 174301 (2011)",
+      "states": [
+        {
+          "image": "2a3f5b295017a8e9.webp",
+          "overlay": null,
+          "image2x": "49e983d6e24007ba.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "52E45CFA-6921-41A5-88EA-72555AABDBFE",
+      "n": 3,
+      "title": "Why do we care?",
+      "text": "Why do we care? MIST B. Scharfman, A. Techet, J. Bush & L. Bourouiba, Exp. Fluids, 57:2, 1-9 (2016)",
+      "states": [
+        {
+          "image": "28496ed8a8ed4a3e.webp",
+          "overlay": null,
+          "image2x": "3cc26bf3d8560b4b.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v01",
+              "rect": [
+                507,
+                200,
+                906,
+                709
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "AFFA78FA-0546-4F88-A783-769DA9B4A6B3",
+      "n": 4,
+      "title": "How do we model polymeric flows?",
+      "text": "How do we model polymeric flows?",
+      "states": [
+        {
+          "image": "5889c076b38fbe84.webp",
+          "overlay": null,
+          "image2x": "f02c1b412649c267.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "6BEBF357-62BF-4DAE-AADF-0299ABEA142C",
+      "n": 5,
+      "title": "Polymers add a stress to the momentum balance",
+      "text": "Polymers add a stress to the momentum balance ! ∂u ρ + u · ∇u ∂t \" = ∇ · τ momentum",
+      "states": [
+        {
+          "image": "bb098326b4c1bf2d.webp",
+          "overlay": null,
+          "image2x": "85af38db76aa019c.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "5FD918A2-CD7E-4EA2-932D-91AA5A6EBE60",
+      "n": 6,
+      "title": "Polymers add a stress to the momentum balance",
+      "text": "Polymers add a stress to the momentum balance ! ∂u ρ + u · ∇u ∂t \" = ∇ · τ τ = −p I + 2µs D + τp (A) # 1 D = 2 ∇u + (∇u) $ T momentum solvent + polymer deformation (strain-rate) tensor",
+      "states": [
+        {
+          "image": "b3e8c68fb39f3a88.webp",
+          "overlay": null,
+          "image2x": "2fd310c77c4192f7.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "9063DD6D-7F92-4D2E-8470-3C2953912E33",
+      "n": 7,
+      "title": "Polymers add a stress to the momentum balance",
+      "text": "Polymers add a stress to the momentum balance ! ∂u ρ + u · ∇u ∂t \" = ∇ · τ τ = −p I + 2µs D + τp (A) # 1 D = 2 ∇u + (∇u) $ T momentum solvent + polymer deformation (strain-rate) tensor A: conformation tensor (polymer stretch and orientation)",
+      "states": [
+        {
+          "image": "b768567970c3a5a2.webp",
+          "overlay": null,
+          "image2x": "83c50550924b61e4.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "2D75921B-9B32-4AB3-844B-DC9BB23C80D5",
+      "n": 8,
+      "title": "Oldroyd-B: spherical cow of polymeric physics",
+      "text": "Oldroyd-B: spherical cow of polymeric physics µs µp τ G",
+      "states": [
+        {
+          "image": "ddd27e1410e516c1.webp",
+          "overlay": null,
+          "image2x": "e04a7d2c029389ef.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "74A32CF9-9C0B-4746-A28A-E2C00690DEFF",
+      "n": 9,
+      "title": "Oldroyd-B: spherical cow of polymeric physics",
+      "text": "Oldroyd-B: spherical cow of polymeric physics µs µp τ G τp = G (A − I) elastic stress",
+      "states": [
+        {
+          "image": "e0965db151335000.webp",
+          "overlay": null,
+          "image2x": "608bd691f595d11e.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "8BD051D9-33C3-4A4C-B45B-12DFB8C8415A",
+      "n": 10,
+      "title": "Oldroyd-B: spherical cow of polymeric physics",
+      "text": "Oldroyd-B: spherical cow of polymeric physics µs µp τ G τp = G (A − I) elastic stress ∇ A − I A = − , λ relaxation time λ ∇ ∂A T A ≡ + u · ∇A − (∇u) · A − A · ∇u ∂t µp λ = G",
+      "states": [
+        {
+          "image": "85158353c7c5e3ec.webp",
+          "overlay": null,
+          "image2x": "5502bc6fc3b1b68e.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "D021842D-70F1-4107-BC7A-6E0934BCDC54",
+      "n": 11,
+      "title": "Two limits of the same model",
+      "text": "Two limits of the same model λ → 0: viscous liquid A = I τ = −p I + 2µs D",
+      "states": [
+        {
+          "image": "e0cc143253211597.webp",
+          "overlay": null,
+          "image2x": "b1fb24d499127ab2.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "B1119404-EB5A-4C81-BB3B-E78724F605F0",
+      "n": 12,
+      "title": "Two limits of the same model",
+      "text": "Two limits of the same model λ → 0: viscous liquid λ → ∞: Kelvin–Voigt solid A = I ∇ T A = 0 ⇒ A = F · F τ = −p I + 2µs D τ = −p I + 2µs D T + G (F · F − I)",
+      "states": [
+        {
+          "image": "da999c72bedbe3dd.webp",
+          "overlay": null,
+          "image2x": "1815c8ca247a032e.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "42354FDD-20AD-463A-942E-CE6AF720BC95",
+      "n": 13,
+      "title": "Two limits of the same model",
+      "text": "Two limits of the same model λ → 0: viscous liquid λ → ∞: Kelvin–Voigt solid A = I ∇ T A = 0 ⇒ A = F · F τ = −p I + 2µs D τ = −p I + 2µs D T + G (F · F − I) dissipative neo-Hookean solid F : deformation gradient from the initial sheet",
+      "states": [
+        {
+          "image": "1481de03c00cd148.webp",
+          "overlay": null,
+          "image2x": "0b1b488324615ea3.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "F8AD3D8C-4583-411F-8A61-ABAAD2971193",
+      "n": 14,
+      "title": "Three dimensionless parameters: Oh, Ec and De",
+      "text": "Three dimensionless parameters: Oh, Ec and De ! ! √ 3 units: h0, ρh0/σ and σ/(ρh0); then VTC = 2 µs Oh = √ 2ρσh0 viscosity Gh0 Ec = σ elasticity De = ! λ 3 ρh0/σ relaxation √ τ = −p I + 2 2 Oh D + Ec (A − I), ∇ A − I A = − De",
+      "states": [
+        {
+          "image": "73d3cc829ae090cd.webp",
+          "overlay": null,
+          "image2x": "f82c3199d4a20e62.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "44ABFB26-5325-4FA7-B708-6DB668194635",
+      "n": 15,
+      "title": "Three dimensionless parameters: Oh, Ec and De",
+      "text": "Three dimensionless parameters: Oh, Ec and De ! ! √ 3 units: h0, ρh0/σ and σ/(ρh0); then VTC = 2 µs Oh = √ 2ρσh0 viscosity Gh0 Ec = σ elasticity De = ! λ 3 ρh0/σ relaxation De Ec = 0: Newtonian Oh √ τ = −p I + 2 2 Oh D + Ec (A − I), De = 0: Newtonian ∇ A − I A = − De Ec",
+      "states": [
+        {
+          "image": "0a6502f6be0c39b2.webp",
+          "overlay": null,
+          "image2x": "23a0812cc2d56b5d.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "8C72A1AA-9434-4843-B782-71678A0F0402",
+      "n": 16,
+      "title": "On the menu today",
+      "text": "On the menu today 2R0 h0 Sheets How do sheets retract?",
+      "states": [
+        {
+          "image": "10a08e0a442b2fc3.webp",
+          "overlay": null,
+          "image2x": "ee7d8bee08f6c952.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "43450E02-DC6E-4B36-A411-C9425CA76104",
+      "n": 17,
+      "title": "Two open-source solvers behind this talk",
+      "text": "Two open-source solvers behind this talk Basilisk C S. Popinet and team pyoomph and oomph-lib C. Diddens; M. Heil and A. Hazel volume of fluid, adaptive octrees Newtonian sheets, bubbles, drops finite elements, sharp interface elastic sheets in this talk Finite Element Simulations in Python based on #ilovefs and",
+      "states": [
+        {
+          "image": "742f263c1622361d.webp",
+          "overlay": null,
+          "image2x": "423f53bc5ca88479.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "3F437C7A-3768-43DB-9FB0-4CC18A29974D",
+      "n": 18,
+      "title": "On the menu today",
+      "text": "On the menu today 2R0 h0 Sheets How do sheets retract?",
+      "states": [
+        {
+          "image": "10a08e0a442b2fc3.webp",
+          "overlay": null,
+          "image2x": "ee7d8bee08f6c952.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "F682DE07-7594-484F-B163-8B3D58903909",
+      "n": 19,
+      "title": "Real-life example: a bursting soap bubble",
+      "text": "Real-life example: a bursting soap bubble Video: fyfluiddynamics.com/2011/10/high-speed-video-of-a-soap-bubble-being-popped",
+      "states": [
+        {
+          "image": "de88f5d114fb7361.webp",
+          "overlay": null,
+          "image2x": "8525af9af9d8988d.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v02",
+              "rect": [
+                550,
+                160,
+                820,
+                785
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "65E4D61F-DF16-4185-98A9-661F18EEDC1B",
+      "n": 20,
+      "title": "Opening holes in an infinite sheet",
+      "text": "Opening holes in an infinite sheet 2R0 h0 Detlef Lohse Udo Sen Pallav Kant Jacco Snoeijer Vincent Bertin Alex Oratis Charu Datt",
+      "states": [
+        {
+          "image": "28091540aa5c8726.webp",
+          "overlay": null,
+          "image2x": "366faef3fb0bc1f1.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v02",
+              "rect": [
+                125,
+                210,
+                440,
+                421
+              ]
+            },
+            {
+              "kind": "video",
+              "ref": "v03",
+              "rect": [
+                640,
+                314,
+                210,
+                210
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "9B6E990E-97FD-4045-906A-7027FE4949EF",
+      "n": 21,
+      "title": "Classical Taylor–Culick retraction",
+      "text": "Classical Taylor–Culick retraction Oh = 0.05 |u|/VTC 0 1 log10 Φ −5 Φ: viscous dissipation rate per unit volume. Basilisk C, two-phase volume of fluid V. Sanjay, U. Sen, P. Kant & D. Lohse, J. Fluid Mech., 948, A14 (2022) 0 Oh = µs /√2ρσh0 VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "a364c84bdb4556ed.webp",
+          "overlay": null,
+          "image2x": "a70731c419b6d2ce.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v04",
+              "rect": [
+                125,
+                205,
+                1670,
+                675
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "D03C3B50-906C-4938-AA45-D5ABEE424401",
+      "n": 22,
+      "title": "Momentum balance selects the Taylor–Culick speed",
+      "text": "Momentum balance selects the Taylor–Culick speed U the rim collects the sheet: m = ρh0ℓ, ℓ̇ = U d(mU) = 2σ dt m σ σ ℓ G. I. Taylor, Proc. R. Soc. A, 253:1274, 313-321 (1959); F. E. C. Culick, J. Appl. Phys., 31:6, 1128-1129 (1960) P.-G. de Gennes, Faraday Discuss., 104, 1-8 (1996) h0",
+      "states": [
+        {
+          "image": "f19591d71fddef2b.webp",
+          "overlay": null,
+          "image2x": "cf486c4b353e3f27.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "B9BF3ED1-B6FE-4527-8F21-385F19C29279",
+      "n": 23,
+      "title": "Momentum balance selects the Taylor–Culick speed",
+      "text": "Momentum balance selects the Taylor–Culick speed U the rim collects the sheet: m = ρh0ℓ, ℓ̇ = U d(mU) = 2σ dt m σ ℓ steady retraction 2 ρh0U = 2σ ⇒ σ U = VTC = ! 2σ ρh0 G. I. Taylor, Proc. R. Soc. A, 253:1274, 313-321 (1959); F. E. C. Culick, J. Appl. Phys., 31:6, 1128-1129 (1960) P.-G. de Gennes, Faraday Discuss., 104, 1-8 (1996) h0",
+      "states": [
+        {
+          "image": "ba1b2e8fcbb20752.webp",
+          "overlay": null,
+          "image2x": "4f7fc660c806851b.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "8839BB98-1D8F-4D21-8719-F940BDD9B83A",
+      "n": 24,
+      "title": "Momentum balance selects the Taylor–Culick speed",
+      "text": "Momentum balance selects the Taylor–Culick speed U the rim collects the sheet: m = ρh0ℓ, ℓ̇ = U d(mU) = 2σ dt m σ ρh0U = 2σ ⇒ h0 ℓ steady retraction 2 σ U = VTC = energy: half is dissipated, even as Oh → 0 d \"1 2# 2σU = mU + Ė ⇒ Ė = σU d d 2 dt ! 2σ ρh0 rim frame: m U 2 1 Ėd = 2 ṁ U G. I. Taylor, Proc. R. Soc. A, 253:1274, 313-321 (1959); F. E. C. Culick, J. Appl. Phys., 31:6, 1128-1129 (1960) P.-G. de Gennes, Faraday Discuss., 104, 1-8 (1996) dm",
+      "states": [
+        {
+          "image": "c4927f20fbddb68c.webp",
+          "overlay": null,
+          "image2x": "7c68ab05838ccb7a.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "FFBFF753-EB99-4422-9408-6DA0553900B2",
+      "n": 25,
+      "title": "Intermezzo: the same anomaly elsewhere",
+      "text": "Intermezzo: the same anomaly elsewhere less dissipation more Focusing waves Impacting drops Sliding drops L. Kayal, V. Sanjay, N. Yewale, A. Kumar & R. Dasgupta, J. Fluid Mech., 1003, A14 (2025) V. Sanjay & D. Lohse, Phys. Rev. Lett., 134:10, 104003 (2025) J. Talukdar, U. Sen, C. Diddens, D. Lohse & V. Sanjay, APS-DFD (2024)",
+      "states": [
+        {
+          "image": "2fee8320e6555b1a.webp",
+          "overlay": null,
+          "image2x": "ffd0870b201d75cb.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "6BBCECC5-97F2-4DB1-8834-8E91609710DE",
+      "n": 26,
+      "title": "What happens if the film is non-Newtonian?",
+      "text": "What happens if the film is non-Newtonian?",
+      "states": [
+        {
+          "image": "7dbfee34c5a66638.webp",
+          "overlay": null,
+          "image2x": "89ed40b607c6cf0e.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "53DDAB18-BA46-4BD9-AEAA-259FB989A97B",
+      "n": 27,
+      "title": "A Friday-afternoon experiment: low blowing rate",
+      "text": "A Friday-afternoon experiment: low blowing rate D. Tammaro, R. Pasquino, M. M. Villone, G. D’Avino, V. Ferraro, E. Di Maio, A. Langella, N. Grizzuti & P. L. Maffettone, Langmuir, 34:19, 5646-5654 (2018)",
+      "states": [
+        {
+          "image": "f15463a52c6585e0.webp",
+          "overlay": null,
+          "image2x": "33946aa6cf2dfc33.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v05",
+              "rect": [
+                731,
+                170,
+                458,
+                815
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "72A0C4CA-A1F4-4D34-AB0E-A90FF56B8DFA",
+      "n": 28,
+      "title": "A Friday-afternoon experiment: high blowing rate",
+      "text": "A Friday-afternoon experiment: high blowing rate D. Tammaro, R. Pasquino, M. M. Villone, G. D’Avino, V. Ferraro, E. Di Maio, A. Langella, N. Grizzuti & P. L. Maffettone, Langmuir, 34:19, 5646-5654 (2018)",
+      "states": [
+        {
+          "image": "767fe2ab787781b0.webp",
+          "overlay": null,
+          "image2x": "3973b8775c8a3c36.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v06",
+              "rect": [
+                731,
+                170,
+                458,
+                815
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C891A085-9AB3-4C15-A72E-11650D55BE7B",
+      "n": 29,
+      "title": "Simulation: axisymmetric FEM that follows the rim",
+      "text": "Simulation: axisymmetric FEM that follows the rim r = 0 U = Ṙ H h0 R(t) window of length L that moves with the rim sharp free surface on a moving mesh; initially a rounded edge with R0 = h0 comphy-lab/taylor-culick-fem, built on pyoomph and oomph-lib",
+      "states": [
+        {
+          "image": "3d34105db2fb0e57.webp",
+          "overlay": null,
+          "image2x": "f555742b507ca417.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "11E03D0D-9CF4-46E3-80A4-FFA3123646BC",
+      "n": 30,
+      "title": "First: no relaxation, De → ∞",
+      "text": "First: no relaxation, De → ∞ De De → ∞ Ec Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "38cdd06aedecb20f.webp",
+          "overlay": null,
+          "image2x": "8fd6ef7b0adaccd8.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "5F8A654E-875E-449D-A186-8D579B3054AC",
+      "n": 31,
+      "title": "First: no relaxation, De → ∞",
+      "text": "First: no relaxation, De → ∞ De De → ∞ Kelvin–Voigt sheet A = F · F T √ τ = −p I + 2 2 Oh D + Ec (A − I) Ec Oh = 1 in every FEM run Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "7c1bc47e955b299b.webp",
+          "overlay": null,
+          "image2x": "fb61de3ac6c2d3e5.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "DAAC6717-17BC-477C-9F64-AEE1971E7C9D",
+      "n": 32,
+      "title": "Ec = 0: stretched polymers, no stress",
+      "text": "Ec = 0: stretched polymers, no stress Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "f6125a9db8c1552f.webp",
+          "overlay": null,
+          "image2x": "a78444a562827d38.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v07",
+              "rect": [
+                142,
+                188,
+                1636,
+                750
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CC4B1806-849D-4D1A-801B-F13D23AA18B7",
+      "n": 33,
+      "title": "Ec = 0.01: slightly slower than Ec = 0",
+      "text": "Ec = 0.01: slightly slower than Ec = 0 Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "d0854b2953f8f107.webp",
+          "overlay": null,
+          "image2x": "7e08bf2bbce67f7a.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v08",
+              "rect": [
+                142,
+                188,
+                1636,
+                750
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "CB9F72FB-C565-4E29-8703-4B841C170688",
+      "n": 34,
+      "title": "Ec = 0.1: a long, flat rim",
+      "text": "Ec = 0.1: a long, flat rim Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "0c7f8dcf8c114a78.webp",
+          "overlay": null,
+          "image2x": "e845181383bac163.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v09",
+              "rect": [
+                142,
+                188,
+                1636,
+                750
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "7BFE98DE-6B94-4B5F-9DC9-2C78C79E6E03",
+      "n": 35,
+      "title": "Ec = 1: the hole stops, then recoils",
+      "text": "Ec = 1: the hole stops, then recoils Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "de74e1cfac945296.webp",
+          "overlay": null,
+          "image2x": "d83c28c9852a3201.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v10",
+              "rect": [
+                142,
+                188,
+                1636,
+                750
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "8F429C5F-37EA-4011-85AA-501231B27A6D",
+      "n": 36,
+      "title": "Elasticity slows the hole, then stops it",
+      "text": "Elasticity slows the hole, then stops it Ec 1.0 ∗uU/V=TC 0.8 Newtonian 0.6 0.4 0.2 0.0 10 0 10 1 10 R/h0 2 10 3 Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "4854b1b4b5057ec7.webp",
+          "overlay": null,
+          "image2x": "c879526c466c9b20.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "B0E8C433-789F-4138-A7C4-D561594A3425",
+      "n": 37,
+      "title": "Elasticity slows the hole, then stops it",
+      "text": "Elasticity slows the hole, then stops it Ec 1.0 ∗uU/V=TC 0.8 Newtonian 10−6–10−3 10−2 0.6 0.4 0.2 0.0 10 0 10 1 10 R/h0 2 10 3 Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "dec03ff3156c1675.webp",
+          "overlay": null,
+          "image2x": "7bb85b3c0bcf5f06.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "0AC88D90-FFB2-4C49-9BF8-A37634085C9C",
+      "n": 38,
+      "title": "Elasticity slows the hole, then stops it",
+      "text": "Elasticity slows the hole, then stops it Ec 1.0 ∗uU/V=TC 0.8 Newtonian 10−6–10−3 10−2 0.1 0.15 0.6 0.2 0.4 0.2 0.3 1 0.0 10 0 0.5 10 1 10 R/h0 2 10 3 Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "23aa3d812cd8f488.webp",
+          "overlay": null,
+          "image2x": "1785e2436493ed55.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "EA0FAACD-574F-44FF-B9C8-B2CCA7F11117",
+      "n": 39,
+      "title": "Stiffer sheets stop thickening sooner",
+      "text": "Stiffer sheets stop thickening sooner Ec 0, Newtonian 20 H/h0 10 5 3 2 1.5 1 10 0 10 1 t 10 2 10 3 Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "fec5522d679ef4de.webp",
+          "overlay": null,
+          "image2x": "164917e02ff5a38a.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "0A72648C-9814-49EF-B26B-A11BF78E0446",
+      "n": 40,
+      "title": "Stiffer sheets stop thickening sooner",
+      "text": "Stiffer sheets stop thickening sooner Ec 0, Newtonian 10−6 10−5 −4 10 10−3 10−2 0.1 0.15 0.2 0.3 0.5 1 20 H/h0 10 5 3 H∞ 2 1.5 1 10 0 10 1 t 10 2 10 0.1 0.15 0.2 0.3 0.5 1 3 Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "e922aa5cee0c4a39.webp",
+          "overlay": null,
+          "image2x": "59c4d47a82f9e93b.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "D5D0FBC7-30A0-48F6-B4A9-2FD574880309",
+      "n": 41,
+      "title": "Stiffer sheets stop thickening sooner",
+      "text": "Stiffer sheets stop thickening sooner Ec 0, Newtonian 10−6 10−5 −4 10 10−3 10−2 0.1 0.15 0.2 0.3 0.5 1 static FEM 20 H/h0 10 5 3 H∞ 2 1.5 1 10 0 10 1 t 10 2 10 0.1 0.15 0.2 0.3 0.5 1 3 Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "f572ba3cb6ad96b8.webp",
+          "overlay": null,
+          "image2x": "62b8d66a0f918aab.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "17A16803-E1BC-4013-A898-1E93E0903095",
+      "n": 42,
+      "title": "Opening a hole stretches every hoop",
+      "text": "Opening a hole stretches every hoop t = 0 r λθ = ξ t hoop stretch of a material ring R R0 ξ r V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation",
+      "states": [
+        {
+          "image": "d0860f130d46dab4.webp",
+          "overlay": null,
+          "image2x": "e61d1f43f4aacd1a.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "D7FF8D27-6F1D-4C3E-972A-16EE7C62F496",
+      "n": 43,
+      "title": "Opening a hole stretches every hoop",
+      "text": "Opening a hole stretches every hoop t = 0 r λθ = ξ t hoop stretch of a material ring 2 Aθθ = λθ, R R0 ξ r V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation τθθ = G (Aθθ − 1)",
+      "states": [
+        {
+          "image": "60badfd87664aa3b.webp",
+          "overlay": null,
+          "image2x": "37ebfcc3b3fa50cf.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "C54E3784-47D1-4B22-9F80-15BAD82C144A",
+      "n": 44,
+      "title": "Opening a hole stretches every hoop",
+      "text": "Opening a hole stretches every hoop t = 0 r λθ = ξ t hoop stretch of a material ring 2 Aθθ = λθ, R R0 ξ τθθ = G (Aθθ − 1) the tip started at ξ = R0: r V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation ! \"2 R tip Aθθ = R0",
+      "states": [
+        {
+          "image": "4d817619c320d8a3.webp",
+          "overlay": null,
+          "image2x": "72191c769f760ec0.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "576134EC-2C2E-44E6-B7D5-3AEA552D17D0",
+      "n": 45,
+      "title": "Elastic mapping: hoop stretch from the shape",
+      "text": "Elastic mapping: hoop stretch from the shape volume conservation tells where each ring started h0 !ξ 2 2 − R̃0 \" = 2 # r R h(s, t) s ds ⇒ ξ(r , t) flat initial sheet; R̃0 = 1.113 R0 (volume-equivalent radius) J. H. Snoeijer, A. Pandey, M. A. Herrada & J. Eggers, Proc. R. Soc. A, 476:2243, 20200419 (2020) V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation",
+      "states": [
+        {
+          "image": "011f98866ac660cc.webp",
+          "overlay": null,
+          "image2x": "f985b9f063c25d78.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "A6DB816F-88A9-435F-9035-41390D3437C3",
+      "n": 46,
+      "title": "Elastic mapping: hoop stretch from the shape",
+      "text": "Elastic mapping: hoop stretch from the shape volume conservation tells where each ring started h0 !ξ 2 2 − R̃0 \" = 2 # r R h(s, t) s ds ⇒ ξ(r , t) flat initial sheet; R̃0 = 1.113 R0 (volume-equivalent radius) then, as before Aθθ(r , t) = $ r ξ(r , t) %2 J. H. Snoeijer, A. Pandey, M. A. Herrada & J. Eggers, Proc. R. Soc. A, 476:2243, 20200419 (2020) V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation",
+      "states": [
+        {
+          "image": "3e6db08038ce1dbf.webp",
+          "overlay": null,
+          "image2x": "827e46e8c71fa180.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "9DC36478-45D1-4F8B-87BD-92FC97C193A7",
+      "n": 47,
+      "title": "Elastic mapping: hoop stretch from the shape",
+      "text": "Elastic mapping: hoop stretch from the shape volume conservation tells where each ring started h0 !ξ 2 2 − R̃0 \" = 2 # r R h(s, t) s ds ⇒ ξ(r , t) flat initial sheet; R̃0 = 1.113 R0 (volume-equivalent radius) then, as before Aθθ(r , t) = $ r ξ(r , t) %2 rounded edge: the tip is the original edge material ξ(R) = R0 J. H. Snoeijer, A. Pandey, M. A. Herrada & J. Eggers, Proc. R. Soc. A, 476:2243, 20200419 (2020) V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation",
+      "states": [
+        {
+          "image": "15435afe4cf7c06b.webp",
+          "overlay": null,
+          "image2x": "25c6bcadf89a12b3.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "B3D67182-3E59-4697-8736-9B98A147A966",
+      "n": 48,
+      "title": "FEM against the mapping",
+      "text": "FEM against the mapping Ec = 0.1; Δ: tip element size Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "013285ff3385bbb0.webp",
+          "overlay": null,
+          "image2x": "ab49157bcb11975f.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v11",
+              "rect": [
+                142,
+                188,
+                1636,
+                750
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A0A2C8FA-0136-4928-8AEC-372B0BD81538",
+      "n": 49,
+      "title": "Each e-fold in radius adds the same hoop force",
+      "text": "Each e-fold in radius adds the same hoop force the ring from ξ is now in the rim at R 2 R R λθ = ⇒ τθθ ≃ G 2 ξ ξ t = 0 t R R0 ξ V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation r ≃ R",
+      "states": [
+        {
+          "image": "013fcbd3def2aef5.webp",
+          "overlay": null,
+          "image2x": "3f5fe9065d4b19e6.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "B0666A3A-9F2F-4EC0-ADFE-205E956671D1",
+      "n": 50,
+      "title": "Each e-fold in radius adds the same hoop force",
+      "text": "Each e-fold in radius adds the same hoop force the ring from ξ is now in the rim at R 2 R R λθ = ⇒ τθθ ≃ G 2 ξ ξ t = 0 volume kept: cross-section ξh0 dξ/R ξh0 dξ dξ dTθ = τθθ = Gh0R R ξ V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation t R R0 ξ r ≃ R",
+      "states": [
+        {
+          "image": "e7933659bb03787d.webp",
+          "overlay": null,
+          "image2x": "e780c5399ed073c8.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "02864DEF-1E1C-487A-831A-BE7F67F7BB14",
+      "n": 51,
+      "title": "Each e-fold in radius adds the same hoop force",
+      "text": "Each e-fold in radius adds the same hoop force the ring from ξ is now in the rim at R 2 R R λθ = ⇒ τθθ ≃ G 2 ξ ξ t = 0 volume kept: cross-section ξh0 dξ/R ξh0 dξ dξ dTθ = τθθ = Gh0R R ξ hoop tension Tθ pulls inwards with Tθ/R Fel ≃ Gh0 ! R dξ R = Gh0 ln R0 R0 ξ V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation t R R0 ξ r ≃ R",
+      "states": [
+        {
+          "image": "ec51d7b481cfb8cc.webp",
+          "overlay": null,
+          "image2x": "357d6deb074377c3.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "0402E16E-7683-4751-B28E-82DAF02D13F5",
+      "n": 52,
+      "title": "The arrest radius is exponential in 1/Ec",
+      "text": "The arrest radius is exponential in 1/Ec at rest: elastic resistance against capillary pull R∞ R∞ 2 Gh0 ln = 2σ ⇒ ln = R0 R0 Ec t = 0 t R R0 ξ V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation r ≃ R Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "a5b175f161822475.webp",
+          "overlay": null,
+          "image2x": "9e3d6f1adeda5e8d.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "E3CC63C4-61FF-4CB6-B3E5-03A4AD779A42",
+      "n": 53,
+      "title": "The arrest radius is exponential in 1/Ec",
+      "text": "The arrest radius is exponential in 1/Ec at rest: elastic resistance against capillary pull R∞ R∞ 2 Gh0 ln = 2σ ⇒ ln = R0 R0 Ec R∞ = R0 e 2/Ec t = 0 singular as Ec → 0 t R R0 ξ r ≃ R leading order: the rim shape adds an O(1) constant V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "b818f3b942bff2e4.webp",
+          "overlay": null,
+          "image2x": "89ed8e717cc27985.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "0367A7A0-D39A-4351-A97F-487D66A379A5",
+      "n": 54,
+      "title": "Accounting for the shape of the rim",
+      "text": "Accounting for the shape of the rim dT = −(1 + k) dy T = Nrr /(Gh0), radial membrane tension y = ln(r /ξ), k = λr /λθ (radial/hoop stretch) V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "72a768f5cde3b726.webp",
+          "overlay": null,
+          "image2x": "ea502ccfc5ab5e6f.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "7D5D70DB-6A4D-4AD6-B270-358B411ABD01",
+      "n": 55,
+      "title": "Accounting for the shape of the rim",
+      "text": "Accounting for the shape of the rim dT = −(1 + k) dy T = Nrr /(Gh0), radial membrane tension y = ln(r /ξ), k = λr /λθ (radial/hoop stretch) far field (y = 0, T = 0) to edge (y = Y ≡ ln(R∞/R0), T = −2/Ec): 2 − = −Y − Ec ! Y 0 k dy ⇒ R∞ 2 ln = − R0 Ec V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation ! Y 0 k dy Ec = Gh0/σ VTC = \" 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "b210aa12c8b835eb.webp",
+          "overlay": null,
+          "image2x": "aeca208f787a5ca2.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "10F5E5BA-4596-4B66-B1A3-F6C6347DA33D",
+      "n": 56,
+      "title": "Accounting for the shape of the rim",
+      "text": "Accounting for the shape of the rim dT = −(1 + k) dy T = Nrr /(Gh0), radial membrane tension y = ln(r /ξ), k = λr /λθ (radial/hoop stretch) far field (y = 0, T = 0) to edge (y = Y ≡ ln(R∞/R0), T = −2/Ec): 2 − = −Y − Ec ! Y 0 k dy ⇒ R∞ 2 ln = − R0 Ec rim gathering, r ≃ R, k → 0 −2 constant thickness, k = λθ depth-averaged solution V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation ! Y 0 k dy ln(R∞/R0) as Ec → 0 2/Ec 2/Ec − 1/2 2/Ec − C , C = 0.4725 Ec = Gh0/σ VTC = \" 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "f0fec07ed28b3e26.webp",
+          "overlay": null,
+          "image2x": "2dbaa1b78738849b.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "8EA1560C-14FD-437D-AE11-41C5E11366FC",
+      "n": 57,
+      "title": "Accounting for the shape of the rim",
+      "text": "Accounting for the shape of the rim dT = −(1 + k) dy T = Nrr /(Gh0), radial membrane tension y = ln(r /ξ), k = λr /λθ (radial/hoop stretch) far field (y = 0, T = 0) to edge (y = Y ≡ ln(R∞/R0), T = −2/Ec): 2 − = −Y − Ec ! Y 0 k dy ⇒ R∞ 2 ln = − R0 Ec rim gathering, r ≃ R, k → 0 −2 constant thickness, k = λθ depth-averaged solution\" rounded edge: Dcap = (1 − h/h0) dξ/ξ = 0.0972 V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation ! Y 0 k dy ln(R∞/R0) as Ec → 0 2/Ec 2/Ec − 1/2 2/Ec − C , C = 0.4725 2/Ec − C + Dcap Ec = Gh0/σ VTC = # 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "0dba89523352dbf5.webp",
+          "overlay": null,
+          "image2x": "49024a9de0ab26ac.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "4AE437E0-8210-4A89-A032-C51F2001D868",
+      "n": 58,
+      "title": "Arrest radius: equilibria, theory, dynamics",
+      "text": "Arrest radius: equilibria, theory, dynamics 10 6 10 4 10 2 10 0 R∞/h0 10 8 static FEM 10−1 100 101 Ec V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "ca422497a81aea70.webp",
+          "overlay": null,
+          "image2x": "e9cda527a2740836.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "477D903A-2F30-436A-AD91-3F5149CE0F53",
+      "n": 59,
+      "title": "Arrest radius: equilibria, theory, dynamics",
+      "text": "Arrest radius: equilibria, theory, dynamics 10 6 10 4 10 2 10 0 R∞/h0 10 8 static FEM R0 e2/Ec 10−1 100 101 Ec V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "1256c7c770a12676.webp",
+          "overlay": null,
+          "image2x": "d7a153e65b674146.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "8B47FE10-1046-4C05-9381-8216DFDDC90E",
+      "n": 60,
+      "title": "Arrest radius: equilibria, theory, dynamics",
+      "text": "Arrest radius: equilibria, theory, dynamics 10 6 10 4 10 2 10 0 R∞/h0 10 8 static FEM R0 e2/Ec constant thickness, R0 e2/Ec−1/2 depth-averaged, R0 e2/Ec−C , C = 0.4725 rounded edge, R0 e2/Ec−C+Dcap , Dcap = 0.0972 10−1 100 101 Ec V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "2b56e58a8c05fff5.webp",
+          "overlay": null,
+          "image2x": "76fe5d4435dd8e55.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "9B2A0F75-6339-49EE-8385-E086D000612B",
+      "n": 61,
+      "title": "Arrest radius: equilibria, theory, dynamics",
+      "text": "Arrest radius: equilibria, theory, dynamics 10 6 10 4 10 2 10 0 R∞/h0 10 8 static FEM R0 e2/Ec constant thickness, R0 e2/Ec−1/2 depth-averaged, R0 e2/Ec−C , C = 0.4725 rounded edge, R0 e2/Ec−C+Dcap , Dcap = 0.0972 dynamic FEM 10−1 100 101 Ec V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "6e250e19010dca1e.webp",
+          "overlay": null,
+          "image2x": "4db763a67dd7c0c6.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "E4B5F60E-513B-4E2A-81E9-F088827C0147",
+      "n": 62,
+      "title": "Arrest radius: equilibria, theory, dynamics",
+      "text": "Arrest radius: equilibria, theory, dynamics 10 6 10 4 10 2 10 0 R∞/h0 10 8 static FEM R0 e2/Ec constant thickness, R0 e2/Ec−1/2 depth-averaged, R0 e2/Ec−C , C = 0.4725 rounded edge, R0 e2/Ec−C+Dcap , Dcap = 0.0972 dynamic FEM depth-averaged solver 10−1 100 101 Ec V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "a676ef4e7062f04a.webp",
+          "overlay": null,
+          "image2x": "309a52dd9d164b66.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "C4840595-30AC-419B-994F-0A49C7115750",
+      "n": 63,
+      "title": "What happens for Ec → 0?",
+      "text": "What happens for Ec → 0? R∞ ∝ e is singular; but Ec ln(R∞/R0) is regular R∞ Ec ln R0 = 2 − Ec (C − Dcap) + o(Ec) C = 0.4725, Dcap = 0.0972 2.0 1.8 Ecln(R∞/R0) 2/Ec 1.6 1.4 1.2 static FEM 2 constant thickness, 2 − Ec/2 depth-averaged, 2 − Ec C rounded edge, 2 − Ec (C − Dcap) dynamic FEM depth-averaged solver 1.0 0.8 0.6 10−3 V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation 10−2 10−1 Ec Ec = Gh0/σ 100 VTC = 101 ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "55895b2b8596c3a7.webp",
+          "overlay": null,
+          "image2x": "bc43e7d57d99a499.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "03EAFE15-04E4-4FEB-8E87-A9F7C5721CDB",
+      "n": 64,
+      "title": "Elastic jump height",
+      "text": "Elastic jump height edge thickness stretch λz 3 −Gh0 λz ≃ −2σ ⇒ λz ≃ ! 2 Ec \"1/3 ⇒ H∞/h0 ∼ Ec −1/3 soft sheets, Ec ≪ 1 V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation Ec = Gh0/σ VTC = # 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "98b5ed61e36cc873.webp",
+          "overlay": null,
+          "image2x": "7feef4c766319b69.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "896A996A-3515-449B-ABE7-E6D20C6A3F85",
+      "n": 65,
+      "title": "Elastic jump height",
+      "text": "Elastic jump height edge thickness stretch λz 2.5 3 −Gh0 λz ≃ −2σ 2 Ec 2 \"1/3 ⇒ H∞/h0 ∼ Ec −1/3 H∞/h0 ⇒ λz ≃ ! ∝ Ec−1/3 1.5 1 H∞ = h0 static FEM dynamic FEM depth-averaged solver soft sheets, Ec ≪ 1 10 −1 V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation 10 0 10 Ec Ec = Gh0/σ VTC = # 1 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "89ed13e04c63f0a6.webp",
+          "overlay": null,
+          "image2x": "d0be43b2d85848ca.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "E6A6E580-E379-4C06-98AA-2CBEAAD93E66",
+      "n": 66,
+      "title": "Elastic jump height",
+      "text": "Elastic jump height 2.5 3 −Gh0 λz ≃ −2σ 2 Ec 2 \"1/3 ⇒ H∞/h0 ∼ Ec −1/3 2 1.5 H∞/h0 ⇒ λz ≃ ! ∝ Ec −1/3 Ec1/3H∞/h0 edge thickness stretch λz 1.5 1 10−3 10−2 1 10−1 Ec 100 101 H∞ = h0 static FEM dynamic FEM depth-averaged solver soft sheets, Ec ≪ 1 10 −1 V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation 10 0 10 Ec Ec = Gh0/σ VTC = # 1 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "69a54fd31d7117e3.webp",
+          "overlay": null,
+          "image2x": "f382ce05fa1ce10c.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "F3C498BF-DC1F-4B27-923B-F3FA8576D7A5",
+      "n": 67,
+      "title": "Elasticity subtracts from the Newtonian pull",
+      "text": "Elasticity subtracts from the Newtonian pull FEM quasi-steady rim: forces add 1.0 Ec = 10−2 ∗uU/V=TC 2 ρh0U = 2σ − Fvisc − Fel 0.8 0.1 0.15 0.6 0.2 0.4 0.2 0.3 1 0.0 100 0.5 101 102 103 104 R/h0 V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "8645e0d8aece28cc.webp",
+          "overlay": null,
+          "image2x": "ca3cbdd851c8e6df.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "F4874F0F-4F17-4E4B-BB41-97C62945DCDF",
+      "n": 68,
+      "title": "Elasticity subtracts from the Newtonian pull",
+      "text": "Elasticity subtracts from the Newtonian pull FEM quasi-steady rim: forces add 1.0 Ec = 10−2 u ∗2 Fel ∗2 ≃ uN − \" 2σ # R Fel ≃ Gh0 ln + C − Dcap R0 no fitted parameter ∗ uN : Newtonian run, same Oh and t ∗uU/V=TC 2 ρh0U = 2σ − Fvisc − Fel estimate 0.8 0.1 0.15 0.6 0.2 0.4 0.2 0.3 1 0.0 100 V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation 0.5 101 102 103 104 R/h0 Ec = Gh0/σ VTC = ! 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "74e6ac92ea69e03f.webp",
+          "overlay": null,
+          "image2x": "8b0421a77c8c2dc2.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "72DD4502-36D8-4E79-BC5A-091E67951419",
+      "n": 69,
+      "title": "What about polymer relaxation?",
+      "text": "What about polymer relaxation? De De → ∞ finite relaxation: Oldroyd-B ∇ A − I A = − De Ec = Oh = 1 0 < De < ∞ Ec = 1 Ec Oh = µs /√2ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "ea720de84909fb71.webp",
+          "overlay": null,
+          "image2x": "76b667313c8217ed.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "841B9CEE-F911-476A-AD43-82FE5F9FDAAC",
+      "n": 70,
+      "title": "Ec = 1, De → ∞: the hole stops",
+      "text": "Ec = 1, De → ∞: the hole stops Oh = µs /√2ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "23d2bb03adfbcaed.webp",
+          "overlay": null,
+          "image2x": "a29031077adc8da8.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v12",
+              "rect": [
+                142,
+                188,
+                1636,
+                750
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "EB7DC52F-54C0-4781-BF71-FE8EBD6CF4C3",
+      "n": 71,
+      "title": "Ec = 1, De = 1: the hole keeps opening",
+      "text": "Ec = 1, De = 1: the hole keeps opening Oh = µs /√2ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "18d981376da64458.webp",
+          "overlay": null,
+          "image2x": "f6846799757fe165.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v13",
+              "rect": [
+                142,
+                188,
+                1636,
+                750
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "2753D208-4195-489E-97F0-83CF20F7A01E",
+      "n": 72,
+      "title": "Finite relaxation releases the arrest",
+      "text": "Finite relaxation releases the arrest Ec = Oh = 1 De = 0 De → ∞ ∗uU/V=TC 1.0 0.8 0.6 0.4 0.2 0.0 10 −1 10 0 10 t 1 10 Oh = µs /√2ρσh0 2 Ec = Gh0/σ 10 3 De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "2c80a947ec2be9f0.webp",
+          "overlay": null,
+          "image2x": "2447c117619cd791.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "046EAB6A-7193-47DC-803C-4799755362D2",
+      "n": 73,
+      "title": "Finite relaxation releases the arrest",
+      "text": "Finite relaxation releases the arrest Ec = Oh = 1 De = 0 De → ∞ De = 0.1 De = 1 De = 10 De = 31.6 De = 100 De = 316 ∗uU/V=TC 1.0 0.8 0.6 0.4 0.2 0.0 10 −1 10 0 10 t 1 10 Oh = µs /√2ρσh0 2 Ec = Gh0/σ 10 3 De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "06a04a0a4b75b3e9.webp",
+          "overlay": null,
+          "image2x": "7ee30b99909bc914.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "50E38D09-F6A2-4803-B4AE-AB38E9B7FB58",
+      "n": 74,
+      "title": "The limit of small De",
+      "text": "The limit of small De ∇ fast relaxation, De |D| ≪ 1: A = I + O(De), and I = −2D (backup) ∇ ∇ A − I A = − ⇒ A − I ≃ −De I = 2 De D ⇒ τp ≃ 2 Ec De D De Oh = µs /√2ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "e64afce10941ae06.webp",
+          "overlay": null,
+          "image2x": "74729aeab9f33c51.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "CD5C8D36-9131-417C-914F-8FF94C320ED8",
+      "n": 75,
+      "title": "The limit of small De",
+      "text": "The limit of small De ∇ fast relaxation, De |D| ≪ 1: A = I + O(De), and I = −2D (backup) ∇ ∇ A − I A = − ⇒ A − I ≃ −De I = 2 De D ⇒ τp ≃ 2 Ec De D De a viscosity added to the solvent’s µN = √ 2 Oh + Ec De Oh = µs /√2ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "9bd0166216821155.webp",
+          "overlay": null,
+          "image2x": "0a31c41d9b418366.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "C8E7B45C-EC16-4967-8899-1C435050F0C8",
+      "n": 76,
+      "title": "The limit of small De",
+      "text": "The limit of small De ∇ fast relaxation, De |D| ≪ 1: A = I + O(De), and I = −2D (backup) ∇ ∇ A − I A = − ⇒ A − I ≃ −De I = 2 De D ⇒ τp ≃ 2 Ec De D De a viscosity added to the solvent’s µN = √ 2 Oh + Ec De rim radius a ∼ R 1/2 grows, so strain rates fall expected: U → VTC as t → ∞ at every finite De Oh = µs /√2ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "456a3c053d871129.webp",
+          "overlay": null,
+          "image2x": "857d6e400396cdc5.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "E6EFE4BB-80BD-4681-801F-026BF7721825",
+      "n": 77,
+      "title": "Summary: bursting elastic sheets",
+      "text": "Summary: bursting elastic sheets 1. Hoop stretch r /ξ: a resistance Gh0 ln(R/R0) subtracts from the Newtonian pull 2. Without relaxation it arrests: Ec ln(R∞/R0) → 2 as Ec → 0 3. Soft sheets thicken at the edge: H∞/h0 ∼ Ec 4. Finite relaxation releases the arrest −1/3",
+      "states": [
+        {
+          "image": "297c25f61035eb96.webp",
+          "overlay": null,
+          "image2x": "6a7cf3edfed0b316.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v14",
+              "rect": [
+                125,
+                185,
+                1670,
+                348
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "48A4C5D0-5D8F-4B9A-B24E-CE9453F62D34",
+      "n": 78,
+      "title": "Thanks! Questions?",
+      "text": "Thanks! Questions? ! contact CoMPhy Lab",
+      "states": [
+        {
+          "image": "c716a3d9b5be8909.webp",
+          "overlay": null,
+          "image2x": "5a045495816c7f51.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v15",
+              "rect": [
+                125,
+                430,
+                1248,
+                260
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "A59534D5-6B9C-4EB4-B875-9BDDC80CCAF3",
+      "n": 79,
+      "title": "Backup: the radial balance of the sheet",
+      "text": "Backup: the radial balance of the sheet column from ξ: λr = ∂r /∂ξ, λθ = r /ξ, λz = 1/(λr λθ) (incompressible) ! 2 \" 2 Nrr = Gh0 λz λr − λz , ! 2 \" 2 Nθθ = Gh0 λz λθ − λz neo-Hookean tensions per unit length; radial equilibrium, hoops pull inwards: d(rNrr ) = Nθθ, dr Nrr = −2σ at the edge, Nrr → 0 far away with x = ln ξ, y = ln λθ, k = λr /λθ, T = Nrr /(Gh0): 2 2 2 3 dr /dx = ξλr = kr , dy /dx = k − 1, kλz λθ = 1, kλz λr = k (the λz terms cancel): 2 dT dT 1 − k 2 = k !Nθθ/(Gh0) − T \" = 1 − k ⇒ = = −(1 + k) dx dy k − 1 k → 0: T = −y , the hoop force Gh0 ln(R/R0) of the gathered rings V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation Ec = Gh0/σ",
+      "states": [
+        {
+          "image": "8d31cd8282250b4c.webp",
+          "overlay": null,
+          "image2x": "84411d220a12d2df.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "2CACCEEA-9945-4D42-A5AD-163D70CD2F32",
+      "n": 80,
+      "title": "Backup: integration at constant thickness",
+      "text": "Backup: integration at constant thickness if every column kept its thickness, λz = 1: λr = 1/λθ, ! Y 0 e −2y dy = \" 1 2 1 − e −2Y # , %2 R∞ 2 1 1 $ R0 ⇒ ln = − + R0 Ec 2 2 R∞ R∞ 2 1 ln ≃ − R0 Ec 2 −2 −2y k = λθ = e R∞ Y = ln R0 (R∞ ≫ R0) the energy route gives the same (next backup) V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation Ec = Gh0/σ",
+      "states": [
+        {
+          "image": "449af73cdebedddf.webp",
+          "overlay": null,
+          "image2x": "e681cbcb5b4c9647.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "931BD648-B8C2-4DB8-824C-6F67A1EC874D",
+      "n": 81,
+      "title": "Backup: the energy route at constant thickness",
+      "text": "Backup: the energy route at constant thickness 2 2 2 2 constant thickness: λθ = 1 + (R − R0 )/ξ , λr = 1/λθ Eel = πGh0 two free faces ! ∞ \" R0 Eσ = −2πσ (R 2 1 λθ − λθ #2 R 2 2 ξ dξ = πGh0 (R − R0 ) ln R0 2 − R0 ) at rest the total energy is stationary, d(Eel + Eσ )/dR = 0; for R ≫ R0: Gh0 $ % R∞ 1 ln + = 2σ R0 2 −2 the force balance with k = λθ ; no dissipation term at rest V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation Ec = Gh0/σ",
+      "states": [
+        {
+          "image": "2fdb9b34e4d61b8e.webp",
+          "overlay": null,
+          "image2x": "0279366ae6ec55bf.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "8466CC0B-F6FA-466C-B919-145302930284",
+      "n": 82,
+      "title": "Backup: the depth-averaged solution",
+      "text": "Backup: the depth-averaged solution 1.0 T = k − e −6y k dT = −(1 + k) dy , 3 differentiate T , eliminate dT /dy : 4 dk (1 + k) k + 6k e = − 4 −6y dy k + 3e −6y k=λr/λθ 3 −6y 3 neo-Hookean column, λz = e /k : depth-averaged constant thickness, e−2y 0.5 area C = 0.4725 0.0 0 1 2 3 4 y = ln(r/ξ) −2y far field y = T = 0, k = 1 (slope −2, as for e ); integrate numerically: C = ! ∞ 0 k dy = 0.4725 ⇒ R∞ 2 ln → − C same k(y ) for every Ec R0 Ec V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation Ec = Gh0/σ",
+      "states": [
+        {
+          "image": "3df3e6abdce805da.webp",
+          "overlay": null,
+          "image2x": "1d81f4f3f6f4e02d.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "AB0C7CE2-94A5-48B4-8385-CC2E8DD28044",
+      "n": 83,
+      "title": "initial edge: a half-disc of diameter h0,",
+      "text": "initial edge: a half-disc of diameter h0, tip at R0 = h0; s = 2(ξ − R0)/h0 ∈ [0, 1]: ! h/h0 Backup: the rounded edge 1.0 sharp edge rounded cap 0.5 dξ ds 1 − h/h s (2 − s), = 0.0 1.0 1.5 2.0 ξ 2 + s ξ/h ! 0 $ \" R0+h0/2 # \" 1 1 − s (2 − s) h dξ Dcap = 1 − = ds = 0.0972 h ξ 2 + s 0 R0 0 h = h0 0 less material near the edge: gathered rings carry % (h/h0) dξ/ξ = ln(R/R0) − Dcap R∞ 2 ln ≃ − C + Dcap the hole opens further R0 Ec V. Bertin, V. Sanjay, C. Datt, A. T. Oratis & J. H. Snoeijer, In preparation Ec = Gh0/σ",
+      "states": [
+        {
+          "image": "04a74aa5ae7fd1d7.webp",
+          "overlay": null,
+          "image2x": "b99964c200945768.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "DB5A3527-C388-465B-BA9E-F77C40195918",
+      "n": 84,
+      "title": "Backup: the limit of small De",
+      "text": "Backup: the limit of small De ∇ 2 Oldroyd-B: A = −(A − I)/De; fast relaxation: A = I + De A1 + O(De ) ∇ T upper-convected: A = ∂t A + u · ∇A − (∇u) · A − A · ∇u ∇ T the identity is not frozen in the flow I = −(∇u) − ∇u = −2 D ∇ ∇ 2 2 A − I = −De A = −De I + O(De ) = 2 De D + O(De ) √ τ = −p I + 2 !2 Oh D + √Ec (A\"− I) √ ≃ −p I + 2 2 Oh + Ec De D Newtonian, with viscosity µN = 2 Oh + Ec√ De, while De |D| ≪ 1 Oh = µs / 2ρσh0 Ec = Gh0/σ De = λ #$ ρh03/σ VTC = $ 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "cef17795160f48b7.webp",
+          "overlay": null,
+          "image2x": "7477c815e28595f7.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "59A68363-05FA-4BF1-B64E-B5554EA4DD0B",
+      "n": 85,
+      "title": "Backup: rest is out of dynamic reach at small Ec",
+      "text": "Backup: rest is out of dynamic reach at small Ec quasi-steady approach: Ṙ = VTC u∗, u ∗2 \" ! ∞ −x e dx π √ tqs ≃ R∞ = R∞ Ec Ec x 0 ≃ (Ec/2) ln(R∞/R) quasi-steady arrival; at Ec = 1 and 0.5 the first stops took 3× and 2× longer Ec R∞/R0 fixed t, Ec → 0: Newtonian retraction fixed Ec > 0, t → ∞: arrest rest states come from the static problem tip stretch R∞/R0: beyond real elastomers 1 0.5 0.3 0.2 0.1 4.24 35.6 537 4 1.5 × 10 8 3.3 × 10 Ec = Gh0/σ tqs 7.5 89 3 1.7 × 10 4 6.0 × 10 9 1.9 × 10 VTC = # 2σ/(ρh0)",
+      "states": [
+        {
+          "image": "4863ab25fd36c015.webp",
+          "overlay": null,
+          "image2x": "feac54efdb6a3238.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "12EFD07F-37DD-41C7-AFB2-3CD7EBE33B15",
+      "n": 86,
+      "title": "Backup: hoop stretch at Ec = 0.01",
+      "text": "Backup: hoop stretch at Ec = 0.01 Δ: tip element size Ec = Gh0/σ",
+      "states": [
+        {
+          "image": "ace241e9210a3e66.webp",
+          "overlay": null,
+          "image2x": "4fd4c73bc95ee9b6.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v16",
+              "rect": [
+                142,
+                188,
+                1636,
+                750
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "changelog": [
+    {
+      "date": "2026-11-06",
+      "note": "First web version of the Elastic Taylor–Culick talk."
+    }
+  ]
+}

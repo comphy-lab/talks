@@ -1,0 +1,20 @@
+# Human decisions for the elastic-taylor-culick talk (see docs/SPEC.md §1.2).
+# Slide content comes from the Keynote HTML export, which is not committed.
+# Published at Vatsal's request (6 Nov 2026): the main talk and its derivation
+# backups; the provenance backup is not part of the web version.
+
+slug: elastic-taylor-culick
+title: Elastic Taylor–Culick retractions
+subtitle: How elasticity arrests a retracting sheet
+speaker: Vatsal Sanjay
+updated: "2026-11-06"
+media_base: https://media.comphy-lab.org/talks/elastic-taylor-culick/
+
+video:
+  loop: true            # every video loops, as in the deck
+  spans: auto           # same source at the same rect on consecutive states/slides = one placement
+  max_scale: 2.0        # encode at most 2x the largest on-slide box
+
+changelog:
+  - date: "2026-11-06"
+    note: First web version of the Elastic Taylor–Culick talk.
