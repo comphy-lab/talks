@@ -25,6 +25,20 @@ before changing any of them.
 - Citations shown on slides come from publisher metadata (Crossref), never
   from memory.
 
+## Publishing a talk
+
+- Export HTML from a copy of the accepted `.key` (delete web-excluded
+  slides; Magic Move to Dissolve), then `derive-pdf`, `build --stills`,
+  `validate`, both test suites and `upload` (`docs/SPEC.md` Sections 1-2).
+- Downloads: put the files in Dropbox and register the public `dl=1` links
+  that Vatsal creates. The Keynote download is the native deck (Section 2.1).
+  A format appears on the page only once its link is registered.
+- If the Pages deploy job fails, do not use "Re-run failed jobs": it leaves
+  two `github-pages` artifacts on the run, which then cannot deploy. Start a
+  fresh run with `gh workflow run pages.yml --ref main`.
+- After the deploy, compare the live `manifest.json` and `talks.json` with
+  the commit; Cloudflare rewrites only the footer's email link in the HTML.
+
 ## Development
 
 ```bash

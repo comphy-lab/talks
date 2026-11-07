@@ -21,7 +21,17 @@ code, manifests and decisions, never media.
 
 The Keynote HTML export (File > Export To > HTML) is the only build input
 for slide content. The export is not committed: it is large, and most of it
-is duplicated. Its structure:
+is duplicated.
+
+Export from a copy of the accepted deck, never the deck itself. The pipeline
+has no slide filter, so a slide that should not appear on the web (for
+example a private provenance backup) is deleted from that copy before export.
+The player shows only `none` and `dissolve` transitions, and a Magic Move
+transition leaves its slide without a single flattened final texture, which
+the build rejects; set any Magic Move to Dissolve in the copy. The deck
+itself keeps its transitions.
+
+Its structure:
 
 - `assets/header.json`: `slideList` (slide UUIDs in show order),
   `slideWidth`, `slideHeight` (1920 x 1080 for our decks).
@@ -165,9 +175,14 @@ the export that build read: the build records both digests in
   slide without the embed, linked to the video on YouTube at its start time;
   the video itself is not included. A `dissolve` state gets a fade
   transition, or a fade-in of its still when it is a click build.
-- `key`: the `pptx` file opened in Keynote (macOS only), with every movie set
-  to loop and muted, and saved as a Keynote document. The build fails unless
-  Keynote reports the expected numbers of slides and movies.
+- `key`: preferably the native Keynote deck the talk was given from (the
+  accepted version, minus any slides left off the web), which keeps vector
+  slides, transitions and movie settings. The generator's fallback is the
+  `pptx` file opened in Keynote (macOS only), with every movie set to loop
+  and muted, and saved as a Keynote document; the build fails unless Keynote
+  reports the expected numbers of slides and movies. That fallback needs an
+  unlocked, attended Keynote session: behind a locked screen the PowerPoint
+  import dialog blocks Keynote indefinitely.
 
 Each file is named `<speaker surname>-<slug>-<updated>.<ext>` and stored as
 `build/<slug>/media/<sha256-16 of the file>/<name>`, so its key is
