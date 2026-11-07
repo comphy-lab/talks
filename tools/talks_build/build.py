@@ -16,6 +16,7 @@ from PIL import Image
 from . import patches as patchmod
 from . import site as sitemod
 from .geometry import Rect, scaled_video_size
+from .magicmove import apply_magic_moves
 from .keynote import Deck, MovieUse, Slide, State, export_digest, leaves_of, load_deck, movie_leaf_orders
 from .manifest import MEDIA_NAME_RE, dumps, validate
 from .media import MediaStore
@@ -137,10 +138,12 @@ class Builder:
         if self.pdf is None:
             self.warn("no flat PDF export found; slide text comes from the per-slide textures")
 
+        self.glide_excl = self._glide_exclusions(deck)
         slides_out = []
         for slide in deck.slides:
             slides_out.append(self._slide(slide, videos, youtube, yt_rects, flat_text))
             self.pages.forget()
+        self.report["magic_move"] = apply_magic_moves(slides_out, self.talk.magic_move)
 
         manifest = OrderedDict(
             schema=2,
@@ -350,6 +353,27 @@ class Builder:
         return entries, rects
 
     # ------------------------------------------------------------------
+    def _glide_exclusions(self, deck) -> dict:
+        """(slide n, state index) -> movie object ids to leave out of the glide stills.
+
+        Around a Magic Move the moving video's poster is in both stills; during
+        the glide those copies would show beside the moving video. The two states
+        get extra stills without it (``glide_image``), used only while gliding.
+        """
+        out: dict[tuple[int, int], set[str]] = {}
+        index = {s.id: i for i, s in enumerate(deck.slides)}
+        for sid in self.talk.magic_move:
+            i = index.get(sid)
+            if i is None or i + 1 >= len(deck.slides):
+                continue  # apply_magic_moves reports it
+            a, b = deck.slides[i].states[-1], deck.slides[i + 1].states[0]
+            for mb in b.movies:
+                for ma in a.movies:
+                    if self.file_digest.get(ma.file) == self.file_digest.get(mb.file) and ma.rect.snapped() != mb.rect.snapped():
+                        out.setdefault((a.slide.n, a.index), set()).add(ma.object_id)
+                        out.setdefault((b.slide.n, b.index), set()).add(mb.object_id)
+        return out
+
     def _slide(self, slide: Slide, videos, youtube, yt_rects, flat_text) -> dict:
         comp = Compositor(slide, self.pages, self.deck.width, self.deck.height)
         excluded = self.yt_objects.get(slide.id, set())
@@ -414,6 +438,12 @@ class Builder:
                     self.pool.submit(put, image),
                     self.pool.submit(put, overlay, alpha=True) if overlay else None,
                 )
+                glide_ids = self.glide_excl.get((slide.n, state.index))
+                if glide_ids and state.tree is not None:
+                    bare = compositor.composite(
+                        state.leaves(), include=lambda lf, ids=glide_ids: lf.object_id not in excluded and lf.object_id not in ids
+                    )
+                    density_jobs[("glide", scale)] = self.pool.submit(self.store.put_webp, bare)
                 if slide.n in self.previews:
                     self._save_preview(
                         slide, state, image, overlay, yt_rects.get(slide.id) if embed else None, excluded, scale
@@ -432,16 +462,18 @@ class Builder:
                     media.append(OrderedDict(kind="video", ref=ref, rect=list(m.rect.snapped())))
             img_f, ovl_f = density_jobs[1]
             hi_img_f, hi_ovl_f = density_jobs[2]
-            states_out.append(
-                OrderedDict(
-                    image=img_f.result(),
-                    overlay=ovl_f.result() if ovl_f else None,
-                    image2x=hi_img_f.result(),
-                    overlay2x=hi_ovl_f.result() if hi_ovl_f else None,
-                    transition=state.transition,
-                    media=media,
-                )
+            entry = OrderedDict(
+                image=img_f.result(),
+                overlay=ovl_f.result() if ovl_f else None,
+                image2x=hi_img_f.result(),
+                overlay2x=hi_ovl_f.result() if hi_ovl_f else None,
+                transition=state.transition,
+                media=media,
             )
+            if ("glide", 1) in density_jobs:
+                entry["glide_image"] = density_jobs[("glide", 1)].result()
+                entry["glide_image2x"] = density_jobs[("glide", 2)].result()
+            states_out.append(entry)
         raw = flat_text[slide.n - 1] if flat_text else self._texture_text(slide)
         blocks = self.flat_blocks[slide.n - 1] if self.flat_blocks else None
         # The corrections drawn on the slide apply to its text as well.

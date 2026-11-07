@@ -288,6 +288,31 @@ function finishFades() {
   for (const finish of [...fades]) finish();
 }
 
+/* ----------------------------------------------------------- magic move */
+
+/** The video ref a placement key encodes (`video:<ref>:x,y,w,h`), or null. */
+function videoRefOf(key) {
+  const parts = String(key).split(':');
+  return parts.length === 3 && parts[0] === 'video' ? parts[1] : null;
+}
+
+/** Glide a kept video from its current rect to `rect` over `ms`, as Keynote's Magic Move does. */
+function glide(node, rect, ms) {
+  node.style.transitionDuration = `${ms}ms`;
+  node.classList.add('glide');
+  window.getComputedStyle(node).left; // commit the start geometry
+  place(node, rect);
+  let timer = 0;
+  const finish = () => {
+    if (!fades.delete(finish)) return;
+    clearTimeout(timer);
+    node.classList.remove('glide');
+    node.style.transitionDuration = '';
+  };
+  timer = setTimeout(finish, ms + 50);
+  fades.add(finish);
+}
+
 /* --------------------------------------------------------------- stills */
 
 function makeStill(url, className) {
@@ -360,6 +385,14 @@ function preloadAround(index) {
     if (typeof img.decode === 'function') img.decode().catch(() => undefined);
     preloaded.set(url, img);
   }
+}
+
+/** The Magic Move background of a state (its still without the moving video's poster), at the stage's density. */
+function glideImage(state) {
+  if (!state || !state.glide_image) return null;
+  const width = ui.stage.getBoundingClientRect().width;
+  const dense = (window.devicePixelRatio || 1) * width > canvasW;
+  return dense && state.glide_image2x ? state.glide_image2x : state.glide_image;
 }
 
 /** Select a matching still/overlay pair without changing logical geometry. */
@@ -681,7 +714,13 @@ function createEntry(key, m) {
 /** Mount `steps[index]`. Steps 1-5 of SPEC 3.2, in order. */
 function commit(index, stills, animate) {
   const { si, state } = stepAt(index);
-  const dissolve = animate && state.transition === 'dissolve' && !reducedMotion.matches;
+  const motion = animate && !reducedMotion.matches;
+  // Only a single forward step replays a Magic Move: a jump, or a step that
+  // skipped a state still decoding, applies the state as usual (SPEC 3.2).
+  const morph = motion && state.transition === 'magic-move' && index === committed + 1;
+  const dissolve = motion && (state.transition === 'dissolve' || morph);
+  const glideMs = morph && Number.isFinite(state.transition_duration) && state.transition_duration > 0
+    ? Math.min(state.transition_duration, 5) * 1000 : 0;
   finishFades();
 
   // 1. The target state's keys, in z-order.
@@ -695,9 +734,27 @@ function commit(index, stills, animate) {
     wanted.push([key, m]);
   }
 
+  // Magic Move: a video of the same source that only changes rect is kept
+  // playing and glides to its new place instead of being re-created.
+  const reuse = new Map();
+  if (glideMs) {
+    const claimed = new Set();
+    for (const [key, m] of wanted) {
+      if (m.kind !== 'video' || mounted.has(key)) continue;
+      for (const [oldKey, entry] of mounted) {
+        if (seen.has(oldKey) || claimed.has(oldKey) || entry.kind !== 'video') continue;
+        if (videoRefOf(oldKey) !== m.ref) continue;
+        claimed.add(oldKey);
+        reuse.set(key, entry);
+        break;
+      }
+    }
+  }
+  const kept = new Set([...reuse.values()]);
+
   // 3. Pause and detach every element whose key is not in the target set.
   for (const [key, entry] of mounted) {
-    if (!seen.has(key)) entry.destroy();
+    if (!seen.has(key) && !kept.has(entry)) entry.destroy();
   }
 
   // 2 and 4. Keep surviving elements untouched; create the new ones.
@@ -705,7 +762,13 @@ function commit(index, stills, animate) {
   wanted.forEach(([key, m], i) => {
     const z = String(i + 1);
     let entry = mounted.get(key);
-    if (entry) {
+    if (!entry && reuse.has(key)) {
+      entry = reuse.get(key);
+      entry.key = key;
+      entry.el.dataset.key = key;
+      entry.el.style.zIndex = z;
+      glide(entry.el, m.rect, glideMs);
+    } else if (entry) {
       if (entry.el.style.zIndex !== z) entry.el.style.zIndex = z;
     } else {
       entry = createEntry(key, m);
@@ -719,8 +782,23 @@ function commit(index, stills, animate) {
   });
   mounted = next;
 
-  // 5. Swap the still and the overlay.
-  swapLayer(ui.imageLayer, stills.image, dissolve);
+  // 5. Swap the still and the overlay. During a glide the stills would show
+  // the moving video's poster at both ends, so the glide crossfades between
+  // the two states' glide backgrounds and restores the still once it lands.
+  if (reuse.size && stills.glideFrom && stills.glideTo) {
+    ui.imageLayer.replaceChildren(stills.glideFrom);
+    swapLayer(ui.imageLayer, stills.glideTo, true);
+    let timer = 0;
+    const land = () => {
+      if (!fades.delete(land)) return;
+      clearTimeout(timer);
+      if (committed === index) swapLayer(ui.imageLayer, stills.image, false);
+    };
+    timer = setTimeout(land, glideMs + 60);
+    fades.add(land);
+  } else {
+    swapLayer(ui.imageLayer, stills.image, dissolve);
+  }
   swapLayer(ui.overlayLayer, stills.overlay, dissolve);
 
   const navigated = committed !== index;
@@ -743,7 +821,17 @@ function go(index, { animate = false, refresh = false } = {}) {
     image: imageUrl ? makeStill(imageUrl, 'still--image') : null,
     overlay: overlayUrl ? makeStill(overlayUrl, 'still--overlay') : null,
   };
-  const pending = [stills.image, stills.overlay].filter((img) => img && !isDecoded(img));
+  // A single forward step into a Magic Move also needs both glide backgrounds.
+  if (animate && state.transition === 'magic-move' && to === committed + 1 && committed >= 0) {
+    const from = glideImage(stepAt(committed).state);
+    const into = glideImage(state);
+    if (from && into) {
+      stills.glideFrom = makeStill(mediaUrl(from), 'still--image');
+      stills.glideTo = makeStill(mediaUrl(into), 'still--image');
+    }
+  }
+  const pending = [stills.image, stills.overlay, stills.glideFrom, stills.glideTo]
+    .filter((img) => img && !isDecoded(img));
   if (!pending.length) {
     setBusy(false);
     commit(to, stills, animate);

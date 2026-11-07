@@ -28,8 +28,9 @@ has no slide filter, so a slide that should not appear on the web (for
 example a private provenance backup) is deleted from that copy before export.
 The player shows only `none` and `dissolve` transitions, and a Magic Move
 transition leaves its slide without a single flattened final texture, which
-the build rejects; set any Magic Move to Dissolve in the copy. The deck
-itself keeps its transitions.
+the build rejects; set any Magic Move to Dissolve in the copy and record it
+in `talk.yaml` as `magic_move` (Section 1.2), which the player replays. The
+deck itself keeps its transitions.
 
 Its structure:
 
@@ -75,6 +76,13 @@ for the authoritative example. Its fields:
 - `patches[]`: corrections drawn onto slide images. Each gives the slide UUID,
   the rectangle to cover, the replacement text and style. They are used until
   the `.key` file itself is fixed.
+- `magic_move`: optional list of `{slide, duration}`, where `slide` is the
+  UUID of the slide whose outgoing transition is a Magic Move in the deck and
+  `duration` its length in seconds (at most 5). The first state of the next
+  slide gets `transition: magic-move` and `transition_duration`. The build
+  fails unless a video of the same source is in both states at different
+  rectangles. Both states also get `glide_image` / `glide_image2x`: their
+  stills without the moving video's poster, shown while it glides.
 - `titles`: optional map from slide UUID to a human-written title, for a
   slide whose title derived from its text (Section 3) is wrong.
 - `downloads`: optional list of `{format, url, bytes}` entries, in display
@@ -223,7 +231,10 @@ entries and retains configured Dropbox entries.
           "overlay": "<hash>.webp",                   // or null: transparent full-canvas layer drawn ABOVE media
           "image2x": "<hash>.webp",                   // optional 3840 x 2160 vector render
           "overlay2x": "<hash>.webp",                 // paired with image2x; null exactly when overlay is null
-          "transition": "none",                       // "none" | "dissolve"
+          "transition": "none",                       // "none" | "dissolve" | "magic-move"
+          "transition_duration": 1.2,                 // seconds; only with "magic-move"
+          "glide_image": "<hash>.webp",               // optional: still without the gliding video's poster
+          "glide_image2x": "<hash>.webp",             // paired with glide_image
           "media": [                                  // everything visible in this state
             { "kind": "video",   "ref": "v01", "rect": [x, y, w, h] },
             { "kind": "youtube", "ref": "y01", "rect": [x, y, w, h] }
@@ -320,6 +331,17 @@ not the size, so a video lines up with the poster frame baked into the still.
   the stage frame at once, so keys and presenter clickers keep working.
   The 200 x 200 CSS px minimum is re-evaluated after resize or fullscreen
   changes; below it, the link-out is shown without loading an inline player.
+- **Magic Move.** When a state with `transition: magic-move` is reached by
+  a single step with motion allowed, a mounted video whose key is not in the
+  target set but whose `ref` matches a new video placement is kept instead of
+  being removed and re-created: its element moves to the new key, keeps
+  playing and glides from its old rectangle to the new one over
+  `transition_duration` seconds (ease-in-out, CSS on left, top, width and
+  height). During the glide the stage shows the two states' `glide_image`
+  stills (cross-fading), so no poster copy sits at either rectangle; the
+  normal still replaces them when the glide lands. Any other new media
+  dissolves. A jump, a deep link
+  or `prefers-reduced-motion: reduce` applies the state as usual.
 - **Pause control.** A visible button pauses and resumes all media. This
   satisfies WCAG 2.2.2. Under `prefers-reduced-motion: reduce`, media starts
   paused and the button resumes it.
@@ -418,6 +440,11 @@ not the size, so a video lines up with the poster frame baked into the still.
 - Every media file name matches `^[0-9a-f]{16}\.(webp|mp4)$`.
 - `media_base` is `https://media.comphy-lab.org/talks/<slug>/`.
 - No two placements in one state share a key.
+- `transition: magic-move` appears only on the first state of a slide after
+  the first, with `transition_duration` in (0, 5], and the previous slide's
+  last state shares a video `ref` at a different rectangle;
+  `transition_duration` appears only with it. `glide_image` and
+  `glide_image2x` come as a pair.
 - Density assets require schema 2, are supplied as an `image2x` / `overlay2x`
   pair, and agree with the original pair on whether an overlay exists.
 - With `--media-dir`, density-bearing states are checked against their actual

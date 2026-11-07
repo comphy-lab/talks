@@ -28,7 +28,8 @@ before changing any of them.
 ## Publishing a talk
 
 - Export HTML from a copy of the accepted `.key` (delete web-excluded
-  slides; Magic Move to Dissolve), then `derive-pdf`, `build --stills`,
+  slides; set Magic Move to Dissolve and list it under `magic_move` in
+  `talk.yaml`, so the player replays it), then `derive-pdf`, `build --stills`,
   `validate`, both test suites and `upload` (`docs/SPEC.md` Sections 1-2).
 - Downloads: put the files in Dropbox and register the public `dl=1` links
   that Vatsal creates. The Keynote download is the native deck (Section 2.1).

@@ -44,6 +44,9 @@ class Talk:
     # Downloadable copies offered on the talk page, in this order.
     downloads: list[str] = field(default_factory=list)
     download_links: list[dict] = field(default_factory=list)
+    # Outgoing slide UUID -> Magic Move duration in seconds (the next slide's
+    # first state glides the shared video into place; SPEC 1.2 and 3.2).
+    magic_move: dict[str, float] = field(default_factory=dict)
 
 
 def _date(value, what: str) -> str:
@@ -135,6 +138,23 @@ def load_talk(path: Path) -> Talk:
         if not isinstance(title, str) or not title.strip():
             raise TalkError(f"talk.yaml titles[{sid}]: title must be non-empty text")
         titles[str(sid)] = title.strip()
+    magic_move: dict[str, float] = {}
+    raw_mm = data.get("magic_move") or []
+    if not isinstance(raw_mm, list):
+        raise TalkError("talk.yaml: magic_move must be a list of {slide, duration}")
+    for i, e in enumerate(raw_mm):
+        where = f"talk.yaml magic_move[{i}]"
+        if not isinstance(e, dict) or not UUID_RE.match(str(e.get("slide", ""))):
+            raise TalkError(f"{where}: slide must be the outgoing slide's Keynote UUID")
+        try:
+            duration = float(e.get("duration"))
+        except (TypeError, ValueError) as exc:
+            raise TalkError(f"{where}: duration must be a number of seconds") from exc
+        if not 0 < duration <= 5:
+            raise TalkError(f"{where}: duration must be in (0, 5] seconds")
+        if str(e["slide"]) in magic_move:
+            raise TalkError(f"{where}: slide listed twice")
+        magic_move[str(e["slide"])] = duration
     changelog = []
     for i, c in enumerate(data.get("changelog") or []):
         changelog.append({"date": _date(c.get("date"), f"changelog[{i}]"), "note": str(c.get("note") or "").strip()})
@@ -178,4 +198,5 @@ def load_talk(path: Path) -> Talk:
         titles=titles,
         downloads=list(downloads),
         download_links=download_links,
+        magic_move=magic_move,
     )

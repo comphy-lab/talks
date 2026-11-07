@@ -96,7 +96,10 @@
                 "overlay": { "oneOf": [{ "$ref": "#/$defs/webp" }, { "type": "null" }] },
                 "image2x": { "$ref": "#/$defs/webp" },
                 "overlay2x": { "oneOf": [{ "$ref": "#/$defs/webp" }, { "type": "null" }] },
-                "transition": { "enum": ["none", "dissolve"] },
+                "transition": { "enum": ["none", "dissolve", "magic-move"] },
+                "transition_duration": { "type": "number", "exclusiveMinimum": 0, "maximum": 5 },
+                "glide_image": { "$ref": "#/$defs/webp" },
+                "glide_image2x": { "$ref": "#/$defs/webp" },
                 "media": {
                   "type": "array",
                   "items": {

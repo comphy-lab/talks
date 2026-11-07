@@ -464,7 +464,9 @@
                 785
               ]
             }
-          ]
+          ],
+          "glide_image": "66d484cecf43eadd.webp",
+          "glide_image2x": "89b43b9d8e6935b4.webp"
         }
       ]
     },
@@ -479,7 +481,7 @@
           "overlay": null,
           "image2x": "366faef3fb0bc1f1.webp",
           "overlay2x": null,
-          "transition": "dissolve",
+          "transition": "magic-move",
           "media": [
             {
               "kind": "video",
@@ -501,7 +503,10 @@
                 210
               ]
             }
-          ]
+          ],
+          "glide_image": "5536b3e0d38c7da1.webp",
+          "glide_image2x": "2f7ec9ee4524af08.webp",
+          "transition_duration": 1.2
         }
       ]
     },
@@ -1709,6 +1714,18 @@
     {
       "date": "2026-11-06",
       "note": "First web version of the Elastic Taylor–Culick talk."
+    },
+    {
+      "date": "2026-11-06",
+      "note": "Added the Keynote download."
+    },
+    {
+      "date": "2026-11-07",
+      "note": "Added the PDF and PowerPoint downloads."
+    },
+    {
+      "date": "2026-11-07",
+      "note": "The soap bubble now glides from slide 19 into slide 20 (Magic Move), as in the deck."
     }
   ],
   "downloads": [

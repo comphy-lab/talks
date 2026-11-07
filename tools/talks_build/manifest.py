@@ -70,6 +70,9 @@ def media_files(manifest: dict) -> list[str]:
                 names.append(st["image2x"])
             if st.get("overlay2x") is not None:
                 names.append(st["overlay2x"])
+            for k in ("glide_image", "glide_image2x"):
+                if st.get(k) is not None:
+                    names.append(st[k])
     out: list[str] = []
     for n in names:
         if n not in out:
@@ -151,6 +154,22 @@ def validate(manifest: dict, media_dir: Path | None = None) -> list[str]:
             errors.append(f"slide {i}: duplicate id {slide['id']}")
         seen_ids.add(slide["id"])
         for j, st in enumerate(slide["states"]):
+            where_mm = f"slide {i} state {j}"
+            if st.get("transition") == "magic-move":
+                if j != 0 or i == 1:
+                    errors.append(f"{where_mm}: magic-move only enters the first state of a later slide")
+                elif "transition_duration" not in st:
+                    errors.append(f"{where_mm}: magic-move needs transition_duration")
+                else:
+                    from .magicmove import moved_videos
+
+                    prev = manifest["slides"][i - 2]["states"][-1]
+                    if not moved_videos(prev, st):
+                        errors.append(f"{where_mm}: magic-move without a video that changes rect")
+            elif "transition_duration" in st:
+                errors.append(f"{where_mm}: transition_duration is only for magic-move")
+            if ("glide_image" in st) != ("glide_image2x" in st):
+                errors.append(f"{where_mm}: glide_image and glide_image2x must be supplied together")
             density_fields = "image2x" in st or "overlay2x" in st
             if density_fields:
                 where = f"slide {i} state {j}"

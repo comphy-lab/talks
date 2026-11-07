@@ -234,6 +234,12 @@ main {
   transition: opacity 0.5s ease-in-out;
 }
 
+/* Magic Move: a kept video glides between rects; the duration comes from the manifest. */
+.glide {
+  transition-property: left, top, width, height;
+  transition-timing-function: ease-in-out;
+}
+
 .is-transparent {
   opacity: 0;
 }
@@ -1003,6 +1009,7 @@ kbd {
 
 @media (prefers-reduced-motion: reduce) {
   .fade,
+  .glide,
   .progress__bar,
   .ctl,
   .downloads__item,

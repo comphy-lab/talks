@@ -15,6 +15,12 @@ video:
   spans: auto           # same source at the same rect on consecutive states/slides = one placement
   max_scale: 2.0        # encode at most 2x the largest on-slide box
 
+# Magic Move as in the deck (SPEC 1.2): the export sets it to Dissolve, and the
+# player glides the soap-bubble movie from slide 19 into its place on slide 20.
+magic_move:
+  - slide: F682DE07-7594-484F-B163-8B3D58903909   # slide 19, real-life example: a bursting soap bubble
+    duration: 1.2
+
 # Downloadable copies offered on the talk page (docs/SPEC.md section 2.1).
 # The Keynote file is the native deck (not the PowerPoint round trip), shared by Vatsal.
 downloads:
@@ -35,3 +41,5 @@ changelog:
     note: Added the Keynote download.
   - date: "2026-11-07"
     note: Added the PDF and PowerPoint downloads.
+  - date: "2026-11-07"
+    note: The soap bubble now glides from slide 19 into slide 20 (Magic Move), as in the deck.
