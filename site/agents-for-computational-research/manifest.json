@@ -1,0 +1,798 @@
+{
+  "schema": 2,
+  "slug": "agents-for-computational-research",
+  "title": "Agents for computational research",
+  "subtitle": "A practical introduction, live",
+  "speaker": "Vatsal Sanjay",
+  "updated": "2026-11-19",
+  "canvas": {
+    "width": 1920,
+    "height": 1080
+  },
+  "media_base": "https://media.comphy-lab.org/talks/agents-for-computational-research/",
+  "videos": {
+    "v01": {
+      "src": "2b6286a5f731925b.mp4",
+      "poster": "9f75999ac6b4298b.webp",
+      "width": 896,
+      "height": 784,
+      "duration": 4.733,
+      "credit": null
+    }
+  },
+  "youtube": {},
+  "slides": [
+    {
+      "id": "3E9BC3E6-F5BF-4647-BE99-EFF8375B652F",
+      "n": 1,
+      "title": "Agents for computational research",
+      "text": "Agents for computational research A practical introduction, live CoMPhy Lab Vatsal Sanjay CoMPhy Lab, Durham University 19 November 2026",
+      "states": [
+        {
+          "image": "294f058275f77bc5.webp",
+          "overlay": null,
+          "image2x": "4abe26b5b9272b36.webp",
+          "overlay2x": null,
+          "transition": "none",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "55B39D43-4CA9-4B17-B893-1705AE30C050",
+      "n": 2,
+      "title": "Every slide here was made by AI.",
+      "text": "Every slide here was made by AI. The responsibility is still mine.",
+      "states": [
+        {
+          "image": "61c6ad63ba111115.webp",
+          "overlay": null,
+          "image2x": "7672b8d7fdbdf2ce.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "386FA374-92CD-4243-82F2-B135AB067E3F",
+      "n": 3,
+      "title": "The prompt",
+      "text": "The prompt Look at this paper: “Impacting spheres: from liquid drops to elastic beads” (Soft Matter 2026), PDF attached. The source code is github.com/comphy-lab/Soft-Sphere-Impacts. Clone it and follow its AGENTS.md. Clock: record date -u now and at each milestone; report the total at the end. 1. Reproduce Figure 5(a). Use $basilisk-master and $basilisk-runs. Simulate the infinite-Weissenberg (Kelvin–Voigt) case, bounce-kv.c, at We = 100 and El = 40 (Ec = 4000), at grid level 9: coarse, but enough for a first comparison. Digitise F (t) from Figure 5(a) and compare the two with $publication-plots, stating the relative error in Fmax and in its time. Add a drop-impact video coloured by velocity. 2. In parallel, find the Bingham (viscoplastic) model in github.com/comphy-lab/MultiRheoFlow and implement it here: twoPhase-VP.h with the plumbing it needs, and bounce-bingham.c, following the existing drivers. Run one Bingham case at We = 100 with yield stress J = τy /(ρV 2) = 0.001 and add its F (t) to the plot. 3. Fully document bounce-kv.c, the driver behind the soft-matter paper. Be concise and to the point. 4. Combine everything on one branch. Get $council-of-sages approval (seats gpt-6.2-astra at medium effort and claude-fable-5-2 at high; two rounds are enough if both seats score above 7), then $gh-pr-create a normal PR. $full-stop: never merge. Rules: simulations through $research-compute-dispatch on my lab workstation, inside my published reservation (8 cores, 32 GiB). I authorise running while it stays held: give each run half its cores, 4 threads each; skip activation, tracker updates and release, and book nothing else. If it is unavailable, you may stop one of my lower-priority simulations, never a registered or production run, and record exactly what you stopped. The PR carries code and documentation only (it is public). Report the plot, the video, the PR link and the timings.",
+      "states": [
+        {
+          "image": "8c039ae4979dc0fc.webp",
+          "overlay": null,
+          "image2x": "e365c421e48b6c0e.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "03F69337-85B2-4C5C-BD25-421F4100E850",
+      "n": 4,
+      "title": "Recent headlines",
+      "text": "CNBC 9 Sep 2026 e th ed lv so e av h to s m ai cl I A en Op 90-year-old Navier-Stokes math problem in 88 hours Scientific American 8 Sep 2026 AI may have just solved a million-dollar math problem. The field will never be the same Quanta Magazine 19 Oct 2026 AI Proved the Quasi-Riemann Hypothesis. What Happens Now? Scientific American 27 Oct 2026 Dueling proofs from OpenAI and Anthropic astound scientists Can we leapfrog our research too?",
+      "states": [
+        {
+          "image": "b59bb4405cae8b98.webp",
+          "overlay": null,
+          "image2x": "28b44aff0b4227c0.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "BD78BF18-55ED-420E-A8CC-53D31B07187E",
+      "n": 5,
+      "title": "Not in this talk",
+      "text": "Not in this talk Personal assistant agents Whether any of this is a good idea What follows is one personal, subjective way of working.",
+      "states": [
+        {
+          "image": "dea7702bf9e088de.webp",
+          "overlay": null,
+          "image2x": "397918bcf98a6166.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "A465B719-5760-45A8-B6E7-D5A2913CCDCB",
+      "n": 6,
+      "title": "At the centre",
+      "text": "At the centre Everything else is built around you You",
+      "states": [
+        {
+          "image": "e3400d8fa685f624.webp",
+          "overlay": null,
+          "image2x": "3eb111f292f56382.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "B60E8A49-CA9D-4BC2-B0DE-27043ECC1958",
+      "n": 7,
+      "title": "Interface",
+      "text": "Interface Where you type and read Interface You",
+      "states": [
+        {
+          "image": "e9af49540bc3a560.webp",
+          "overlay": null,
+          "image2x": "bb6b0697e21567dc.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "B6BC16EF-8E36-4A74-91BA-B24F975FB49F",
+      "n": 8,
+      "title": "Interfaces",
+      "text": "Interfaces chatgpt.com Codex app Claude Code app Command line VS Code T3 Code",
+      "states": [
+        {
+          "image": "846081f72e57b87f.webp",
+          "overlay": null,
+          "image2x": "62cb176bd31f84cc.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "B43B5F7B-8AF4-4F2C-AF05-E929B9CF7290",
+      "n": 9,
+      "title": "Harness",
+      "text": "Harness An agent with tools, a shell and a machine Harness Interface You",
+      "states": [
+        {
+          "image": "b25a4babbf33c8f3.webp",
+          "overlay": null,
+          "image2x": "307acdb6ead2d4e9.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "97615503-7E82-4A05-A4D4-03302719B0D3",
+      "n": 10,
+      "title": "What is an agent?",
+      "text": "What is an agent? A model calling tools in a loop Read Observe model Act Plan",
+      "states": [
+        {
+          "image": "afc59b808f28e249.webp",
+          "overlay": null,
+          "image2x": "3687fe5327238f11.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "7DEF80BD-7CD8-43A2-B750-B34C7700192E",
+      "n": 11,
+      "title": "What is a harness?",
+      "text": "What is a harness? harness A model calling tools in a loop Read + a shell, files and a machine Observe model Act Plan",
+      "states": [
+        {
+          "image": "21d10c030fda03ad.webp",
+          "overlay": null,
+          "image2x": "a06e1e5cc6e0bdef.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "90BC596A-F33D-4C65-8773-6A6972E25FB0",
+      "n": 12,
+      "title": "What is a harness?",
+      "text": "What is a harness? harness A model calling tools in a loop Read + a shell, files and a machine Observe model Act Plan Claude Code CLI Codex ACP Antigravity ACP/CLI",
+      "states": [
+        {
+          "image": "3c2ec0f42e8eb752.webp",
+          "overlay": null,
+          "image2x": "ed7195015392a432.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "86CB7577-F4FA-4EF0-89AA-0DCE8F81D3C2",
+      "n": 13,
+      "title": "The machine",
+      "text": "The machine It is the time of Linux A Linux workstation in the lab The harness gets its shell here The prompt’s code runs here",
+      "states": [
+        {
+          "image": "16ae36d564b60080.webp",
+          "overlay": null,
+          "image2x": "d40f5d0c2c16d9e7.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "E269D3B8-B091-45B1-AF13-C13DEE6AD94C",
+      "n": 14,
+      "title": "Why limit what it can reach",
+      "text": "CNBC 30 Jul 2026 Anthropic says its Claude models ‘gained unauthorized access’ to other organizations’ systems CNBC 22 Jul 2026 safety test, safeguards off evaluation, safeguards off ABC News 24 Sep 2026 OpenAI hacked Medicare portal, Prime Minister Anthony Albanese says internal model, reduced safeguards OpenAI cyber models broke out of training environment to hack Hugging Face The Register 21 Jul 2025 Vibe coding service Replit deleted production database commercial tool, given too much access So limit what it can reach",
+      "states": [
+        {
+          "image": "64e242a62a42520b.webp",
+          "overlay": null,
+          "image2x": "549f401f582dafcc.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "7E8B5EBF-3B3E-4ECD-AB96-179C40C0EDEC",
+      "n": 15,
+      "title": "A sandbox you control",
+      "text": "A sandbox you control 1 A spare Linux box (I suggest 8–16 GB) 2 Power, internet, its own user account 3 Outbound SSH closed, HTTPS open 24×7 online",
+      "states": [
+        {
+          "image": "4db97353533fc02e.webp",
+          "overlay": null,
+          "image2x": "6ca9dd9d6425cdf8.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "95E641B5-4E36-408D-AEB9-7C61E5768771",
+      "n": 16,
+      "title": "A sandbox you control",
+      "text": "A sandbox you control 1 A spare Linux box (I suggest 8–16 GB) 2 Power, internet, its own user account 3 Outbound SSH closed, HTTPS open 4 T3 Code server, linked with T3 Connect 24×7 online Setup guide 5 T3 Code on your laptop, same login",
+      "states": [
+        {
+          "image": "077a89bd0c441977.webp",
+          "overlay": null,
+          "image2x": "50152b6b998ebc4c.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ],
+      "links": [
+        {
+          "rect": [
+            1470,
+            500,
+            270,
+            270
+          ],
+          "url": "https://comphy-lab.org/agents-in-research/",
+          "label": "Setup guide"
+        }
+      ]
+    },
+    {
+      "id": "08F2CAC1-1866-4A3A-9AEA-7F579016C01F",
+      "n": 17,
+      "title": "Laptop to workstation",
+      "text": "Laptop to workstation Laptop: client tunnel Prompts and code still go here Workstation: server Model provider",
+      "states": [
+        {
+          "image": "a49f097ed1bd9beb.webp",
+          "overlay": null,
+          "image2x": "fb9736cf9ca12f52.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "95E06D14-B11C-4470-B847-59EA9CD1C48A",
+      "n": 18,
+      "title": "So far, no LLM. Only plumbing.",
+      "text": "So far, no LLM. Only plumbing. Sandboxing matters more than ever.",
+      "states": [
+        {
+          "image": "beceb6d63959d194.webp",
+          "overlay": null,
+          "image2x": "d5f744d7f97f681e.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "40853A14-A87C-4908-8136-308B4C89FCC2",
+      "n": 19,
+      "title": "Ring 3: the API",
+      "text": "API API Your subscription, logged in Harness Interface You",
+      "states": [
+        {
+          "image": "a34d2dd2ec23335e.webp",
+          "overlay": null,
+          "image2x": "27e154f3d5f9878d.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "4CD9EEB5-14AB-4647-97E4-7327C3E58263",
+      "n": 20,
+      "title": "Subscription or pay per token",
+      "text": "Subscription or pay per token Subscription: Claude Max, Ultra Pay per token: Opus 5.5 $100–200 a month flat, with usage limits $4 in, $20 out per million tokens Anthropic, 2025, on one outlier: “tens of thousands in model usage on a $200 plan” Claude pricing, Nov 2026 (Opus 5.5 list price); Anthropic statement on usage limits, Jul 2025",
+      "states": [
+        {
+          "image": "9a60b41450b394e5.webp",
+          "overlay": null,
+          "image2x": "e4d7429047768cab.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "FB53D063-92E8-46D2-A2C2-4C143624AE83",
+      "n": 21,
+      "title": "Ring 4: models on GPUs",
+      "text": "GPUs API GPUs Models and weights in a data centre Harness Interface You",
+      "states": [
+        {
+          "image": "2520d00d20fc4b0a.webp",
+          "overlay": null,
+          "image2x": "48ba9e4f6d14527c.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "B03D99DA-C9E6-491E-A1ED-38875D67FDFB",
+      "n": 22,
+      "title": "The agent",
+      "text": "GPUs API The agent Harness Interface Everything between you and the GPUs You agent",
+      "states": [
+        {
+          "image": "4268d06b0df9752e.webp",
+          "overlay": null,
+          "image2x": "38014928fc4fa787.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "E0897E84-C67C-4BA4-98F0-B5C6CC99B575",
+      "n": 23,
+      "title": "When we fired the prompt",
+      "text": "When we fired the prompt GPUs API T3 Code on my laptop Workstation: T3 server and Codex or Claude Code My subscription OpenAI’s or Anthropic’s GPUs Harness Interface You",
+      "states": [
+        {
+          "image": "46f7474ade233bac.webp",
+          "overlay": null,
+          "image2x": "1cfb9902606d507a.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "4139C4B6-278B-44B6-8F25-541E9A0128AD",
+      "n": 24,
+      "title": "The prompt",
+      "text": "The prompt Look at this paper: “Impacting spheres: from liquid drops to elastic beads” (Soft Matter 2026), PDF attached. The source code is github.com/comphy-lab/Soft-Sphere-Impacts. Clone it and follow its AGENTS.md. Clock: record date -u now and at each milestone; report the total at the end. 1. Reproduce Figure 5(a). Use $basilisk-master and $basilisk-runs. Simulate the infinite-Weissenberg (Kelvin–Voigt) case, bounce-kv.c, at We = 100 and El = 40 (Ec = 4000), at grid level 9: coarse, but enough for a first comparison. Digitise F (t) from Figure 5(a) and compare the two with $publication-plots, stating the relative error in Fmax and in its time. Add a drop-impact video coloured by velocity. 2. In parallel, find the Bingham (viscoplastic) model in github.com/comphy-lab/MultiRheoFlow and implement it here: twoPhase-VP.h with the plumbing it needs, and bounce-bingham.c, following the existing drivers. Run one Bingham case at We = 100 with yield stress J = τy /(ρV 2) = 0.001 and add its F (t) to the plot. 3. Fully document bounce-kv.c, the driver behind the soft-matter paper. Be concise and to the point. 4. Combine everything on one branch. Get $council-of-sages approval (seats gpt-6.2-astra at medium effort and claude-fable-5-2 at high; two rounds are enough if both seats score above 7), then $gh-pr-create a normal PR. $full-stop: never merge. Rules: simulations through $research-compute-dispatch on my lab workstation, inside my published reservation (8 cores, 32 GiB). I authorise running while it stays held: give each run half its cores, 4 threads each; skip activation, tracker updates and release, and book nothing else. If it is unavailable, you may stop one of my lower-priority simulations, never a registered or production run, and record exactly what you stopped. The PR carries code and documentation only (it is public). Report the plot, the video, the PR link and the timings.",
+      "states": [
+        {
+          "image": "8c039ae4979dc0fc.webp",
+          "overlay": null,
+          "image2x": "e365c421e48b6c0e.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "9EC065EE-68C0-4908-839B-99AC8E103EB6",
+      "n": 25,
+      "title": "Skills",
+      "text": "Skills Instructions an agent loads only when the task needs them basilisk-master Basilisk solver know-how: sources, APIs, build errors basilisk-runs Preflight, launch, monitor and close out simulations publication-plots Consistent, publication-quality figures and videos research-compute-dispatch Reserve compute; never disturb other runs council-of-sages Two independent AI reviewers must approve gh-pr-create Open a pull request with a clear description full-stop Finish the work, stop at the open PR: a human merges Public skills",
+      "states": [
+        {
+          "image": "dd4d9528aa558c8c.webp",
+          "overlay": null,
+          "image2x": "e10e17d7b066f2bf.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ],
+      "links": [
+        {
+          "rect": [
+            1620,
+            70,
+            230,
+            230
+          ],
+          "url": "https://github.com/VatsalSy/rayleigh-coding/tree/main/plugins/rayleigh-coding/skills",
+          "label": "Public skills"
+        }
+      ]
+    },
+    {
+      "id": "4CD39EAF-5CF2-4CD2-B377-C2185B0D760C",
+      "n": 26,
+      "title": "council-of-sages",
+      "text": "council-of-sages All must approve Council skill adapted from Theo Browne’s tstack: github.com/t3dotgg/tstack/tree/main/skills/council",
+      "states": [
+        {
+          "image": "e852a474fc6a8532.webp",
+          "overlay": null,
+          "image2x": "c03febb752d3c4ab.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ],
+      "links": [
+        {
+          "rect": [
+            710,
+            982,
+            764,
+            48
+          ],
+          "url": "https://github.com/t3dotgg/tstack/tree/main/skills/council",
+          "label": "Theo Browne's council skill (tstack)"
+        }
+      ]
+    },
+    {
+      "id": "8DD68328-8DEA-4393-8A4E-E2944107279F",
+      "n": 27,
+      "title": "AGENTS.md",
+      "text": "AGENTS.md Standing rules for every session What to do, and what never to do In my experience, aligned models follow them. They guide; they do not enforce.",
+      "states": [
+        {
+          "image": "873b8a4b3f341ad9.webp",
+          "overlay": null,
+          "image2x": "08a3bbf0ef9c25e6.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "718E2F74-1D44-446E-9DC7-A6E8D911B8BF",
+      "n": 28,
+      "title": "A “simple” setup",
+      "text": "A “simple” setup GPUs API T3 Code Claude Code or Codex on your workstation Your subscription Their GPUs Harness Interface You Setup guide",
+      "states": [
+        {
+          "image": "257235a378ab6cc4.webp",
+          "overlay": null,
+          "image2x": "deab3a8925d7e810.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ],
+      "links": [
+        {
+          "rect": [
+            1640,
+            90,
+            250,
+            250
+          ],
+          "url": "https://comphy-lab.org/agents-in-research/",
+          "label": "Setup guide"
+        }
+      ]
+    },
+    {
+      "id": "9C377817-E5C9-47EB-9D27-A5A613E1E8F8",
+      "n": 29,
+      "title": "My setup",
+      "text": "My setup T3 Code Claude Code, Codex on my workstations Subscriptions Anthropic, OpenAI GPUs API Harness Interface Me Shared National HPC University HPC Lab workstations",
+      "states": [
+        {
+          "image": "eb39614aa8d99b01.webp",
+          "overlay": null,
+          "image2x": "decc7df3aa0e0fa0.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "09E18B80-5E62-4824-9062-C22ED092528F",
+      "n": 30,
+      "title": "How to access HPC and shared resources securely?",
+      "text": "How to access HPC and shared resources securely? 1 Prepare the job package locally 2 Read and approve the scripts 3 Let the agent run only these scripts 4 The agent submits and polls while you sleep",
+      "states": [
+        {
+          "image": "ee3aaf5e7da86ed7.webp",
+          "overlay": null,
+          "image2x": "c4567bb94448ae8e.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "770542F0-3CD0-429A-BC88-BCCB8E2077AA",
+      "n": 31,
+      "title": "A script you can read in a minute",
+      "text": "A script you can read in a minute # submit Full scripts id=$(ssh \"$host\" \"cd '$dir' && sbatch --parsable '$script'\") [[ $id =~ ^[0-9]+$ ]] || exit 1 # a job ID, nothing else # poll until it leaves the queue for _ in $(seq 288); do [ -n \"$(ssh \"$host\" \"squeue -h -j $id\")\" ] || break sleep 300 done # how did it end? ssh \"$host\" \"sacct -n -X -j $id -o JobID,State,Elapsed\" Teaching excerpt. The full scripts also validate inputs, handle lost replies and failed queries, and bound resubmission.",
+      "states": [
+        {
+          "image": "c3b6e1523e33fa7f.webp",
+          "overlay": null,
+          "image2x": "d119a3f4bd8f1b64.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ],
+      "links": [
+        {
+          "rect": [
+            1620,
+            70,
+            200,
+            200
+          ],
+          "url": "https://github.com/VatsalSy/agentic-hpc-scripts",
+          "label": "Full HPC scripts"
+        }
+      ]
+    },
+    {
+      "id": "E2E1A915-189D-4CB8-AEA0-BA798A7C9D79",
+      "n": 32,
+      "title": "chatgpt.com",
+      "text": "chatgpt.com GPUs API The website Harness Interface OpenAI’s cloud OpenAI OpenAI’s GPUs You",
+      "states": [
+        {
+          "image": "0ab1d421f0217fab.webp",
+          "overlay": null,
+          "image2x": "b30d74365811ed01.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "7E0F7DAD-9EA3-4863-B3A8-C49866B6A740",
+      "n": 33,
+      "title": "Result: F(t)",
+      "text": "Result: F (t) 0.1% error in F max 52 min prompt to finish, PR open at 28 min Level 10: half the paper’s resolution",
+      "states": [
+        {
+          "image": "27eea8f169efe737.webp",
+          "overlay": null,
+          "image2x": "fbfdd05d6cec0fb3.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "B4004760-8A12-407B-8195-9ABE61FE1E80",
+      "n": 34,
+      "title": "Result: the impact",
+      "text": "Result: the impact Elastic sphere, We = 100, El = 40 Colour: speed |u|/V",
+      "states": [
+        {
+          "image": "45303bbfe0e76d82.webp",
+          "overlay": null,
+          "image2x": "a0e3646d309f0546.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        },
+        {
+          "image": "10108abd4c0ab95c.webp",
+          "overlay": null,
+          "image2x": "e7f417a82fc17d33.webp",
+          "overlay2x": null,
+          "transition": "none",
+          "media": [
+            {
+              "kind": "video",
+              "ref": "v01",
+              "rect": [
+                125,
+                200,
+                914,
+                800
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "F4CB35CC-7971-4173-A33E-EEF69CB556C9",
+      "n": 35,
+      "title": "Reading the pull request",
+      "text": "Reading the pull request Files changed Review The diff Add a Bingham drop impact driver #6 src-local/twoPhase-VP.h +70 simulationCases/bounce-bingham.c +124 simulationCases/bounce-kv.c +36 simulationCases/runSimulation.sh +2 README.md +14 AGENTS.md +2 −26 −2 −5 −1 Council: 9/10 and 8/10 Checks green Open, not merged",
+      "states": [
+        {
+          "image": "339fd488764d0884.webp",
+          "overlay": null,
+          "image2x": "37b5d508a116e764.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ],
+      "links": [
+        {
+          "rect": [
+            118,
+            436,
+            690,
+            72
+          ],
+          "url": "https://github.com/comphy-lab/Soft-Sphere-Impacts/pull/6",
+          "label": "Pull request #6: Add a Bingham drop impact driver"
+        }
+      ]
+    },
+    {
+      "id": "EF596F16-FBB6-44B4-A3EB-247A086CDA34",
+      "n": 36,
+      "title": "Examples",
+      "text": "Examples Three knobs: shape A, gravity Bo, viscosity Oh schematic One point = one simulation, hours to days Bo = 10 Bubble trapped: a thin sheet in this box. Find it. A Bo = 1 2 Bo = 0 −4 10 0.5 10 −1 Oh The agent checks every 2 h, launches the next points, shows me the pictures One exchange, in full",
+      "states": [
+        {
+          "image": "36758f992c3b9324.webp",
+          "overlay": null,
+          "image2x": "95bbc0f16973d74e.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ],
+      "links": [
+        {
+          "rect": [
+            1240,
+            825,
+            190,
+            190
+          ],
+          "url": "https://share.comphy-lab.org/agent-coworking-example/",
+          "label": "One exchange with a simulation agent"
+        }
+      ]
+    },
+    {
+      "id": "73E5CF44-EFC6-4D5F-96C5-8A20FD11A9F3",
+      "n": 37,
+      "title": "Not covered? Ask your agent",
+      "text": "Not covered? Ask your agent “Talk me through this.” “Write me a monograph on it.” A move 37? Ask for the assumptions, the derivation and a check you can run.",
+      "states": [
+        {
+          "image": "e6b08fd430aaa905.webp",
+          "overlay": null,
+          "image2x": "caf9b2bd841f4d22.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "7E8B5484-4C8A-46E5-99A0-F94F0AD6FFF1",
+      "n": 38,
+      "title": "Who is using it matters",
+      "text": "Who is using it matters A professor A PhD student a smart PhD student a smart intern An agent is as good as its user",
+      "states": [
+        {
+          "image": "7228e6ac0b39553d.webp",
+          "overlay": null,
+          "image2x": "c085538f346c7a22.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ]
+    },
+    {
+      "id": "BDCB8262-C4AB-48CE-9A69-5CF7F49B2DB2",
+      "n": 39,
+      "title": "Questions?",
+      "text": "Questions? Setup guide Public skills comphy-lab.org/agents-in-research github.com/VatsalSy/rayleigh-coding CoMPhy Lab",
+      "states": [
+        {
+          "image": "68c9bbadca061e86.webp",
+          "overlay": null,
+          "image2x": "1676f376e1e73fd1.webp",
+          "overlay2x": null,
+          "transition": "dissolve",
+          "media": []
+        }
+      ],
+      "links": [
+        {
+          "rect": [
+            440,
+            300,
+            400,
+            400
+          ],
+          "url": "https://comphy-lab.org/agents-in-research/",
+          "label": "Setup guide"
+        },
+        {
+          "rect": [
+            1080,
+            300,
+            400,
+            400
+          ],
+          "url": "https://github.com/VatsalSy/rayleigh-coding/tree/main/plugins/rayleigh-coding/skills",
+          "label": "Public skills"
+        }
+      ]
+    }
+  ],
+  "changelog": [
+    {
+      "date": "2026-11-19",
+      "note": "First web version of the talk."
+    }
+  ],
+  "downloads": [
+    {
+      "format": "pdf",
+      "url": "https://www.dropbox.com/scl/fi/3anx2nnt5w8ltw7bbukt7/Sanjay-agents-for-computational-research-2026-11-19.pdf?rlkey=u9e1c2k8x1oqz9y78q1ozdbfk&dl=1",
+      "bytes": 5515955
+    },
+    {
+      "format": "pptx",
+      "url": "https://www.dropbox.com/scl/fi/tzqkyns0cponbxe13ogko/Sanjay-agents-for-computational-research-2026-11-19.pptx?rlkey=lvzlj0ouriggtkmj0wklmwpag&dl=1",
+      "bytes": 9383670
+    },
+    {
+      "format": "key",
+      "url": "https://www.dropbox.com/scl/fi/szspmz8m027lwdv5anq9v/Sanjay-agents-for-computational-research-2026-11-19.key?rlkey=dynw4klviuw0yxntzosd0c749&dl=1",
+      "bytes": 8784079
+    }
+  ]
+}

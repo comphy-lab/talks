@@ -1,0 +1,85 @@
+# Human decisions for the agents-for-computational-research talk (see docs/SPEC.md §1.2).
+# Slide content comes from the Keynote HTML export, which is not committed.
+# Published at Vatsal's request (19 Nov 2026), after the talk: a sanitised copy
+# of the deck as given, with the live-thread QR removed, host and cluster names
+# generalised, the demo reservation's ID and CPU set removed (its size stays)
+# and no presenter notes.
+
+slug: agents-for-computational-research
+title: Agents for computational research
+subtitle: A practical introduction, live
+speaker: Vatsal Sanjay
+venue_note: Given at Durham University on 19 November 2026.
+updated: "2026-11-19"
+media_base: https://media.comphy-lab.org/talks/agents-for-computational-research/
+
+video:
+  loop: true            # every video loops, as in the deck
+  spans: auto           # same source at the same rect on consecutive states/slides = one placement
+  max_scale: 2.0        # encode at most 2x the largest on-slide box
+
+# Titles derived from slide text that read badly on their own (SPEC 1.2).
+titles:
+  03F69337-85B2-4C5C-BD25-421F4100E850: Recent headlines                 # slide 4
+  E269D3B8-B091-45B1-AF13-C13DEE6AD94C: Why limit what it can reach      # slide 14
+  40853A14-A87C-4908-8136-308B4C89FCC2: "Ring 3: the API"                # slide 19
+  FB53D063-92E8-46D2-A2C2-4C143624AE83: "Ring 4: models on GPUs"         # slide 21
+  B03D99DA-C9E6-491E-A1ED-38875D67FDFB: The agent                        # slide 22
+  7E0F7DAD-9EA3-4863-B3A8-C49866B6A740: "Result: F(t)"                   # slide 33
+
+# Clickable areas: every QR code, plus two printed addresses (SPEC 1.2).
+# Rects are the QR images' boxes from the slide sources, with a 10 px margin.
+links:
+  - slide: 95E641B5-4E36-408D-AEB9-7C61E5768771   # slide 16, sandbox: setup guide
+    rect: [1470, 500, 270, 270]
+    url: https://comphy-lab.org/agents-in-research/
+    label: Setup guide
+  - slide: 9EC065EE-68C0-4908-839B-99AC8E103EB6   # slide 25, skills
+    rect: [1620, 70, 230, 230]
+    url: https://github.com/VatsalSy/rayleigh-coding/tree/main/plugins/rayleigh-coding/skills
+    label: Public skills
+  - slide: 4CD39EAF-5CF2-4CD2-B377-C2185B0D760C   # slide 26, council credit
+    rect: [710, 982, 764, 48]
+    url: https://github.com/t3dotgg/tstack/tree/main/skills/council
+    label: Theo Browne's council skill (tstack)
+  - slide: 718E2F74-1D44-446E-9DC7-A6E8D911B8BF   # slide 28, simple setup: setup guide
+    rect: [1640, 90, 250, 250]
+    url: https://comphy-lab.org/agents-in-research/
+    label: Setup guide
+  - slide: 770542F0-3CD0-429A-BC88-BCCB8E2077AA   # slide 31, script: full scripts
+    rect: [1620, 70, 200, 200]
+    url: https://github.com/VatsalSy/agentic-hpc-scripts
+    label: Full HPC scripts
+  - slide: F4CB35CC-7971-4173-A33E-EEF69CB556C9   # slide 35, the pull request title
+    rect: [118, 436, 690, 72]
+    url: https://github.com/comphy-lab/Soft-Sphere-Impacts/pull/6
+    label: "Pull request #6: Add a Bingham drop impact driver"
+  - slide: EF596F16-FBB6-44B4-A3EB-247A086CDA34   # slide 36, examples: one exchange
+    rect: [1240, 825, 190, 190]
+    url: https://share.comphy-lab.org/agent-coworking-example/
+    label: One exchange with a simulation agent
+  - slide: BDCB8262-C4AB-48CE-9A69-5CF7F49B2DB2   # slide 39, questions: setup guide
+    rect: [440, 300, 400, 400]
+    url: https://comphy-lab.org/agents-in-research/
+    label: Setup guide
+  - slide: BDCB8262-C4AB-48CE-9A69-5CF7F49B2DB2   # slide 39, questions: public skills
+    rect: [1080, 300, 400, 400]
+    url: https://github.com/VatsalSy/rayleigh-coding/tree/main/plugins/rayleigh-coding/skills
+    label: Public skills
+
+# Downloadable copies offered on the talk page (docs/SPEC.md section 2.1), shared by Vatsal.
+# The Keynote file is the sanitised native deck (no presenter notes), not the PowerPoint round trip.
+downloads:
+  - format: pdf
+    url: https://www.dropbox.com/scl/fi/3anx2nnt5w8ltw7bbukt7/Sanjay-agents-for-computational-research-2026-11-19.pdf?rlkey=u9e1c2k8x1oqz9y78q1ozdbfk&dl=1
+    bytes: 5515955
+  - format: pptx
+    url: https://www.dropbox.com/scl/fi/tzqkyns0cponbxe13ogko/Sanjay-agents-for-computational-research-2026-11-19.pptx?rlkey=lvzlj0ouriggtkmj0wklmwpag&dl=1
+    bytes: 9383670
+  - format: key
+    url: https://www.dropbox.com/scl/fi/szspmz8m027lwdv5anq9v/Sanjay-agents-for-computational-research-2026-11-19.key?rlkey=dynw4klviuw0yxntzosd0c749&dl=1
+    bytes: 8784079
+
+changelog:
+  - date: "2026-11-19"
+    note: First web version of the talk.

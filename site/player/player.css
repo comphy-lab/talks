@@ -180,6 +180,46 @@ main {
   pointer-events: auto;
 }
 
+/* Slide links (a QR code, a printed address): invisible until hovered or focused. */
+.stage-links {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  pointer-events: none;
+}
+
+.slide-link {
+  position: absolute;
+  display: block;
+  pointer-events: auto;
+  border: 0;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Over any slide image, light or dark: a teal ring between white and near-black edges. */
+.slide-link:hover,
+.slide-link:focus-visible {
+  outline: 3px solid var(--c-accent-teal);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 7px #111;
+}
+
+.talk-links {
+  margin: 0;
+  padding-left: 1.1em;
+}
+
+.talk-links__item + .talk-links__item {
+  margin-top: 0.4em;
+}
+
+.talk-links__slide {
+  color: var(--fg-2);
+  font-size: 0.9em;
+}
+
 .still {
   position: absolute;
   inset: 0;

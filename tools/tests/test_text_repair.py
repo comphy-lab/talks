@@ -18,6 +18,7 @@ from talks_build.text import (
     drop_invisible,
     pdf_pages_blocks,
     pdf_pages_runs,
+    poppler_xml,
 )
 from talks_build.tounicode import build_cmap, glyph_text, parse_cmap, repaired_copy
 
@@ -101,3 +102,12 @@ def test_clean_text_normalises_tex_constructions():
     assert clean_text("a ̸= b") == "a ≠ b"
     assert clean_text("x =⇒ y, p ⇐⇒ q, f −→ g") == "x ⟹ y, p ⟺ q, f ⟶ g"
     assert clean_text("bad � glyph") == "bad glyph"
+
+
+def test_poppler_xml_survives_raw_glyph_codes():
+    # A plot font without a ToUnicode map: poppler writes its raw codes, which
+    # XML 1.0 forbids. They become spaces; real text, including UTF-8, stays.
+    out = (b'<?xml version="1.0"?>\n<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0//EN" "x">\n'
+           b'<doc><word>\x15\x13\x07\x03</word><word>F\xe2\x82\x98\xe2\x82\x90\xe2\x82\x93 0.1%</word></doc>')
+    words = [w.text for w in poppler_xml(out).iter("word")]
+    assert words[0].strip() == "" and words[1] == "F\u2098\u2090\u2093 0.1%"

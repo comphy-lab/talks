@@ -44,6 +44,13 @@
  *   then does not change slide) and following a link close the panel, as
  *   does entering full screen.
  *
+ * Slide links
+ *   A slide's optional `links` ({rect, url, label}; SPEC 1.2) become plain
+ *   links over their canvas rectangles (a QR code, a printed address), in a
+ *   layer beside the stage so that screen readers reach them; they open in
+ *   a new tab and a click on one does not change slide. The page also lists
+ *   every distinct link of the talk, with the slide it is on.
+ *
  * YouTube embeds
  *   A click inside the embed moves keyboard focus into YouTube's
  *   cross-origin frame, where the talk's keys (and a presenter's clicker)
@@ -99,6 +106,9 @@ const ui = {
   mediaLayer: byId('layer-media'),
   overlayLayer: byId('layer-overlay'),
   stageUi: byId('stage-ui'),
+  links: byId('stage-links'),
+  linksCard: byId('links-card'),
+  linksList: byId('talk-links'),
   prev: byId('btn-prev'),
   next: byId('btn-next'),
   pause: byId('btn-pause'),
@@ -145,6 +155,7 @@ let navToken = 0;
 let paused = reducedMotion.matches;
 let suppressClickUntil = 0;
 let shownTextSlide = -1;
+let shownLinksSlide = -1;
 let announcedSlide = -1;
 
 /** Mounted media, key -> entry, in z-order. */
@@ -938,11 +949,92 @@ function updateChrome(index, si, announce) {
     ui.slideText.textContent = typeof slide.text === 'string' ? slide.text : '';
     shownTextSlide = si;
   }
+  showSlideLinks(si);
   ui.prev.setAttribute('aria-disabled', String(index === 0));
   ui.next.setAttribute('aria-disabled', String(index === steps.length - 1));
   ui.progressBar.style.transform = `scaleX(${(index + 1) / steps.length})`;
 
   writeHash(hashFor(index));
+}
+
+/* ---------------------------------------------------------- slide links */
+
+// As the pipeline (talkfile.py): RFC 3986 characters, ASCII only, and a DNS host name.
+const LINK_URL_RE = /^https:\/\/[A-Za-z0-9\-._~:/?#[\]@!$&'()*+,;=%]+$/;
+const HOST_RE = /^(?=.{1,253}$)[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$/;
+const LABEL_ILLEGAL_RE = /[\u0000-\u0008\u000b\u000c\u000e-\u001f\u007f\ud800-\udfff\ufffe\uffff]/;
+
+/** An absolute https URL with a host name and no user info, as the pipeline requires. */
+function httpsUrl(value) {
+  if (typeof value !== 'string' || !LINK_URL_RE.test(value)) return false;
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' && HOST_RE.test(url.hostname) && !url.username && !url.password;
+  } catch (err) {
+    return false;
+  }
+}
+
+/** The slide's valid links; any other entry is left out. */
+function slideLinks(slide) {
+  const list = slide && Array.isArray(slide.links) ? slide.links : [];
+  return list.filter((l) => l && isRect(l.rect) && httpsUrl(l.url)
+    && typeof l.label === 'string' && l.label.trim() !== '' && !LABEL_ILLEGAL_RE.test(l.label));
+}
+
+/** Show the current slide's links over its canvas rectangles. */
+function showSlideLinks(si) {
+  if (!ui.links || shownLinksSlide === si) return;
+  shownLinksSlide = si;
+  // A focused link of the outgoing slide is about to go: keep focus on the stage.
+  if (ui.links.contains(document.activeElement)) ui.frame.focus({ preventScroll: true });
+  ui.links.replaceChildren(
+    ...slideLinks(slides[si]).map((l) => {
+      const link = el('a', 'slide-link');
+      link.href = l.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.title = l.label;
+      link.append(el('span', 'sr-only', `${l.label} (opens in a new tab)`));
+      place(link, l.rect);
+      return link;
+    }),
+  );
+}
+
+/** The page's list of every distinct link in the talk, with its first slide. */
+function fillLinks() {
+  if (!ui.linksCard || !ui.linksList) return;
+  const seen = new Map();
+  slides.forEach((slide, si) => {
+    for (const l of slideLinks(slide)) {
+      if (!seen.has(l.url)) seen.set(l.url, { ...l, si });
+    }
+  });
+  ui.linksList.replaceChildren(
+    ...[...seen.values()].map((l) => {
+      const li = el('li', 'talk-links__item');
+      const link = el('a', 'talk-links__link', l.label);
+      link.href = l.url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.append(el('span', 'sr-only', ' (opens in a new tab)'));
+      const where = el('a', 'talk-links__slide', `slide ${l.si + 1}`);
+      where.href = `#${slidePrefix(slides[l.si])}`;
+      // An ordinary click shows the slide and brings the viewer into view; a
+      // modified click (new tab, copy) keeps the plain fragment link.
+      where.addEventListener('click', (event) => {
+        if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+        event.preventDefault();
+        go(slideStart[l.si]);
+        ui.viewer.scrollIntoView({ block: 'start', behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+        ui.frame.focus({ preventScroll: true });
+      });
+      li.append(link, ' ', where);
+      return li;
+    }),
+  );
+  ui.linksCard.hidden = seen.size === 0;
 }
 
 /* ------------------------------------------------------------ downloads */
@@ -1423,6 +1515,7 @@ function init(manifest) {
 
   fillHeader(manifest);
   fillDownloads(manifest);
+  fillLinks();
   const first = stepFromHash(window.location.hash);
   go(first >= 0 ? first : 0);
 }

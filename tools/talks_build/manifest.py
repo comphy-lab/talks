@@ -153,6 +153,16 @@ def validate(manifest: dict, media_dir: Path | None = None) -> list[str]:
         if slide["id"] in seen_ids:
             errors.append(f"slide {i}: duplicate id {slide['id']}")
         seen_ids.add(slide["id"])
+        for k, link in enumerate(slide.get("links", [])):
+            from .talkfile import https_url, link_label
+
+            x, y, w, h = link["rect"]
+            if w <= 0 or h <= 0 or x + w > CANVAS[0] or y + h > CANVAS[1]:
+                errors.append(f"slide {i} link {k}: rect must be non-empty and inside the canvas")
+            if not https_url(link["url"]):
+                errors.append(f"slide {i} link {k}: url must be an https:// address with a host name")
+            if not link_label(link["label"]):
+                errors.append(f"slide {i} link {k}: label must be non-blank text without control characters")
         for j, st in enumerate(slide["states"]):
             where_mm = f"slide {i} state {j}"
             if st.get("transition") == "magic-move":

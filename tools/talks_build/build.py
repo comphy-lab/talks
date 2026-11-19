@@ -256,6 +256,9 @@ class Builder:
         for p in self.talk.patches:
             if p.slide not in self.slides_by_id:
                 raise BuildError(f"patch: slide {p.slide} is not in the export")
+        for ln in self.talk.links:
+            if ln.slide not in self.slides_by_id:
+                raise BuildError(f"link: slide {ln.slide} is not in the export")
         for sid in self.talk.titles:
             if sid not in self.slides_by_id:
                 raise BuildError(f"titles: slide {sid} is not in the export")
@@ -484,7 +487,11 @@ class Builder:
             title = replace_spaced(title, spec.find, spec.replace)
         if slide.id in self.talk.titles:
             title = self.talk.titles[slide.id]
-        return OrderedDict(id=slide.id, n=slide.n, title=title, text=clean_text(raw), states=states_out)
+        out = OrderedDict(id=slide.id, n=slide.n, title=title, text=clean_text(raw), states=states_out)
+        links = [OrderedDict(rect=list(ln.rect), url=ln.url, label=ln.label) for ln in self.talk.links if ln.slide == slide.id]
+        if links:
+            out["links"] = links
+        return out
 
     def _put_still(self, img: Image.Image, alpha: bool = False) -> str:
         """Store the webp as usual and keep the lossless pixels next to it, named after it."""

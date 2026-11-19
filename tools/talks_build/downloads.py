@@ -98,7 +98,7 @@ def derive_pdf(export_dir: Path, out: Path) -> dict:
 
 
 def handout_pdf(derived: Path, manifest: dict, page_url: str, out: Path) -> dict:
-    """The PDF download: repaired text maps, metadata, and movie areas linked to the web slide."""
+    """The PDF download: repaired text maps, metadata, movie areas linked to the web slide, and slide links."""
     from pypdf import PdfReader, PdfWriter
     from pypdf.annotations import Link
 
@@ -111,7 +111,7 @@ def handout_pdf(derived: Path, manifest: dict, page_url: str, out: Path) -> dict
         if len(reader.pages) != len(manifest["slides"]):
             raise DownloadError(f"derived PDF has {len(reader.pages)} pages for {len(manifest['slides'])} slides")
         writer = PdfWriter(clone_from=reader)
-        links = 0
+        links = slide_links = 0
         for i, slide in enumerate(manifest["slides"]):
             page = writer.pages[i]
             box = page.mediabox
@@ -131,6 +131,11 @@ def handout_pdf(derived: Path, manifest: dict, page_url: str, out: Path) -> dict
                     pdf_rect = (left + x * sx, top - (y + h) * sy, left + (x + w) * sx, top - y * sy)
                     writer.add_annotation(page_number=i, annotation=Link(rect=pdf_rect, url=url))
                     links += 1
+            for link in slide.get("links", []):
+                x, y, w, h = link["rect"]
+                pdf_rect = (left + x * sx, top - (y + h) * sy, left + (x + w) * sx, top - y * sy)
+                writer.add_annotation(page_number=i, annotation=Link(rect=pdf_rect, url=link["url"]))
+                slide_links += 1
         title = f"{manifest['title']}: {manifest['subtitle']}" if manifest.get("subtitle") else manifest["title"]
         writer.add_metadata(
             {
@@ -144,7 +149,7 @@ def handout_pdf(derived: Path, manifest: dict, page_url: str, out: Path) -> dict
         out.parent.mkdir(parents=True, exist_ok=True)
         with open(out, "wb") as f:
             writer.write(f)
-    return {"pages": len(manifest["slides"]), "movie_links": links, "fonts_repaired": len(fonts)}
+    return {"pages": len(manifest["slides"]), "movie_links": links, "slide_links": slide_links, "fonts_repaired": len(fonts)}
 
 
 # --------------------------------------------------------------------------
@@ -410,7 +415,8 @@ def build_pptx(manifest: dict, media_dir: Path, stills_dir: Path, out: Path, pag
     props.subject = manifest.get("subtitle") or ""
     props.author = manifest["speaker"]
     props.comments = f"Web version: {page_url}"
-    counts = {"slides": 0, "states": 0, "builds": 0, "videos": 0, "youtube_links": 0, "overlays": 0, "covers": 0}
+    counts = {"slides": 0, "states": 0, "builds": 0, "videos": 0, "youtube_links": 0, "overlays": 0, "covers": 0,
+              "slide_links": 0}
     with tempfile.TemporaryDirectory(prefix="talks-pptx-") as tmpdir:
         tmp = Path(tmpdir)
         posters: dict[str, Path] = {}
@@ -488,6 +494,27 @@ def build_pptx(manifest: dict, media_dir: Path, stills_dir: Path, out: Path, pag
                     if j < last:
                         clicks[j].append(("out", shape.shape_id))
                     counts["overlays"] += 1
+            # Slide links (SPEC 1.2) last, so they sit above everything: an
+            # invisible rectangle with the hyperlink, once per web slide of the run.
+            from pptx.enum.shapes import MSO_SHAPE
+
+            # A run can span web slides; each link shows only for its own slide's states.
+            for web_slide in dict.fromkeys(id(sl) for sl, _, _ in run):
+                owned = [j for j, (sl, _, _) in enumerate(run) if id(sl) == web_slide]
+                slide = run[owned[0]][0]
+                first, end = owned[0], owned[-1]
+                for link in slide.get("links", []):
+                    x, y, w, h = link["rect"]
+                    shape = s.shapes.add_shape(MSO_SHAPE.RECTANGLE, _emu(x), _emu(y), _emu(w), _emu(h))
+                    shape.fill.background()
+                    shape.line.fill.background()
+                    shape.name = f"Link: {link['label']}"
+                    shape.click_action.hyperlink.address = link["url"]
+                    if first:
+                        clicks[first - 1].append(("in", shape.shape_id, False))
+                    if end < last:
+                        clicks[end].append(("out", shape.shape_id))
+                    counts["slide_links"] += 1
             _set_timing_and_transition(s, timed, run[0][2].get("transition") == "dissolve", clicks)
             counts["slides"] += 1
             counts["states"] += len(run)

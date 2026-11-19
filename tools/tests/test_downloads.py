@@ -586,3 +586,94 @@ def test_make_downloads_subset_keeps_other_formats_in_talk_order(tmp_path, monke
     assert [e["format"] for e in entries] == ["pdf", "pptx"]
     assert entries[0] == m["downloads"][0]
     assert json.loads(path.read_text())["downloads"] == entries
+
+
+LINK = {"rect": [1470, 500, 270, 270], "url": "https://comphy-lab.org/agents-in-research/", "label": "Setup guide"}
+
+
+def test_handout_pdf_links_slide_links(tmp_path):
+    from pypdf import PdfReader, PdfWriter
+
+    m = good()
+    m["slides"][0]["links"] = [LINK]
+    w = PdfWriter()
+    for _ in m["slides"]:
+        w.add_blank_page(width=1920, height=1080)
+    src = tmp_path / "derived.pdf"
+    with open(src, "wb") as f:
+        w.write(f)
+    res = handout_pdf(src, m, "https://comphy-lab.org/talks/demo-talk/", tmp_path / "handout.pdf")
+    annots = [a.get_object() for a in PdfReader(tmp_path / "handout.pdf").pages[0].get("/Annots", [])]
+    mine = [a for a in annots if a["/A"]["/URI"] == LINK["url"]]
+    assert res["slide_links"] == 1 and len(mine) == 1
+    x, y, w_, h = LINK["rect"]
+    assert tuple(round(float(v)) for v in mine[0]["/Rect"]) == (x, 1080 - (y + h), x + w_, 1080 - y)
+
+
+def test_build_pptx_adds_slide_links_on_top(tmp_path):
+    from pptx import Presentation
+
+    m, media, stills = _pptx_fixture(tmp_path)
+    m["slides"][0]["links"] = [LINK]
+    out = tmp_path / "talk.pptx"
+    counts = build_pptx(m, media, stills, out, "https://comphy-lab.org/talks/demo-talk/")
+    assert counts["slide_links"] == 1
+    shapes = list(Presentation(str(out)).slides[0].shapes)
+    top = shapes[-1]
+    assert top.name == "Link: Setup guide" and top.click_action.hyperlink.address == LINK["url"]
+    x, y, w_, h = LINK["rect"]
+    assert (top.left, top.top, top.width, top.height) == (x * 6350, y * 6350, w_ * 6350, h * 6350)
+
+
+def test_build_pptx_link_shows_only_with_its_web_slide(tmp_path):
+    # Two web slides that keep the same video share one PowerPoint slide; a link
+    # of the second web slide enters with the click that shows it.
+    from pptx import Presentation
+
+    m, media, stills = _pptx_fixture(tmp_path)
+    first, second = m["slides"][0]["states"]
+    m["slides"] = [
+        dict(m["slides"][0], states=[first]),
+        dict(m["slides"][0], id="22222222-2222-2222-2222-222222222222", n=2, states=[second], links=[LINK]),
+    ]
+    out = tmp_path / "talk.pptx"
+    counts = build_pptx(m, media, stills, out, "https://comphy-lab.org/talks/demo-talk/")
+    prs = Presentation(str(out))
+    assert counts["slides"] == 1 and counts["slide_links"] == 1
+    slide = prs.slides[0]
+    link = next(sh for sh in slide.shapes if sh.name == "Link: Setup guide")
+    effects = _effects(slide._element.find(f"{P}timing"))
+    shown = [i for i, row in enumerate(effects) for (_, cls, spid, val) in row
+             if spid == link.shape_id and cls == "entr" and val == "visible"]
+    assert shown == [1], effects  # hidden in the first state, shown with the click
+
+
+
+def test_build_pptx_links_follow_their_web_slides_in_a_shared_run(tmp_path):
+    # Three web slides keep the same video, so they share one PowerPoint slide. The
+    # first two have different links at the same rect; the third has none. Each
+    # link shows only during its own state.
+    from pptx import Presentation
+
+    m, media, stills = _pptx_fixture(tmp_path)
+    first, second = m["slides"][0]["states"]
+    other = dict(LINK, url="https://github.com/VatsalSy/agentic-hpc-scripts", label="Scripts")
+    m["slides"] = [
+        dict(m["slides"][0], states=[first], links=[LINK]),
+        dict(m["slides"][0], id="22222222-2222-2222-2222-222222222222", n=2, states=[second], links=[other]),
+        dict(m["slides"][0], id="33333333-3333-3333-3333-333333333333", n=3, states=[copy.deepcopy(second)]),
+    ]
+    out = tmp_path / "talk.pptx"
+    counts = build_pptx(m, media, stills, out, "https://comphy-lab.org/talks/demo-talk/")
+    slide = Presentation(str(out)).slides[0]
+    assert counts["slides"] == 1 and counts["slide_links"] == 2
+    a = next(sh for sh in slide.shapes if sh.name == "Link: Setup guide")
+    b = next(sh for sh in slide.shapes if sh.name == "Link: Scripts")
+    effects = _effects(slide._element.find(f"{P}timing"))
+
+    def rows(shape, cls):
+        return [i for i, row in enumerate(effects) for (_, c, spid, _) in row if spid == shape.shape_id and c == cls]
+
+    # Row 0 starts the video; row k is the click that shows state k of the run.
+    assert rows(a, "entr") == [] and rows(a, "exit") == [1]
+    assert rows(b, "entr") == [1] and rows(b, "exit") == [2]

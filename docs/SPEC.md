@@ -89,6 +89,12 @@ for the authoritative example. Its fields:
   order. Each URL is a public Dropbox file link with `dl=1`, matching its
   `pdf`, `pptx` or `key` format (Section 2.1). A list of format names is
   retained for generating local copies of older talks.
+- `links`: optional list of `{slide, rect, url, label}`: a clickable area on
+  a slide, such as a QR code or a printed address. `rect` is `[x, y, w, h]` in
+  whole canvas pixels inside 1920 x 1080, `url` an `https://` address and
+  `label` the text a screen reader and the page's list show. Take the rect
+  from the slide's source (a QR image's box, with a small margin); slides are
+  flattened images, so the export does not record it.
 - `changelog[]`: `{date, note}`.
 
 ## 2. Pipeline outputs
@@ -160,7 +166,8 @@ the export that build read: the build records both digests in
 
 - `pdf`: the derived PDF (above), one page per slide in its final state.
   Movies appear as the frame Keynote shows; each movie area links to that
-  slide on the website. The text maps are repaired as for slide text
+  slide on the website, and each slide link (Section 1.2) is a link
+  annotation over its rect. The text maps are repaired as for slide text
   (Section 3.1), so the PDF's text can be searched and copied. Title, author
   and subject are set from the manifest.
 - `pptx`: every click state, 13.333 x 7.5 in (16:9; one canvas pixel is
@@ -182,7 +189,9 @@ the export that build read: the build records both digests in
   becomes the poster frame Keynote shows, cropped from a state of the same
   slide without the embed, linked to the video on YouTube at its start time;
   the video itself is not included. A `dissolve` state gets a fade
-  transition, or a fade-in of its still when it is a click build.
+  transition, or a fade-in of its still when it is a click build. Each slide
+  link (Section 1.2) is an invisible rectangle above everything else on its
+  slide, hyperlinked to its `url`.
 - `key`: preferably the native Keynote deck the talk was given from (the
   accepted version, minus any slides left off the web), which keeps vector
   slides, transitions and movie settings. The generator's fallback is the
@@ -225,6 +234,9 @@ entries and retains configured Dropbox entries.
       "n": 1,                                         // 1-based show order
       "title": "…",                                   // first text line, for UI and screen readers
       "text": "…",                                    // all text shown on the slide, for screen readers and search
+      "links": [                                      // optional, from talk.yaml links (Section 1.2); omitted when none
+        { "rect": [1470, 500, 270, 270], "url": "https://…", "label": "Setup guide" }
+      ],
       "states": [                                     // one per click (rest state)
         {
           "image":   "<hash>.webp",                   // full-canvas still, videos excluded
@@ -375,6 +387,15 @@ not the size, so a video lines up with the poster frame baked into the still.
   - Clicks and swipes inside a YouTube embed go to YouTube's cross-origin
     frame and cannot navigate; the page's help says to swipe outside the
     video or use the arrow buttons there.
+- **Slide links.** A slide's `links` are plain links over their canvas
+  rectangles (placed as media are), in a layer beside the stage rather than
+  inside its `role="img"` element, so assistive technology reaches them.
+  Each opens in a new tab (`noopener noreferrer`), carries its label as
+  accessible text, shows a teal ring on hover and keyboard focus, and a click
+  on it does not change slide. They follow the shown slide on every step.
+  The page's "Links in this talk" card lists each distinct `url` once, with
+  a deep link to the first slide that has it; it stays hidden when the talk
+  has none.
 - **Deep links.** `#<first 8 hex chars of slide UUID>` or `#<…>.<k>`, where
   `k` counts the slide's states from 1 (`#<…>.1` is the same as `#<…>`). The
   hash follows the state on screen, written without a suffix for a slide's
@@ -449,6 +470,8 @@ not the size, so a video lines up with the poster frame baked into the still.
   pair, and agree with the original pair on whether an overlay exists.
 - With `--media-dir`, density-bearing states are checked against their actual
   file dimensions: 1920 x 1080 for the original pair and 3840 x 2160 for 2x.
+- A slide link's `rect` is non-empty and inside the canvas; its `url` is
+  `https://`; its `label` is non-empty; `links` is omitted rather than empty.
 - A download's `url` is an HTTPS file link on `www.dropbox.com`, under `/s/`
   or `/scl/fi/`, with a matching format extension, `dl=1`, no fragment or
   credentials, and no repeated `dl` value. Its byte count is a positive safe

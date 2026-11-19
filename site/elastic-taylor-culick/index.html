@@ -20,10 +20,10 @@
   <link rel="stylesheet" href="../vendor/ds/tokens.css?v=ceeb52a3ae50f441">
   <link rel="stylesheet" href="../vendor/comphy-lab/header.css?v=6b2f70da694aa56d">
   <link rel="stylesheet" href="../vendor/comphy-lab/footer-v2.css?v=37c0b057d1a1842e">
-  <link rel="stylesheet" href="../player/player.css?v=e4ec201e507fb92a">
+  <link rel="stylesheet" href="../player/player.css?v=16a845ca4e1b75dc">
   <script data-cfasync="false" src="../player/theme.js?v=9433bc1b9e1724e7"></script>
   <script data-cfasync="false" src="../player/header.js?v=f00a0daaa2a0ac52" defer></script>
-  <script type="module" data-cfasync="false" src="../player/player.js?v=5a2978d23b8d28fd"></script>
+  <script type="module" data-cfasync="false" src="../player/player.js?v=6c52a9798827eb3d"></script>
 </head>
 <body id="top" class="talk-page">
   <a class="skip-link" href="#viewer">Skip to the slides</a>
@@ -76,6 +76,7 @@
                 <div class="layer layer--overlay" id="layer-overlay"></div>
               </div>
               <div class="stage-ui" id="stage-ui"></div>
+              <div class="stage-links" id="stage-links"></div>
             </div>
             <div class="stage-tools" id="stage-tools" role="group" aria-label="Full-screen controls">
               <button class="ctl ctl--onblack" type="button" id="btn-pause-fs" aria-label="Pause videos" title="Pause videos (P or K)">
@@ -142,6 +143,10 @@
               <div><dt><kbd>P</kbd> <kbd>K</kbd></dt><dd>Pause or play videos</dd></div>
             </dl>
             <p class="about__hint">On a touch screen, swipe left or right; on a slide with a YouTube video, swipe outside the video or use the arrow buttons. A click on the right half of a slide moves on; the left half goes back.</p>
+          </div>
+          <div class="card" id="links-card" hidden>
+            <h3>Links in this talk</h3>
+            <ul class="talk-links" id="talk-links"></ul>
           </div>
           <div class="card">
             <h3>Changes</h3>

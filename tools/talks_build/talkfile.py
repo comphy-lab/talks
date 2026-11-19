@@ -17,10 +17,45 @@ SLUG_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 UUID_RE = re.compile(r"^[0-9A-F]{8}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{4}-[0-9A-F]{12}$")
 YOUTUBE_ID_RE = re.compile(r"^[A-Za-z0-9_-]{11}$")
 DOWNLOAD_FORMATS = ("pdf", "pptx", "key")
+# URL characters RFC 3986 allows, ASCII only: PDF link targets must be ASCII.
+LINK_URL_RE = re.compile(r"^https://[A-Za-z0-9\-._~:/?#\[\]@!$&'()*+,;=%]+$")
+HOST_RE = re.compile(r"^(?=.{1,253}$)[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?(?:\.[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?)+$")
+
+LABEL_ILLEGAL_RE = re.compile("[\x00-\x08\x0b\x0c\x0e-\x1f\x7f\ud800-\udfff\ufffe\uffff]")
+
+
+def link_label(label) -> bool:
+    """A non-blank label without control characters (they break the PowerPoint XML)."""
+    return isinstance(label, str) and bool(label.strip()) and not LABEL_ILLEGAL_RE.search(label)
+
+
+def https_url(url) -> bool:
+    """An absolute https:// URL with a host name and no user info (SPEC 1.2 links)."""
+    from urllib.parse import urlsplit
+
+    if not isinstance(url, str) or not LINK_URL_RE.match(url):
+        return False
+    try:
+        parts = urlsplit(url)
+        host = parts.hostname
+        parts.port  # raises ValueError for a malformed or out-of-range port
+    except ValueError:
+        return False
+    return parts.scheme == "https" and bool(host) and bool(HOST_RE.match(host)) and "@" not in parts.netloc
 
 
 class TalkError(ValueError):
     pass
+
+
+@dataclass(frozen=True)
+class LinkSpec:
+    """A clickable area on a slide (a QR code, a printed address), SPEC 1.2."""
+
+    slide: str
+    rect: tuple[int, int, int, int]
+    url: str
+    label: str
 
 
 @dataclass
@@ -47,6 +82,8 @@ class Talk:
     # Outgoing slide UUID -> Magic Move duration in seconds (the next slide's
     # first state glides the shared video into place; SPEC 1.2 and 3.2).
     magic_move: dict[str, float] = field(default_factory=dict)
+    # Clickable areas on slides, in reading order (SPEC 1.2).
+    links: list[LinkSpec] = field(default_factory=list)
 
 
 def _date(value, what: str) -> str:
@@ -155,6 +192,28 @@ def load_talk(path: Path) -> Talk:
         if str(e["slide"]) in magic_move:
             raise TalkError(f"{where}: slide listed twice")
         magic_move[str(e["slide"])] = duration
+    links = []
+    raw_links = data.get("links", [])
+    if not isinstance(raw_links, list):
+        raise TalkError("talk.yaml: links must be a list of {slide, rect, url, label}")
+    for i, ln in enumerate(raw_links):
+        where = f"talk.yaml links[{i}]"
+        if not isinstance(ln, dict) or set(ln) != {"slide", "rect", "url", "label"}:
+            raise TalkError(f"{where}: needs exactly slide, rect, url and label")
+        if not UUID_RE.match(str(ln["slide"])):
+            raise TalkError(f"{where}: slide must be a Keynote slide UUID")
+        rect = ln["rect"]
+        if not (isinstance(rect, list) and len(rect) == 4 and all(type(v) is int for v in rect)):
+            raise TalkError(f"{where}: rect must be [x, y, w, h] in whole canvas pixels")
+        x, y, w, h = rect
+        if not (w > 0 and h > 0 and x >= 0 and y >= 0 and x + w <= 1920 and y + h <= 1080):
+            raise TalkError(f"{where}: rect must be non-empty and inside the 1920 x 1080 canvas")
+        url, label = ln["url"], ln["label"]
+        if not https_url(url):
+            raise TalkError(f"{where}: url must be an https:// address with a host name")
+        if not link_label(label):
+            raise TalkError(f"{where}: label must be non-empty text without control characters")
+        links.append(LinkSpec(slide=str(ln["slide"]), rect=(x, y, w, h), url=url, label=label.strip()))
     changelog = []
     for i, c in enumerate(data.get("changelog") or []):
         changelog.append({"date": _date(c.get("date"), f"changelog[{i}]"), "note": str(c.get("note") or "").strip()})
@@ -199,4 +258,5 @@ def load_talk(path: Path) -> Talk:
         downloads=list(downloads),
         download_links=download_links,
         magic_move=magic_move,
+        links=links,
     )

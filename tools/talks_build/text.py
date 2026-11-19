@@ -68,6 +68,21 @@ LONG_ARROWS = {
 }
 
 
+# Bytes XML 1.0 forbids. A font without a usable ToUnicode map (for example a
+# plot's embedded font in Keynote's export) makes poppler emit its raw glyph
+# codes, which can fall here; clean_text drops them in plain text the same way.
+_XML_ILLEGAL = re.compile(rb"[\x00-\x08\x0b\x0c\x0e-\x1f]")
+
+
+def poppler_xml(out: bytes) -> ET.Element:
+    """Parse poppler's XML output: no DOCTYPE lookup, illegal control bytes as spaces.
+
+    The control bytes are single ASCII bytes, never part of a UTF-8 sequence,
+    so replacing them cannot split a character.
+    """
+    return ET.fromstring(_XML_ILLEGAL.sub(b" ", re.sub(rb"<!DOCTYPE[^>]*>", b"", out)))
+
+
 def clean_text(text: str) -> str:
     """Collapse whitespace, drop file names, unknown glyphs and object-replacement marks."""
     text = text.replace("\ufffd", " ")
@@ -128,7 +143,7 @@ def slide_title(raw: str, blocks: list[list[Line]] | None) -> str | None:
 def pdf_pages_blocks(pdf: Path) -> list[list[list[Line]]]:
     """Per page, per block, the lines of ``pdftotext -bbox-layout`` output."""
     out = run(["pdftotext", "-enc", "UTF-8", "-bbox-layout", str(pdf), "-"], capture=True).stdout
-    root = ET.fromstring(re.sub(rb"<!DOCTYPE[^>]*>", b"", out))
+    root = poppler_xml(out)
     pages: list[list[list[Line]]] = []
     for page_el in root.iter(f"{XHTML}page"):
         blocks: list[list[Line]] = []
@@ -233,7 +248,7 @@ def pdf_pages_runs(pdf: Path) -> list[list[Run]]:
     later overlays in place, transparent); ``pdftohtml`` reports the opacity.
     """
     out = run(["pdftohtml", "-xml", "-i", "-stdout", "-zoom", "1", "-q", str(pdf)], capture=True).stdout
-    root = ET.fromstring(re.sub(rb"<!DOCTYPE[^>]*>", b"", out))
+    root = poppler_xml(out)
     opacity: dict[str, float] = {}
     for spec in root.iter("fontspec"):
         try:
@@ -322,9 +337,7 @@ def page_lines(pdf: Path, page_index: int) -> list[Line]:
         ],
         capture=True,
     ).stdout
-    # Strip the DOCTYPE so ElementTree does not try to resolve it.
-    text = re.sub(rb"<!DOCTYPE[^>]*>", b"", out)
-    root = ET.fromstring(text)
+    root = poppler_xml(out)
     return [ln for ln in (_line(el) for el in root.iter(f"{XHTML}line")) if ln is not None]
 
 
