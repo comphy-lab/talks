@@ -38,6 +38,10 @@ links:
     rect: [1620, 70, 230, 230]
     url: https://github.com/VatsalSy/rayleigh-coding/tree/main/plugins/rayleigh-coding/skills
     label: Public skills
+  - slide: 9EC065EE-68C0-4908-839B-99AC8E103EB6   # slide 25, skills: tstack credit
+    rect: [668, 982, 390, 48]
+    url: https://github.com/t3dotgg/tstack
+    label: Theo Browne's tstack skills
   - slide: 4CD39EAF-5CF2-4CD2-B377-C2185B0D760C   # slide 26, council credit
     rect: [710, 982, 764, 48]
     url: https://github.com/t3dotgg/tstack/tree/main/skills/council
@@ -72,14 +76,16 @@ links:
 downloads:
   - format: pdf
     url: https://www.dropbox.com/scl/fi/3anx2nnt5w8ltw7bbukt7/Sanjay-agents-for-computational-research-2026-11-19.pdf?rlkey=u9e1c2k8x1oqz9y78q1ozdbfk&dl=1
-    bytes: 5515955
+    bytes: 5522291
   - format: pptx
     url: https://www.dropbox.com/scl/fi/tzqkyns0cponbxe13ogko/Sanjay-agents-for-computational-research-2026-11-19.pptx?rlkey=lvzlj0ouriggtkmj0wklmwpag&dl=1
-    bytes: 9383670
+    bytes: 9418902
   - format: key
     url: https://www.dropbox.com/scl/fi/szspmz8m027lwdv5anq9v/Sanjay-agents-for-computational-research-2026-11-19.key?rlkey=dynw4klviuw0yxntzosd0c749&dl=1
-    bytes: 8784079
+    bytes: 8795033
 
 changelog:
   - date: "2026-11-19"
     note: First web version of the talk.
+  - date: "2026-11-19"
+    note: The skills slide credits Theo Browne's tstack for three of its skills.

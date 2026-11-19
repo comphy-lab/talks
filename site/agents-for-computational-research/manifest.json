@@ -422,12 +422,12 @@
       "id": "9EC065EE-68C0-4908-839B-99AC8E103EB6",
       "n": 25,
       "title": "Skills",
-      "text": "Skills Instructions an agent loads only when the task needs them basilisk-master Basilisk solver know-how: sources, APIs, build errors basilisk-runs Preflight, launch, monitor and close out simulations publication-plots Consistent, publication-quality figures and videos research-compute-dispatch Reserve compute; never disturb other runs council-of-sages Two independent AI reviewers must approve gh-pr-create Open a pull request with a clear description full-stop Finish the work, stop at the open PR: a human merges Public skills",
+      "text": "Skills Instructions an agent loads only when the task needs them basilisk-master Basilisk solver know-how: sources, APIs, build errors basilisk-runs Preflight, launch, monitor and close out simulations publication-plots Consistent, publication-quality figures and videos research-compute-dispatch Reserve compute; never disturb other runs council-of-sages† Two independent AI reviewers must approve gh-pr-create† Open a pull request with a clear description full-stop † Finish the work, stop at the open PR: a human merges † Adapted in part from Theo Browne’s tstack: github.com/t3dotgg/tstack Public skills",
       "states": [
         {
-          "image": "dd4d9528aa558c8c.webp",
+          "image": "dfde721bf293b344.webp",
           "overlay": null,
-          "image2x": "e10e17d7b066f2bf.webp",
+          "image2x": "0c4685bd7237a995.webp",
           "overlay2x": null,
           "transition": "dissolve",
           "media": []
@@ -443,6 +443,16 @@
           ],
           "url": "https://github.com/VatsalSy/rayleigh-coding/tree/main/plugins/rayleigh-coding/skills",
           "label": "Public skills"
+        },
+        {
+          "rect": [
+            668,
+            982,
+            390,
+            48
+          ],
+          "url": "https://github.com/t3dotgg/tstack",
+          "label": "Theo Browne's tstack skills"
         }
       ]
     },
@@ -776,23 +786,27 @@
     {
       "date": "2026-11-19",
       "note": "First web version of the talk."
+    },
+    {
+      "date": "2026-11-19",
+      "note": "The skills slide credits Theo Browne's tstack for three of its skills."
     }
   ],
   "downloads": [
     {
       "format": "pdf",
       "url": "https://www.dropbox.com/scl/fi/3anx2nnt5w8ltw7bbukt7/Sanjay-agents-for-computational-research-2026-11-19.pdf?rlkey=u9e1c2k8x1oqz9y78q1ozdbfk&dl=1",
-      "bytes": 5515955
+      "bytes": 5522291
     },
     {
       "format": "pptx",
       "url": "https://www.dropbox.com/scl/fi/tzqkyns0cponbxe13ogko/Sanjay-agents-for-computational-research-2026-11-19.pptx?rlkey=lvzlj0ouriggtkmj0wklmwpag&dl=1",
-      "bytes": 9383670
+      "bytes": 9418902
     },
     {
       "format": "key",
       "url": "https://www.dropbox.com/scl/fi/szspmz8m027lwdv5anq9v/Sanjay-agents-for-computational-research-2026-11-19.key?rlkey=dynw4klviuw0yxntzosd0c749&dl=1",
-      "bytes": 8784079
+      "bytes": 8795033
     }
   ]
 }
