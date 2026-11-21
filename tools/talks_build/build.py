@@ -27,6 +27,7 @@ from .text import (
     blocks_text,
     clean_text,
     drop_invisible,
+    join_tilted_lines,
     pdf_pages_blocks,
     pdf_pages_runs,
     replace_spaced,
@@ -241,7 +242,7 @@ class Builder:
             pages = filtered
         else:
             self.warn("text: pdftohtml and pdftotext disagree on the page count; transparent text kept")
-        pages = [attach_marks(blocks) for blocks in pages]
+        pages = [join_tilted_lines(attach_marks(blocks)) for blocks in pages]
         self.report["transparent_words_dropped"] = hidden
         return [blocks_text(b) for b in pages], pages
 

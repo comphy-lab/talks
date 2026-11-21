@@ -299,8 +299,10 @@ not the size, so a video lines up with the poster frame baked into the still.
 - `title` and `text` come from the flat PDF export, as a viewer reads the
   slide: TeX glyphs are decoded from the fonts' own glyph names where the
   export's `ToUnicode` maps contradict them, and text painted at zero
-  opacity (Beamer overlays kept for later slides) is left out. `text` covers
-  every click state of the slide.
+  opacity (Beamer overlays kept for later slides) is left out. A line tilted
+  by a degree or so, which the extraction splits into fragments ordered top to
+  bottom, is rejoined left to right. `text` covers every click state of the
+  slide.
 
 ### 3.2 Player semantics
 

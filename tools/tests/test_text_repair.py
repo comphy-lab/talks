@@ -16,6 +16,7 @@ from talks_build.text import (
     blocks_text,
     clean_text,
     drop_invisible,
+    join_tilted_lines,
     pdf_pages_blocks,
     pdf_pages_runs,
     poppler_xml,
@@ -96,6 +97,44 @@ def test_raised_mark_rejoins_its_line():
     # A label is never moved, even when it sits inside another line's box.
     label = [Line((_w("Oh", 300, 50, 40, 40),))]
     assert attach_marks([label, title]) == [label, title]
+
+
+def test_tilted_line_fragments_rejoin_left_to_right():
+    # A headline rotated by about a degree: pdftotext gives each kerned
+    # fragment a line of its own, top to bottom, so the line comes out reversed.
+    pieces = [("Op", 162, 61), ("en", 223, 47), ("A", 270, 36), ("I", 306, 16), ("cl", 335, 36),
+              ("aims", 371, 94), ("to", 477, 39), ("have", 529, 92)]  # fmt: skip
+    fragments = [Line((_w(t, x, 170 - 0.02 * (x - 162), w, 60),)) for t, x, w in reversed(pieces)]
+    below = Line((_w("90-year-old", 163, 227, 232, 64),))
+    (rows,) = join_tilted_lines([fragments + [below]])
+    assert [clean_text(blocks_text([[r]])) for r in rows] == ["OpenAI claims to have", "90-year-old"]
+
+
+def test_line_pairs_and_spread_labels_are_not_rejoined():
+    # An exponent next to its base, and axis labels on one baseline, pair up
+    # the same way but are not a tilted line: their order is left as found.
+    pair = [Line((_w("2", 300, 50, 20, 40),)), Line((_w("Z", 270, 50, 22, 40),))]
+    assert join_tilted_lines([pair]) == [pair]
+    ticks = [Line((_w(t, x, 900, 30, 40),)) for t, x in (("1", 500), ("10", 300), ("0.1", 100))]
+    assert join_tilted_lines([ticks]) == [ticks]
+    # Separate labels set as a staircase, each 7 pt lower and 5 pt to the left
+    # of the one before: the same overlap and gaps, but far too steep for a tilt.
+    stairs = [Line((_w(t, x, y, 72, 40),)) for t, x, y in (("ONE", 400, 100), ("TWO", 323, 107), ("THREE", 246, 114))]
+    assert join_tilted_lines([stairs]) == [stairs]
+    # Wide labels stepping down at under 2 degrees: still whole words, 5 pt apart.
+    wide = [Line((_w(t, x, y, 216, 40),)) for t, x, y in (("GROUP-AAA", 542, 100), ("GROUP-BBB", 321, 107),
+                                                         ("GROUP-CCC", 100, 114))]  # fmt: skip
+    assert join_tilted_lines([wide]) == [wide]
+
+
+def test_tilted_line_rejoins_beside_a_separate_label():
+    # A label just right of the headline, above its baseline, joins the run of
+    # lines but not the tilted line: the headline is still repaired.
+    pieces = [("Op", 162, 61), ("en", 223, 47), ("A", 270, 36), ("I", 306, 16), ("cl", 335, 36), ("aims", 371, 94)]
+    fragments = [Line((_w(t, x, 170 - 0.02 * (x - 162), w, 60),)) for t, x, w in reversed(pieces)]
+    label = Line((_w("NEW", 474, 155, 60, 60),))
+    (rows,) = join_tilted_lines([[label] + fragments])
+    assert [clean_text(blocks_text([[r]])) for r in rows] == ["NEW", "OpenAI claims"]
 
 
 def test_clean_text_normalises_tex_constructions():

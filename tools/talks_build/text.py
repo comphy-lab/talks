@@ -212,6 +212,88 @@ def attach_marks(blocks: list[list[Line]]) -> list[list[Line]]:
     return out
 
 
+# A text box tilted by a degree or so reaches ``pdftotext`` as one line per
+# kerned fragment, sorted top to bottom, which reverses a line that rises to
+# the right. Consecutive lines of a block are fragments of one visual line when
+# their heights agree to within ROW_HEIGHT_TOLERANCE, they share at least
+# ROW_OVERLAP of that height, and they sit side by side at most ROW_GAP of it
+# apart (a word space). The longest stretch of at least ROW_MIN_FRAGMENTS such
+# lines is rejoined if its fragments lie on one straight baseline, within
+# ROW_BASELINE_TOLERANCE of their height, tilted by at most ROW_MAX_SLOPE
+# (about 2 degrees), and at least one word is split between two abutting
+# fragments, as kerning splits words in tilted text. Pairs, and separate labels
+# set in a staircase, are left alone: equation pieces and axis labels can line
+# up the same way, but their words are whole.
+ROW_HEIGHT_TOLERANCE = 0.12
+ROW_OVERLAP = 0.75
+ROW_GAP = 0.5
+ROW_MIN_FRAGMENTS = 3
+ROW_MAX_SLOPE = 0.035
+ROW_BASELINE_TOLERANCE = 0.1
+
+
+def _fragments_of_one_row(a: Line, b: Line) -> bool:
+    heights = [w.box.h for w in a.words + b.words]
+    low, high = min(heights), max(heights)
+    if high - low > ROW_HEIGHT_TOLERANCE * high:
+        return False
+    if min(a.box.y2, b.box.y2) - max(a.box.y, b.box.y) < ROW_OVERLAP * low:
+        return False
+    # Abutting fragments of one word may overlap by a fraction of a point.
+    gap = max(b.box.x - a.box.x2, a.box.x - b.box.x2)
+    return -JOIN_GAP * low <= gap <= ROW_GAP * low
+
+
+def _one_tilted_baseline(words: list[Word]) -> bool:
+    """True when the words' bottoms lie on one straight, slightly tilted line."""
+    words = sorted(words, key=lambda w: w.box.x + w.box.w / 2)
+    first, last = words[0].box, words[-1].box
+    span = (last.x + last.w / 2) - (first.x + first.w / 2)
+    if span <= 0:
+        return False
+    slope = (last.y2 - first.y2) / span
+    if abs(slope) > ROW_MAX_SLOPE:
+        return False
+    tolerance = ROW_BASELINE_TOLERANCE * min(w.box.h for w in words)
+    return all(
+        abs(w.box.y2 - (first.y2 + slope * ((w.box.x + w.box.w / 2) - (first.x + first.w / 2)))) <= tolerance
+        for w in words
+    )
+
+
+def _tilted_line(run: list[Line]) -> bool:
+    words = sorted((w for ln in run for w in ln.words), key=lambda w: w.box.x)
+    if len(run) < ROW_MIN_FRAGMENTS or not _one_tilted_baseline(words):
+        return False
+    return any(v.box.x - w.box.x2 < JOIN_GAP * min(w.box.h, v.box.h) for w, v in zip(words, words[1:], strict=False))
+
+
+def _rejoin_run(run: list[Line]) -> list[Line]:
+    """The run with its longest tilted-line stretch joined, the rest as found."""
+    n = len(run)
+    for size in range(n, ROW_MIN_FRAGMENTS - 1, -1):
+        for start in range(n - size + 1):
+            part = run[start : start + size]
+            if _tilted_line(part):
+                words = sorted((w for ln in part for w in ln.words), key=lambda w: w.box.x)
+                return _rejoin_run(run[:start]) + [Line(tuple(words))] + _rejoin_run(run[start + size :])
+    return run
+
+
+def join_tilted_lines(blocks: list[list[Line]]) -> list[list[Line]]:
+    """Rejoin the fragments of a slightly rotated line, left to right."""
+    out = []
+    for block in blocks:
+        runs: list[list[Line]] = []
+        for line in block:
+            if runs and _fragments_of_one_row(runs[-1][-1], line):
+                runs[-1].append(line)
+            else:
+                runs.append([line])
+        out.append([row for run in runs for row in _rejoin_run(run)])
+    return out
+
+
 def blocks_text(blocks: list[list[Line]]) -> str:
     """Page text from ``pdftotext -bbox-layout`` blocks, one line per text line."""
     out = []
