@@ -4,7 +4,7 @@
   "title": "Elastic Taylor–Culick retractions",
   "subtitle": "How elasticity arrests a retracting sheet",
   "speaker": "Vatsal Sanjay",
-  "updated": "2026-11-06",
+  "updated": "2026-11-22",
   "canvas": {
     "width": 1920,
     "height": 1080
@@ -365,12 +365,12 @@
       "id": "F8AD3D8C-4583-411F-8A61-ABAAD2971193",
       "n": 14,
       "title": "Three dimensionless parameters: Oh, Ec and De",
-      "text": "Three dimensionless parameters: Oh, Ec and De ! ! √ 3 units: h0, ρh0/σ and σ/(ρh0); then VTC = 2 µs Oh = √ 2ρσh0 viscosity Gh0 Ec = σ elasticity De = ! λ 3 ρh0/σ relaxation √ τ = −p I + 2 2 Oh D + Ec (A − I), ∇ A − I A = − De",
+      "text": "Three dimensionless parameters: Oh, Ec and De ! ! √ 3 units: h0, ρh0/σ and σ/(ρh0); then VTC = 2 µs Oh = √ ρσh0 viscosity Gh0 Ec = σ elasticity De = ! λ 3 ρh0/σ relaxation τ = −p I + 2 Oh D + Ec (A − I), ∇ A − I A = − De",
       "states": [
         {
-          "image": "73d3cc829ae090cd.webp",
+          "image": "b6a84220fbdc0b0b.webp",
           "overlay": null,
-          "image2x": "f82c3199d4a20e62.webp",
+          "image2x": "d1ea4a1727c95cfc.webp",
           "overlay2x": null,
           "transition": "dissolve",
           "media": []
@@ -381,12 +381,12 @@
       "id": "44ABFB26-5325-4FA7-B708-6DB668194635",
       "n": 15,
       "title": "Three dimensionless parameters: Oh, Ec and De",
-      "text": "Three dimensionless parameters: Oh, Ec and De ! ! √ 3 units: h0, ρh0/σ and σ/(ρh0); then VTC = 2 µs Oh = √ 2ρσh0 viscosity Gh0 Ec = σ elasticity De = ! λ 3 ρh0/σ relaxation De Ec = 0: Newtonian Oh √ τ = −p I + 2 2 Oh D + Ec (A − I), De = 0: Newtonian ∇ A − I A = − De Ec",
+      "text": "Three dimensionless parameters: Oh, Ec and De ! ! √ 3 units: h0, ρh0/σ and σ/(ρh0); then VTC = 2 µs Oh = √ ρσh0 viscosity Gh0 Ec = σ elasticity De = ! λ 3 ρh0/σ relaxation τ = −p I + 2 Oh D + Ec (A − I), De Ec = 0: Newtonian Oh De = 0: Newtonian ∇ A − I A = − De Ec",
       "states": [
         {
-          "image": "0a6502f6be0c39b2.webp",
+          "image": "33a3456ed18c86a5.webp",
           "overlay": null,
-          "image2x": "23a0812cc2d56b5d.webp",
+          "image2x": "62654ddc30822db7.webp",
           "overlay2x": null,
           "transition": "dissolve",
           "media": []
@@ -514,12 +514,12 @@
       "id": "9B6E990E-97FD-4045-906A-7027FE4949EF",
       "n": 21,
       "title": "Classical Taylor–Culick retraction",
-      "text": "Classical Taylor–Culick retraction Oh = 0.05 |u|/VTC 0 1 log10 Φ −5 Φ: viscous dissipation rate per unit volume. Basilisk C, two-phase volume of fluid V. Sanjay, U. Sen, P. Kant & D. Lohse, J. Fluid Mech., 948, A14 (2022) 0 Oh = µs /√2ρσh0 VTC = ! 2σ/(ρh0)",
+      "text": "Classical Taylor–Culick retraction Oh ≈ 0.07 |u|/VTC 0 1 log10 Φ −5 Φ: viscous dissipation rate per unit volume. Basilisk C, two-phase volume of fluid V. Sanjay, U. Sen, P. Kant & D. Lohse, J. Fluid Mech., 948, A14 (2022) 0 Oh = µs /√ρσh0 VTC = ! 2σ/(ρh0)",
       "states": [
         {
-          "image": "a364c84bdb4556ed.webp",
+          "image": "79dfcc450cea7dc9.webp",
           "overlay": null,
-          "image2x": "a70731c419b6d2ce.webp",
+          "image2x": "1be18865bb2c58de.webp",
           "overlay2x": null,
           "transition": "dissolve",
           "media": [
@@ -707,12 +707,12 @@
       "id": "5F8A654E-875E-449D-A186-8D579B3054AC",
       "n": 31,
       "title": "First: no relaxation, De → ∞",
-      "text": "First: no relaxation, De → ∞ De De → ∞ Kelvin–Voigt sheet A = F · F T √ τ = −p I + 2 2 Oh D + Ec (A − I) Ec Oh = 1 in every FEM run Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "text": "First: no relaxation, De → ∞ De De → ∞ Kelvin–Voigt sheet A = F · F T τ = −p I + 2 Oh D + Ec (A − I) Ec Oh = √ 2 in every FEM run Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
       "states": [
         {
-          "image": "7c1bc47e955b299b.webp",
+          "image": "9960a4d8a71f542c.webp",
           "overlay": null,
-          "image2x": "fb61de3ac6c2d3e5.webp",
+          "image2x": "aa23667407d6a4a4.webp",
           "overlay2x": null,
           "transition": "dissolve",
           "media": []
@@ -1370,12 +1370,12 @@
       "id": "72DD4502-36D8-4E79-BC5A-091E67951419",
       "n": 69,
       "title": "What about polymer relaxation?",
-      "text": "What about polymer relaxation? De De → ∞ finite relaxation: Oldroyd-B ∇ A − I A = − De Ec = Oh = 1 0 < De < ∞ Ec = 1 Ec Oh = µs /√2ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "text": "What about polymer relaxation? De De → ∞ finite relaxation: Oldroyd-B ∇ A − I A = − De Ec = 1, Oh = √ 2 0 < De < ∞ Ec = 1 Ec Oh = µs /√ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
       "states": [
         {
-          "image": "ea720de84909fb71.webp",
+          "image": "f9afca082f9e798b.webp",
           "overlay": null,
-          "image2x": "76b667313c8217ed.webp",
+          "image2x": "66847eb2950b8aaa.webp",
           "overlay2x": null,
           "transition": "dissolve",
           "media": []
@@ -1386,12 +1386,12 @@
       "id": "841B9CEE-F911-476A-AD43-82FE5F9FDAAC",
       "n": 70,
       "title": "Ec = 1, De → ∞: the hole stops",
-      "text": "Ec = 1, De → ∞: the hole stops Oh = µs /√2ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "text": "Ec = 1, De → ∞: the hole stops Oh = µs /√ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
       "states": [
         {
-          "image": "23d2bb03adfbcaed.webp",
+          "image": "2b83a9d51f8646c7.webp",
           "overlay": null,
-          "image2x": "a29031077adc8da8.webp",
+          "image2x": "e897c6b0600ccfc8.webp",
           "overlay2x": null,
           "transition": "dissolve",
           "media": [
@@ -1413,12 +1413,12 @@
       "id": "EB7DC52F-54C0-4781-BF71-FE8EBD6CF4C3",
       "n": 71,
       "title": "Ec = 1, De = 1: the hole keeps opening",
-      "text": "Ec = 1, De = 1: the hole keeps opening Oh = µs /√2ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "text": "Ec = 1, De = 1: the hole keeps opening Oh = µs /√ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
       "states": [
         {
-          "image": "18d981376da64458.webp",
+          "image": "142b0a78ee733967.webp",
           "overlay": null,
-          "image2x": "f6846799757fe165.webp",
+          "image2x": "354dcdd790e2e0f5.webp",
           "overlay2x": null,
           "transition": "dissolve",
           "media": [
@@ -1440,12 +1440,12 @@
       "id": "2753D208-4195-489E-97F0-83CF20F7A01E",
       "n": 72,
       "title": "Finite relaxation releases the arrest",
-      "text": "Finite relaxation releases the arrest Ec = Oh = 1 De = 0 De → ∞ ∗uU/V=TC 1.0 0.8 0.6 0.4 0.2 0.0 10 −1 10 0 10 t 1 10 Oh = µs /√2ρσh0 2 Ec = Gh0/σ 10 3 De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "text": "Finite relaxation releases the arrest Ec = 1, Oh = ∗uU/V=TC 2 De = 0 De → ∞ 1.0 √ 0.8 0.6 0.4 0.2 0.0 10 −1 10 0 10 t 1 10 Oh = µs /√ρσh0 2 Ec = Gh0/σ 10 3 De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
       "states": [
         {
-          "image": "2c80a947ec2be9f0.webp",
+          "image": "e6b79a1d3dd74567.webp",
           "overlay": null,
-          "image2x": "2447c117619cd791.webp",
+          "image2x": "0dc9bc13b6624888.webp",
           "overlay2x": null,
           "transition": "dissolve",
           "media": []
@@ -1456,12 +1456,12 @@
       "id": "046EAB6A-7193-47DC-803C-4799755362D2",
       "n": 73,
       "title": "Finite relaxation releases the arrest",
-      "text": "Finite relaxation releases the arrest Ec = Oh = 1 De = 0 De → ∞ De = 0.1 De = 1 De = 10 De = 31.6 De = 100 De = 316 ∗uU/V=TC 1.0 0.8 0.6 0.4 0.2 0.0 10 −1 10 0 10 t 1 10 Oh = µs /√2ρσh0 2 Ec = Gh0/σ 10 3 De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "text": "Finite relaxation releases the arrest Ec = 1, Oh = ∗uU/V=TC 2 De = 0 De → ∞ De = 0.1 De = 1 De = 10 De = 31.6 De = 100 De = 316 1.0 √ 0.8 0.6 0.4 0.2 0.0 10 −1 10 0 10 t 1 10 Oh = µs /√ρσh0 2 Ec = Gh0/σ 10 3 De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
       "states": [
         {
-          "image": "06a04a0a4b75b3e9.webp",
+          "image": "3bbddf10c58825fa.webp",
           "overlay": null,
-          "image2x": "7ee30b99909bc914.webp",
+          "image2x": "fad07602ef8912b9.webp",
           "overlay2x": null,
           "transition": "dissolve",
           "media": []
@@ -1472,12 +1472,12 @@
       "id": "50E38D09-F6A2-4803-B4AE-AB38E9B7FB58",
       "n": 74,
       "title": "The limit of small De",
-      "text": "The limit of small De ∇ fast relaxation, De |D| ≪ 1: A = I + O(De), and I = −2D (backup) ∇ ∇ A − I A = − ⇒ A − I ≃ −De I = 2 De D ⇒ τp ≃ 2 Ec De D De Oh = µs /√2ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "text": "The limit of small De ∇ fast relaxation, De |D| ≪ 1: A = I + O(De), and I = −2D (backup) ∇ ∇ A − I A = − ⇒ A − I ≃ −De I = 2 De D ⇒ τp ≃ 2 Ec De D De Oh = µs /√ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
       "states": [
         {
-          "image": "e64afce10941ae06.webp",
+          "image": "78967816c7d06e8a.webp",
           "overlay": null,
-          "image2x": "74729aeab9f33c51.webp",
+          "image2x": "3aeaf311429fee6a.webp",
           "overlay2x": null,
           "transition": "dissolve",
           "media": []
@@ -1488,12 +1488,12 @@
       "id": "CD5C8D36-9131-417C-914F-8FF94C320ED8",
       "n": 75,
       "title": "The limit of small De",
-      "text": "The limit of small De ∇ fast relaxation, De |D| ≪ 1: A = I + O(De), and I = −2D (backup) ∇ ∇ A − I A = − ⇒ A − I ≃ −De I = 2 De D ⇒ τp ≃ 2 Ec De D De a viscosity added to the solvent’s µN = √ 2 Oh + Ec De Oh = µs /√2ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "text": "The limit of small De ∇ fast relaxation, De |D| ≪ 1: A = I + O(De), and I = −2D (backup) ∇ ∇ A − I A = − ⇒ A − I ≃ −De I = 2 De D ⇒ τp ≃ 2 Ec De D De a viscosity added to the solvent’s µN = Oh + Ec De Oh = µs /√ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
       "states": [
         {
-          "image": "9bd0166216821155.webp",
+          "image": "b8931603a8d1f003.webp",
           "overlay": null,
-          "image2x": "0a31c41d9b418366.webp",
+          "image2x": "c2d32c0eea5a0dcc.webp",
           "overlay2x": null,
           "transition": "dissolve",
           "media": []
@@ -1504,12 +1504,12 @@
       "id": "C8E7B45C-EC16-4967-8899-1C435050F0C8",
       "n": 76,
       "title": "The limit of small De",
-      "text": "The limit of small De ∇ fast relaxation, De |D| ≪ 1: A = I + O(De), and I = −2D (backup) ∇ ∇ A − I A = − ⇒ A − I ≃ −De I = 2 De D ⇒ τp ≃ 2 Ec De D De a viscosity added to the solvent’s µN = √ 2 Oh + Ec De rim radius a ∼ R 1/2 grows, so strain rates fall expected: U → VTC as t → ∞ at every finite De Oh = µs /√2ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
+      "text": "The limit of small De ∇ fast relaxation, De |D| ≪ 1: A = I + O(De), and I = −2D (backup) ∇ ∇ A − I A = − ⇒ A − I ≃ −De I = 2 De D ⇒ τp ≃ 2 Ec De D De a viscosity added to the solvent’s µN = Oh + Ec De rim radius a ∼ R 1/2 grows, so strain rates fall expected: U → VTC as t → ∞ at every finite De Oh = µs /√ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
       "states": [
         {
-          "image": "456a3c053d871129.webp",
+          "image": "0dbe90ef10513da1.webp",
           "overlay": null,
-          "image2x": "857d6e400396cdc5.webp",
+          "image2x": "c364c178f0bf4884.webp",
           "overlay2x": null,
           "transition": "dissolve",
           "media": []
@@ -1654,12 +1654,12 @@
       "id": "DB5A3527-C388-465B-BA9E-F77C40195918",
       "n": 84,
       "title": "Backup: the limit of small De",
-      "text": "Backup: the limit of small De ∇ 2 Oldroyd-B: A = −(A − I)/De; fast relaxation: A = I + De A1 + O(De ) ∇ T upper-convected: A = ∂t A + u · ∇A − (∇u) · A − A · ∇u ∇ T the identity is not frozen in the flow I = −(∇u) − ∇u = −2 D ∇ ∇ 2 2 A − I = −De A = −De I + O(De ) = 2 De D + O(De ) √ τ = −p I + 2 !2 Oh D + √Ec (A\"− I) √ ≃ −p I + 2 2 Oh + Ec De D Newtonian, with viscosity µN = 2 Oh + Ec√ De, while De |D| ≪ 1 Oh = µs / 2ρσh0 Ec = Gh0/σ De = λ #$ ρh03/σ VTC = $ 2σ/(ρh0)",
+      "text": "Backup: the limit of small De ∇ 2 Oldroyd-B: A = −(A − I)/De; fast relaxation: A = I + De A1 + O(De ) ∇ T upper-convected: A = ∂t A + u · ∇A − (∇u) · A − A · ∇u ∇ T the identity is not frozen in the flow I = −(∇u) − ∇u = −2 D ∇ ∇ 2 2 A − I = −De A = −De I + O(De ) = 2 De D + O(De ) τ = −p I + 2 Oh D + Ec (A − I) ≃ −p I + 2 (Oh + Ec De) D Newtonian, with viscosity µN = Oh + Ec De,√ while De |D| ≪ 1 Oh = µs / ρσh0 Ec = Gh0/σ De = λ !\" ρh03/σ VTC = \" 2σ/(ρh0)",
       "states": [
         {
-          "image": "cef17795160f48b7.webp",
+          "image": "f286f76ea4b5ea3e.webp",
           "overlay": null,
-          "image2x": "7477c815e28595f7.webp",
+          "image2x": "2c0f0a2ba0cfc993.webp",
           "overlay2x": null,
           "transition": "dissolve",
           "media": []
@@ -1726,23 +1726,27 @@
     {
       "date": "2026-11-07",
       "note": "The soap bubble now glides from slide 19 into slide 20 (Magic Move), as in the deck."
+    },
+    {
+      "date": "2026-11-22",
+      "note": "Corrected the Ohnesorge number to Oh = μs/√(ρσh0): the FEM runs are at Oh = √2 and the classical Taylor–Culick movie at Oh ≈ 0.07."
     }
   ],
   "downloads": [
     {
       "format": "pdf",
       "url": "https://www.dropbox.com/scl/fi/f3rdfqhu01jas5s87xly9/Sanjay-elastic-taylor-culick-2026-11-06.pdf?rlkey=uz1e9l4cc5jxq72g0nu6mqpdy&dl=1",
-      "bytes": 20722488
+      "bytes": 20722473
     },
     {
       "format": "pptx",
       "url": "https://www.dropbox.com/scl/fi/t53rxfkqezzpg6xgbp25o/Sanjay-elastic-taylor-culick-2026-11-06.pptx?rlkey=stj1ekf0i4lhmixhcq9uv7ieg&dl=1",
-      "bytes": 39999436
+      "bytes": 39959940
     },
     {
       "format": "key",
       "url": "https://www.dropbox.com/scl/fi/sfp4qfvwxbk5g1ccs3p9e/Sanjay-elastic-taylor-culick-2026-11-06.key?rlkey=89688lw72sidbm9w8vmceq6sx&dl=1",
-      "bytes": 41486231
+      "bytes": 41490239
     }
   ]
 }

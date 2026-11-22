@@ -1,19 +1,19 @@
 [
   {
+    "slug": "elastic-taylor-culick",
+    "title": "Elastic Taylor–Culick retractions",
+    "subtitle": "How elasticity arrests a retracting sheet",
+    "speaker": "Vatsal Sanjay",
+    "updated": "2026-11-22",
+    "url": "elastic-taylor-culick/"
+  },
+  {
     "slug": "agents-for-computational-research",
     "title": "Agents for computational research",
     "subtitle": "A practical introduction, live",
     "speaker": "Vatsal Sanjay",
     "updated": "2026-11-19",
     "url": "agents-for-computational-research/"
-  },
-  {
-    "slug": "elastic-taylor-culick",
-    "title": "Elastic Taylor–Culick retractions",
-    "subtitle": "How elasticity arrests a retracting sheet",
-    "speaker": "Vatsal Sanjay",
-    "updated": "2026-11-06",
-    "url": "elastic-taylor-culick/"
   },
   {
     "slug": "singular-bursting-bubbles",

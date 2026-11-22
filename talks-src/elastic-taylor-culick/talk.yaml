@@ -7,7 +7,7 @@ slug: elastic-taylor-culick
 title: Elastic Taylor–Culick retractions
 subtitle: How elasticity arrests a retracting sheet
 speaker: Vatsal Sanjay
-updated: "2026-11-06"
+updated: "2026-11-22"
 media_base: https://media.comphy-lab.org/talks/elastic-taylor-culick/
 
 video:
@@ -26,13 +26,13 @@ magic_move:
 downloads:
   - format: pdf
     url: https://www.dropbox.com/scl/fi/f3rdfqhu01jas5s87xly9/Sanjay-elastic-taylor-culick-2026-11-06.pdf?rlkey=uz1e9l4cc5jxq72g0nu6mqpdy&dl=1
-    bytes: 20722488
+    bytes: 20722473
   - format: pptx
     url: https://www.dropbox.com/scl/fi/t53rxfkqezzpg6xgbp25o/Sanjay-elastic-taylor-culick-2026-11-06.pptx?rlkey=stj1ekf0i4lhmixhcq9uv7ieg&dl=1
-    bytes: 39999436
+    bytes: 39959940
   - format: key
     url: https://www.dropbox.com/scl/fi/sfp4qfvwxbk5g1ccs3p9e/Sanjay-elastic-taylor-culick-2026-11-06.key?rlkey=89688lw72sidbm9w8vmceq6sx&dl=1
-    bytes: 41486231
+    bytes: 41490239
 
 changelog:
   - date: "2026-11-06"
@@ -43,3 +43,5 @@ changelog:
     note: Added the PDF and PowerPoint downloads.
   - date: "2026-11-07"
     note: The soap bubble now glides from slide 19 into slide 20 (Magic Move), as in the deck.
+  - date: "2026-11-22"
+    note: "Corrected the Ohnesorge number to Oh = μs/√(ρσh0): the FEM runs are at Oh = √2 and the classical Taylor–Culick movie at Oh ≈ 0.07."
